@@ -10,6 +10,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* next/font define --font-orbitron-stack / --font-tech-stack en <html>; aquí se exponen como utilidades Tailwind */
+  --font-orbitron: var(--font-orbitron-stack);
+  --font-tech: var(--font-tech-stack);
 }
 
 @media (prefers-color-scheme: dark) {
