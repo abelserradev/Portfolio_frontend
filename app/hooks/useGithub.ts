@@ -8,7 +8,7 @@ export interface LanguageStat {
   color: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://apiportfolio.buildforge.work/';
 
 export function useGithub() {
   const [languages, setLanguages] = useState<LanguageStat[]>([]);
