@@ -12,20 +12,23 @@ export default function Home() {
     <div className="text-white bg-black min-h-screen">
       <CyberBackground />
       <Navbar />
-      <main>
-        <HeroSection />
-        <StatusPanel />
-        <ActivityGraph />
-        <MissionGrid />
-        <section
-          id="contacto"
-          className="scroll-mt-24"
-          aria-label="Contacto"
-        >
-          <RetroContactCard />
-        </section>
-      </main>
-      <CodeFooter />
+      {/* overflow-x aquí y no en html/body: overflow-x hidden en la raíz rompe position:sticky en varios navegadores */}
+      <div className="overflow-x-hidden">
+        <main>
+          <HeroSection />
+          <StatusPanel />
+          <ActivityGraph />
+          <MissionGrid />
+          <section
+            id="contacto"
+            className="scroll-mt-24"
+            aria-label="Contacto"
+          >
+            <RetroContactCard />
+          </section>
+        </main>
+        <CodeFooter />
+      </div>
     </div>
   );
 }

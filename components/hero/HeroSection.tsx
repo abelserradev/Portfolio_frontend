@@ -9,18 +9,28 @@ export default function HeroSection() {
       id="inicio"
       className="relative flex min-h-[calc(100svh-96px)] scroll-mt-28 flex-col items-center justify-center px-4 pt-16 text-center sm:min-h-[90vh] sm:scroll-mt-24 sm:pt-20"
     >
-      {/* Marco de escaneo */}
-      <motion.div
-        className="pointer-events-none absolute left-6 top-1/4 h-1/2 w-[calc(100%-3rem)] border border-cyan-500/30 sm:left-1/4 sm:w-1/2"
-        animate={{ opacity: [0.2, 0.8, 0.2] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      />
-
-      {/* Glitch decorativo */}
-      <div className="relative mb-6 max-w-full font-orbitron text-[clamp(2.25rem,12vw,6rem)] font-bold leading-tight text-white md:text-8xl">
-        <span className="relative z-10">Abelserradev</span>
-        <span className="absolute top-0 left-0 text-cyan-500 opacity-70 animate-pulse" aria-hidden="true">Abelserradev</span>
-        <span className="absolute top-0 left-0 text-magenta-500 opacity-70 animate-ping" style={{ animationDuration: '3s' }} aria-hidden="true">Abelserradev</span>
+      {/* Marco pegado al bloque del título: en móvil el rectángulo abs del section no coincidía con el ancho real del glitch */}
+      <div className="relative z-0 mx-auto mb-6 w-fit max-w-[min(100%,calc(100vw-2rem))] px-3 py-2 text-center sm:max-w-none sm:px-5 sm:py-3">
+        <motion.div
+          className="pointer-events-none absolute inset-0 border border-cyan-500/30"
+          animate={{ opacity: [0.2, 0.8, 0.2] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          aria-hidden
+        />
+        {/* clamp más conservador en viewport estrecho: la palabra larga + Orbitron no debe rebasar el marco */}
+        <div className="relative font-orbitron text-[clamp(1.625rem,min(9vw,7vmin),6rem)] font-bold leading-tight text-white md:text-8xl">
+          <span className="relative z-10 inline-block max-w-full">Abelserradev</span>
+          <span className="absolute left-1/2 top-0 -translate-x-1/2 text-cyan-500 opacity-70 animate-pulse" aria-hidden="true">
+            Abelserradev
+          </span>
+          <span
+            className="absolute left-1/2 top-0 -translate-x-1/2 text-magenta-500 opacity-70 animate-ping"
+            style={{ animationDuration: '3s' }}
+            aria-hidden="true"
+          >
+            Abelserradev
+          </span>
+        </div>
       </div>
 
       <h2 className="mb-8 min-h-12 px-2 font-tech text-lg text-gray-400 md:text-2xl">
