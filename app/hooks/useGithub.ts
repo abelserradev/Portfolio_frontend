@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 
 export interface LanguageStat {
-  name: string;
-  percentage: number;
-  color: string;
+  readonly name: string;
+  readonly percentage: number;
+  readonly color: string;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://apiportfolio.buildforge.work/';
@@ -22,10 +22,11 @@ export function useGithub() {
         if (!response.ok) {
           throw new Error('Failed to fetch github stats');
         }
-        const data = await response.json();
+        const data = await response.json() as LanguageStat[];
         setLanguages(data);
-      } catch (err: any) {
-        setError(err.message || 'Error desconocido');
+      } catch (err: unknown) {
+        const mensajeError = err instanceof Error ? err.message : 'Error desconocido';
+        setError(mensajeError);
       } finally {
         setIsLoading(false);
       }

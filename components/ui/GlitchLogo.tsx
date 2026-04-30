@@ -5,7 +5,7 @@ export default function GlitchLogo() {
   const text = "</IRACUZA>";
 
   return (
-    <div className="relative inline-block font-orbitron font-bold text-2xl tracking-widest text-white">
+    <div className="relative inline-block font-orbitron text-lg font-bold tracking-[0.2em] text-white sm:text-2xl sm:tracking-widest">
       <motion.div
         className="relative z-10"
         animate={{ x: [0, -2, 2, -1, 1, 0], opacity: [1, 0.8, 1] }}

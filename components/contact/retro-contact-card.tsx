@@ -111,20 +111,20 @@ export default function RetroContactCard() {
   const socialLinks = obtenerEnlacesSociales(contactData);
 
   return (
-    <div className="flex items-center justify-center p-4">
+    <div className="flex items-center justify-center px-4 py-8 sm:p-4">
       <div className="relative group w-full max-w-2xl">
         <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-fuchsia-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
 
-        <div className="relative bg-slate-900/90 border border-slate-700/50 p-6 rounded-lg leading-none flex flex-col font-mono text-cyan-100">
-          <div className="flex items-center justify-between mb-5 border-b border-cyan-800/50 pb-3">
+        <div className="relative flex flex-col rounded-lg border border-slate-700/50 bg-slate-900/90 p-4 font-mono leading-none text-cyan-100 sm:p-6">
+          <div className="mb-5 flex min-w-0 items-center justify-between gap-3 border-b border-cyan-800/50 pb-3">
             <div className="flex items-center gap-3">
               <Database size={20} className="text-fuchsia-500 animate-pulse" />
               <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_#34d399]" />
             </div>
-            <span className="text-[10px] text-fuchsia-400 tracking-wider uppercase font-bold">
+            <span className="min-w-0 truncate text-[10px] font-bold uppercase tracking-wider text-fuchsia-400">
               PERFIL DE USUARIO.SYS
             </span>
-            <div className="flex space-x-1.5">
+            <div className="flex shrink-0 space-x-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-red-600 border border-red-900" />
               <div className="w-2.5 h-2.5 rounded-full bg-amber-500 border border-amber-800" />
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-600 border border-emerald-900" />
@@ -132,19 +132,19 @@ export default function RetroContactCard() {
           </div>
 
           <div className="space-y-3 mb-6">
-            <div className="flex items-center space-x-4 border border-cyan-800/40 p-3 bg-slate-950/50 rounded shadow-[inset_0_0_10px_rgba(6,182,212,0.1)]">
-              <Terminal size={32} className="text-cyan-400" />
-              <div>
-                <h3 className="text-xl font-black text-white tracking-tight italic">
+            <div className="flex min-w-0 items-center gap-3 rounded border border-cyan-800/40 bg-slate-950/50 p-3 shadow-[inset_0_0_10px_rgba(6,182,212,0.1)] sm:gap-4">
+              <Terminal size={28} className="shrink-0 text-cyan-400 sm:size-8" />
+              <div className="min-w-0">
+                <h3 className="truncate text-lg font-black italic tracking-tight text-white sm:text-xl">
                   {contactData.name}
                 </h3>
-                <p className="text-[11px] text-fuchsia-500 font-extrabold uppercase tracking-widest mt-0.5">
+                <p className="mt-0.5 truncate text-[10px] font-extrabold uppercase tracking-widest text-fuchsia-500 sm:text-[11px]">
                   &gt; {contactData.title}
                 </p>
               </div>
             </div>
 
-            <p className="text-[10px] text-slate-400 leading-relaxed pl-1">
+            <p className="wrap-break-word pl-1 text-[10px] leading-relaxed text-slate-400">
               &gt; STATUS: {contactData.status}
               <br />
               &gt; ENCRIPTACIÓN PROTOCOL_A_90... OK<br />
@@ -152,7 +152,7 @@ export default function RetroContactCard() {
             </p>
           </div>
 
-          <div className="border border-slate-700 p-2 bg-slate-950/80 rounded grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 rounded border border-slate-700 bg-slate-950/80 p-2">
             {socialLinks.map(({ etiqueta, canal, url, color }) => {
               const enlazarExterno = url.startsWith('http');
               return (
@@ -162,7 +162,7 @@ export default function RetroContactCard() {
                   {...(enlazarExterno
                     ? ({ target: '_blank', rel: 'noopener noreferrer' } as const)
                     : {})}
-                  className={`flex items-center justify-center p-3.5 bg-slate-800 hover:bg-slate-700/50 border border-slate-600/50 hover:border-cyan-500 rounded transition-all duration-300 group ${color} hover:shadow-[0_0_12px_#22d3ee]`}
+                  className={`group flex items-center justify-center rounded border border-slate-600/50 bg-slate-800 p-3 transition-all duration-300 hover:border-cyan-500 hover:bg-slate-700/50 hover:shadow-[0_0_12px_#22d3ee] sm:p-3.5 ${color}`}
                 >
                   {renderizarIconoCanal(canal)}
                 </a>
@@ -170,11 +170,11 @@ export default function RetroContactCard() {
             })}
           </div>
 
-          <div className="mt-5 pt-3 border-t border-cyan-800/30 flex justify-between items-center text-[9px] text-slate-500">
-            <span>
+          <div className="mt-5 flex items-center justify-between gap-3 border-t border-cyan-800/30 pt-3 text-[9px] text-slate-500">
+            <span className="min-w-0 truncate">
               © {new Date().getFullYear()} {contactData.name}. // NEON_ARCH
             </span>
-            <div className="h-1 w-16 bg-cyan-600 shadow-[0_0_5px_#22d3ee]" />
+            <div className="h-1 w-12 shrink-0 bg-cyan-600 shadow-[0_0_5px_#22d3ee] sm:w-16" />
           </div>
         </div>
       </div>

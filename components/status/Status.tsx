@@ -33,8 +33,8 @@ export default function StatusPanel() {
   const { languages, isLoading, error } = useGithub();
 
   return (
-    <section id="skills" className="container mx-auto scroll-mt-24 px-4 py-16">
-      <h2 className="font-orbitron text-2xl text-center mb-12 text-cyan-300 tracking-wider">
+    <section id="skills" className="container mx-auto scroll-mt-28 px-4 py-12 sm:scroll-mt-24 sm:py-16">
+      <h2 className="mb-10 text-center font-orbitron text-xl tracking-wider text-cyan-300 sm:mb-12 sm:text-2xl">
         {'<SYS.STATUS>'}
       </h2>
       <div className="max-w-2xl mx-auto space-y-6">
@@ -54,8 +54,8 @@ export default function StatusPanel() {
           const tema = obtenerClasesTemaAccent(skill.color ?? 'gray');
           return (
           <div key={skill.name}>
-            <div className="flex justify-between font-mono text-sm mb-1">
-              <span className="text-gray-400">{`> ${skill.name}`}</span>
+            <div className="mb-1 flex min-w-0 justify-between gap-3 font-mono text-xs sm:text-sm">
+              <span className="min-w-0 truncate text-gray-400">{`> ${skill.name}`}</span>
               <span className={tema.textoPct}>{skill.percentage}%</span>
             </div>
             <div className="w-full h-2 bg-black/60 border border-gray-700 rounded-full overflow-hidden">
