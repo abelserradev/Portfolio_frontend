@@ -1,0 +1,4 @@
+# Config del proyecto (pnpm 10+). No es monorepo; solo políticas de instalación.
+onlyBuiltDependencies:
+  - sharp
+  - unrs-resolver
