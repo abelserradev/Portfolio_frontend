@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# npm (proyecto usa pnpm)
+package-lock.json
+npm-shrinkwrap.json
+
 # testing
 /coverage
 
