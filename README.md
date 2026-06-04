@@ -34,7 +34,7 @@ En CI se usa `pnpm install --frozen-lockfile` para instalar exactamente lo del l
 ## Seguridad (pnpm)
 
 - Estructura de `node_modules` estricta (menos dependencias fantasma que npm clásico).
-- `pnpm.onlyBuiltDependencies` en `package.json`: solo `sharp` y `unrs-resolver` ejecutan scripts de instalación.
+- `onlyBuiltDependencies` en `pnpm-workspace.yaml`: solo `sharp` y `unrs-resolver` ejecutan scripts de instalación.
 - `.npmrc` con `engine-strict=true`.
 
 No uses `npm install` en este repo; `package-lock.json` está ignorado a propósito.
