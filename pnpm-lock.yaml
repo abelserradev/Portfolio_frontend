@@ -24,8 +24,8 @@ importers:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
       react-tooltip:
-        specifier: ^6.0.0
-        version: 6.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^6.0.6
+        version: 6.0.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-type-animation:
         specifier: ^3.2.0
         version: 3.2.0(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1691,8 +1691,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-tooltip@6.0.0:
-    resolution: {integrity: sha512-J7m56tmdmhpjHz8YsQXGNaJdsYtrByKQvKj/Vcd0GBru1fcGRP2yv0ehCEuJbKTirlt3iBg9W5gcMWnM1dj67w==}
+  react-tooltip@6.0.6:
+    resolution: {integrity: sha512-lVTkfNeswvos9VUdV0McdsnVYczxWQXFG2I15sHvXHEmudYXCSwHKrsbJH1j+WmawrB+83tS28vJYSz5m/Fa7g==}
     peerDependencies:
       react: '>=16.14.0'
       react-dom: '>=16.14.0'
@@ -3723,7 +3723,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-tooltip@6.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  react-tooltip@6.0.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@floating-ui/dom': 1.7.6
       clsx: 2.1.1
