@@ -1,6 +1,7 @@
 import Navbar from '../../components/layout/navbar';
 import CyberBackground from '../../components/layout/cyberBackground';
 import HeroSection from '../../components/hero/HeroSection';
+import FeaturedBannerSlot from '../../components/missions/featured-banner-slot';
 import StatusPanel from '../../components/status/Status';
 import ActivityGraph from '../../components/status/ActivityGraph';
 import MissionGrid from '../../components/missions/missionGrid';
@@ -16,6 +17,7 @@ export default function Home() {
       <div className="overflow-x-hidden">
         <main>
           <HeroSection />
+          <FeaturedBannerSlot />
           <StatusPanel />
           <ActivityGraph />
           <MissionGrid />

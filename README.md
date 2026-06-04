@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portafolio (Next.js)
 
-## Getting Started
+Sitio del portafolio. Gestor de paquetes: **pnpm** (lockfile `pnpm-lock.yaml`).
 
-First, run the development server:
+## Requisitos
+
+- Node.js 20+
+- [pnpm](https://pnpm.io/installation) 10+ (o `corepack enable` y usar la versión de `packageManager` en `package.json`)
+
+## Desarrollo local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+corepack enable
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Variables: crea `.env` o `.env.local` con `NEXT_PUBLIC_API_URL` apuntando al backend (p. ej. `http://localhost:8010/api/v1`).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Comando | Uso |
+|---------|-----|
+| `pnpm dev` | Servidor de desarrollo |
+| `pnpm build` | Build de producción |
+| `pnpm start` | Servir build |
+| `pnpm lint` | ESLint |
+| `pnpm audit` | Auditoría de dependencias |
 
-To learn more about Next.js, take a look at the following resources:
+En CI se usa `pnpm install --frozen-lockfile` para instalar exactamente lo del lockfile.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Seguridad (pnpm)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Estructura de `node_modules` estricta (menos dependencias fantasma que npm clásico).
+- `onlyBuiltDependencies` en `pnpm-workspace.yaml`: solo `sharp` y `unrs-resolver` ejecutan scripts de instalación.
+- `.npmrc` con `engine-strict=true`.
 
-## Deploy on Vercel
+No uses `npm install` en este repo; `package-lock.json` está ignorado a propósito.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+El despliegue lo orquesta **Coolify** desde la rama configurada. En el servicio Node del front, usa **pnpm** (p. ej. `pnpm install --frozen-lockfile && pnpm build` y `pnpm start`).
