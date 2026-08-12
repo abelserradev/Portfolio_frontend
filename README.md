@@ -41,4 +41,10 @@ No uses `npm install` en este repo; `package-lock.json` está ignorado a propós
 
 ## Deploy
 
-El despliegue lo orquesta **Coolify** desde la rama configurada. En el servicio Node del front, usa **pnpm** (p. ej. `pnpm install --frozen-lockfile && pnpm build` y `pnpm start`).
+El despliegue lo orquesta **Coolify** desde la rama configurada.
+
+**Build pack:** usa **Dockerfile** (no Nixpacks). Nixpacks descarga `nixpkgs` desde GitHub en cada build y falla con 503 si GitHub no responde.
+
+El `Dockerfile` del repo usa Node 22 + pnpm (`pnpm install --frozen-lockfile`, `pnpm build`, `node server.js` con salida `standalone`).
+
+Variables `NEXT_PUBLIC_*` deben estar definidas como **Build Variables** en Coolify (se inyectan en build time).

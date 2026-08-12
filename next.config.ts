@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Bundle mínimo para contenedor (Coolify/Docker), sin depender de Nixpacks
+  output: "standalone",
 };
 
 export default nextConfig;
