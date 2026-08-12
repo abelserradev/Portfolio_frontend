@@ -43,18 +43,12 @@ No uses `npm install` en este repo; `package-lock.json` está ignorado a propós
 
 El despliegue lo orquesta **Coolify** desde la rama configurada.
 
-**Build pack:** usa **Dockerfile** (no Nixpacks). Nixpacks descarga `nixpkgs` desde GitHub en cada build y falla con 503 si GitHub no responde.
+**Build pack: Nixpacks** (recomendado). Autoconfigura puerto y start command; no requiere ajustes de red en Coolify. Tras el deploy, toma la URL `Network` de los logs y úsala como origen en Cloudflare.
 
-El `Dockerfile` del repo usa Node 22 + pnpm (`pnpm install --frozen-lockfile`, `pnpm build`, `node server.js` con salida `standalone`). En Docker se aplica `node-linker=hoisted` para que el bundle standalone no quede con symlinks rotos de pnpm.
+**Respaldo: Dockerfile.** El repo incluye un `Dockerfile` funcional (Node 22 + pnpm, salida `standalone`) por si Nixpacks falla — p. ej. cuando GitHub devuelve 503 al descargar `nixpkgs`. Si se usa:
 
-**Puerto en Coolify (crítico para evitar 502):**
-
-1. **General → Network → Ports Exposes:** `5173`
-2. **Environment:** no definas `PORT` ni `HOSTNAME` (el Dockerfile ya los fija).
-3. **Domains:** incluye el protocolo: `https://portfolio.buildforge.work` (sin `https://` Traefik genera rutas rotas → 502).
-4. **Healthcheck:** desactívalo temporalmente o pon `/` con puerto `5173`.
-5. Tras redeploy, en logs debe verse: `Local: http://localhost:5173` y `Network: http://0.0.0.0:5173`
-
-App y proxy deben usar el **mismo** puerto. Si la app escucha en `5173` pero Coolify enruta a `3000`, Cloudflare devuelve **502**.
+1. **Build Pack:** `Dockerfile`
+2. **Ports Exposes:** `5173` (debe coincidir con `EXPOSE`/`ENV PORT` del Dockerfile)
+3. **Domains:** con protocolo, `https://portfolio.buildforge.work`
 
 Variables `NEXT_PUBLIC_*` deben estar definidas como **Build Variables** en Coolify (se inyectan en build time).
