@@ -42,10 +42,9 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --chmod=755 scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 USER nextjs
 
 EXPOSE 5173
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["node", "server.js"]

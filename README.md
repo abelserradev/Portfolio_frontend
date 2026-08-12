@@ -50,8 +50,8 @@ El `Dockerfile` del repo usa Node 22 + pnpm (`pnpm install --frozen-lockfile`, `
 **Puerto en Coolify (crítico para evitar 502):**
 
 1. **General → Network → Ports Exposes:** `5173`
-2. **Environment:** `PORT=5173` (o déjalo vacío; el Dockerfile ya lo define).
-3. Tras redeploy, en logs debe verse: `portfolio: starting on http://0.0.0.0:5173`
+2. **Environment:** no definas `PORT` (el Dockerfile ya usa 5173).
+3. Tras redeploy, en logs debe verse: `Local: http://localhost:5173`
 
 App y proxy deben usar el **mismo** puerto. Si la app escucha en `5173` pero Coolify enruta a `3000`, Cloudflare devuelve **502**.
 
