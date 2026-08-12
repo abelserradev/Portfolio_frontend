@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 export default function GlitchLogo() {
-  const text = "</IRACUZA>";
+  const text = "</BUILDFORGE>";
 
   return (
     <div className="relative inline-block font-orbitron text-lg font-bold tracking-[0.2em] text-white sm:text-2xl sm:tracking-widest">
