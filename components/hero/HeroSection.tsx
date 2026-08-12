@@ -18,16 +18,16 @@ export default function HeroSection() {
       />
 
       <div className="relative z-10 mb-6 max-w-full font-orbitron text-[clamp(1.625rem,min(9vw,7vmin),6rem)] font-bold leading-tight text-white md:text-8xl">
-        <span className="relative z-10 inline-block max-w-full">Abelserradev</span>
+        <span className="relative z-10 inline-block max-w-full">Buildforge</span>
         <span className="absolute left-1/2 top-0 -translate-x-1/2 text-cyan-500 opacity-70 animate-pulse" aria-hidden="true">
-          Abelserradev
+          Buildforge
         </span>
         <span
           className="absolute left-1/2 top-0 -translate-x-1/2 text-magenta-500 opacity-70 animate-ping"
           style={{ animationDuration: '3s' }}
           aria-hidden="true"
         >
-          Abelserradev
+          Buildforge
         </span>
       </div>
 
