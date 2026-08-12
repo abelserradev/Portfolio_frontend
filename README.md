@@ -47,6 +47,12 @@ El despliegue lo orquesta **Coolify** desde la rama configurada.
 
 El `Dockerfile` del repo usa Node 22 + pnpm (`pnpm install --frozen-lockfile`, `pnpm build`, `node server.js` con salida `standalone`). En Docker se aplica `node-linker=hoisted` para que el bundle standalone no quede con symlinks rotos de pnpm.
 
-**Puerto en Coolify:** expón **3000** (debe coincidir con `EXPOSE 3000` del Dockerfile).
+**Puerto en Coolify (crítico para evitar 502):**
+
+1. **General → Network → Ports Exposes:** `3000`
+2. **Environment:** elimina `PORT=5173` u otro valor distinto de 3000 (restos de Nixpacks/Vite).
+3. Tras redeploy, en logs debe verse: `portfolio: starting on http://0.0.0.0:3000`
+
+Si la app escucha en `5173` pero el proxy apunta a `3000`, Cloudflare devuelve **502 Bad Gateway** aunque el contenedor esté "Ready".
 
 Variables `NEXT_PUBLIC_*` deben estar definidas como **Build Variables** en Coolify (se inyectan en build time).
