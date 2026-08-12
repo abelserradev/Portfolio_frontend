@@ -33,6 +33,9 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+# Next.js standalone: sin HOSTNAME=0.0.0.0 solo escucha en localhost del contenedor → 502
+ENV HOSTNAME=0.0.0.0
+ENV PORT=5173
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./

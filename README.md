@@ -50,9 +50,10 @@ El `Dockerfile` del repo usa Node 22 + pnpm (`pnpm install --frozen-lockfile`, `
 **Puerto en Coolify (crítico para evitar 502):**
 
 1. **General → Network → Ports Exposes:** `5173`
-2. **Environment:** no definas `PORT` (el Dockerfile ya usa 5173).
-3. **Healthcheck:** desactívalo temporalmente o pon `/` con puerto `5173`.
-4. Tras redeploy, en logs debe verse: `Local: http://localhost:5173`
+2. **Environment:** no definas `PORT` ni `HOSTNAME` (el Dockerfile ya los fija).
+3. **Domains:** incluye el protocolo: `https://portfolio.buildforge.work` (sin `https://` Traefik genera rutas rotas → 502).
+4. **Healthcheck:** desactívalo temporalmente o pon `/` con puerto `5173`.
+5. Tras redeploy, en logs debe verse: `Local: http://localhost:5173` y `Network: http://0.0.0.0:5173`
 
 App y proxy deben usar el **mismo** puerto. Si la app escucha en `5173` pero Coolify enruta a `3000`, Cloudflare devuelve **502**.
 
