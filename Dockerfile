@@ -11,7 +11,9 @@ FROM base AS deps
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-RUN pnpm install --frozen-lockfile
+# Sin scripts arbitrarios de deps; solo rebuild explícito de nativos permitidos (pnpm-workspace.yaml)
+RUN pnpm install --frozen-lockfile --ignore-scripts \
+  && pnpm rebuild sharp unrs-resolver
 
 FROM base AS builder
 
