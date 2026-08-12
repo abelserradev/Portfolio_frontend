@@ -27,7 +27,7 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Abelserradev - Portafolio",
+  title: "Buildforge - Portafolio",
   description: "development, AI, innovation",
 };
 
