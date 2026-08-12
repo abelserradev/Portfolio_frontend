@@ -11,8 +11,9 @@ FROM base AS deps
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-# Sin scripts arbitrarios de deps; solo rebuild explícito de nativos permitidos (pnpm-workspace.yaml)
-RUN pnpm install --frozen-lockfile --ignore-scripts \
+# pnpm aislado rompe symlinks de output standalone; hoisted solo en imagen Docker
+RUN echo "node-linker=hoisted" >> .npmrc \
+  && pnpm install --frozen-lockfile --ignore-scripts \
   && pnpm rebuild sharp unrs-resolver
 
 FROM base AS builder
