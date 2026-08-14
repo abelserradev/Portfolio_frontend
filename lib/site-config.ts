@@ -125,10 +125,3 @@ export function obtenerEnlacesSociales(
     },
   ];
 }
-
-export const MISIONES_INTRO = {
-  encabezado: process.env.NEXT_PUBLIC_MISSIONS_INTRO_HEADING ?? '// PROYECTOS ENTREGADOS',
-  subtitulo:
-    process.env.NEXT_PUBLIC_MISSIONS_INTRO_SUBTITLE ??
-    'Casos reales desarrollados bajo Buildforge — desde MVP hasta producción.',
-} as const;
