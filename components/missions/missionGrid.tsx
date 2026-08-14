@@ -3,6 +3,7 @@
 import { useProjects } from '../../app/hooks/useProjects';
 import { particionarProyectosMisiones } from '@/lib/mission-presentation';
 import MissionCard from './missioncard';
+import MissionsIntroBlock from './missions-intro-block';
 
 export default function MissionGrid() {
   const { projects, isLoading, error } = useProjects();
@@ -31,6 +32,8 @@ export default function MissionGrid() {
       id="misiones"
       className="container mx-auto scroll-mt-28 px-4 py-12 sm:scroll-mt-24 sm:py-16"
     >
+      <MissionsIntroBlock />
+
       {destacados.length > 0 ? (
         <div className="mb-14 sm:mb-16">
           <h2 className="mb-2 text-center font-orbitron text-2xl tracking-widest text-yellow-300 sm:text-3xl">

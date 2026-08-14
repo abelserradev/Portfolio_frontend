@@ -5,6 +5,7 @@ import GlitchLogo from '../ui/GlitchLogo';
 
 const enlacesNav = [
   { etiqueta: '_inicio', href: '#inicio' },
+  { etiqueta: '_servicios', href: '#servicios' },
   { etiqueta: '_skills', href: '#skills' },
   { etiqueta: '_misiones', href: '#misiones' },
   { etiqueta: '_contacto', href: '#contacto' },
