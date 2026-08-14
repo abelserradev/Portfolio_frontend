@@ -63,16 +63,36 @@ En CI se usa `pnpm install --frozen-lockfile` para instalar exactamente lo del l
 
 No uses `npm install` en este repo; `package-lock.json` está ignorado a propósito.
 
-## Deploy
+## Deploy (Coolify)
 
 El despliegue lo orquesta **Coolify** desde la rama configurada.
 
-**Build pack: Nixpacks** (recomendado). Autoconfigura puerto y start command; no requiere ajustes de red en Coolify. Tras el deploy, toma la URL `Network` de los logs y úsala como origen en Cloudflare.
+### Recomendado: Build Pack **Dockerfile**
 
-**Respaldo: Dockerfile.** El repo incluye un `Dockerfile` funcional (Node 22 + pnpm, salida `standalone`) por si Nixpacks falla — p. ej. cuando GitHub devuelve 503 al descargar `nixpkgs`. Si se usa:
+Evita Nixpacks (descargas de `nixpkgs` desde GitHub, builds más lentos e inestables).
 
-1. **Build Pack:** `Dockerfile`
-2. **Ports Exposes:** `5173` (debe coincidir con `EXPOSE`/`ENV PORT` del Dockerfile)
-3. **Domains:** con protocolo, `https://portfolio.buildforge.work`
+1. En el recurso → **Configuration** → **Build Pack:** `Dockerfile`
+2. **Ports Exposes:** `3000` (coincide con `EXPOSE` / `ENV PORT` del Dockerfile)
+3. **Build Variables:** todas las `NEXT_PUBLIC_*` necesarias (build time)
+4. Redeploy
 
-Variables `NEXT_PUBLIC_*` deben estar definidas como **Build Variables** en Coolify (se inyectan en build time).
+El `Dockerfile` usa Node 22 + pnpm, salida Next.js `standalone` y `node server.js`.
+
+### Alternativa: Nixpacks
+
+Si usas Nixpacks, existe `nixpacks.toml` con `pnpm install --frozen-lockfile` y Node 22. Coolify suele autodetectar el puerto.
+
+### Fallo `exit code 255` a mitad de `pnpm install`
+
+El log se corta **sin error de pnpm** (p. ej. en “downloaded 57/367”). Eso casi nunca es bug del código: Coolify mata la sesión SSH del build ([issue conocido](https://github.com/coollabsio/coolify/issues/10853)).
+
+**Qué hacer:**
+
+1. **Redeploy** (a menudo basta en el segundo intento)
+2. **Force deploy without cache** en Coolify
+3. Cambiar a **Build Pack = Dockerfile** (más estable)
+4. Si persiste: en el servidor Coolify, valorar `MUX_ENABLED=false` o revisar timeouts/red hacia `registry.npmjs.org`
+
+### Variables de build
+
+Las `NEXT_PUBLIC_*` deben estar como **Build Variables** en Coolify (se inyectan en build time).
