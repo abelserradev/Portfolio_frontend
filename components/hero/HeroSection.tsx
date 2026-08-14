@@ -34,7 +34,7 @@ export default function HeroSection() {
       <h2 className="mb-8 min-h-12 px-2 font-tech text-lg text-gray-400 md:text-2xl">
         <TypeAnimation
           sequence={[
-            'Apps web y móvil a medida',
+            'Apps web y mobile',
             2000,
             'APIs y backends escalables',
             2000,
