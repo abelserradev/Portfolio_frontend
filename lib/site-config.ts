@@ -72,7 +72,7 @@ export function obtenerConfigMarca(): SiteBrandConfig {
       process.env.NEXT_PUBLIC_SERVICES_VIDEO_URL ?? '/media/buildforge-servicios.mp4',
     servicesPosterUrl:
       process.env.NEXT_PUBLIC_SERVICES_POSTER_URL ??
-      '/media/buildforge-servicios-poster.jpg',
+      '/media/banner_frame.png',
   };
 }
 
