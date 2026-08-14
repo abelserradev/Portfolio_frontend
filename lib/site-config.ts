@@ -16,7 +16,6 @@ export interface SiteBrandConfig {
   readonly brandRole: string;
   readonly brandTagline: string;
   readonly brandPitch: string;
-  readonly operatorName: string | null;
   readonly servicesList: readonly string[];
   readonly servicesVideoUrl: string;
   readonly servicesPosterUrl: string;
@@ -68,7 +67,6 @@ export function obtenerConfigMarca(): SiteBrandConfig {
     brandPitch:
       process.env.NEXT_PUBLIC_BRAND_PITCH ??
       'Transformamos ideas en productos digitales: apps web, APIs robustas, soluciones móviles e integraciones con IA. Desde el MVP hasta producción, con enfoque en resultados para tu negocio.',
-    operatorName: process.env.NEXT_PUBLIC_OPERATOR_NAME ?? 'Operado por Abel Serra',
     servicesList: parseServicesList(process.env.NEXT_PUBLIC_SERVICES_LIST),
     servicesVideoUrl:
       process.env.NEXT_PUBLIC_SERVICES_VIDEO_URL ?? '/media/buildforge-servicios.mp4',
@@ -128,9 +126,3 @@ export function obtenerEnlacesSociales(
   ];
 }
 
-export const MISIONES_INTRO = {
-  encabezado: process.env.NEXT_PUBLIC_MISSIONS_INTRO_HEADING ?? '// PROYECTOS ENTREGADOS',
-  subtitulo:
-    process.env.NEXT_PUBLIC_MISSIONS_INTRO_SUBTITLE ??
-    'Casos reales desarrollados bajo Buildforge — desde MVP hasta producción.',
-} as const;

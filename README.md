@@ -33,7 +33,6 @@ Opcionales (marca Buildforge — defaults en `lib/site-config.ts`):
 | `NEXT_PUBLIC_BRAND_ROLE` | Estudio de desarrollo de software |
 | `NEXT_PUBLIC_BRAND_TAGLINE` | Desarrollo de software a medida |
 | `NEXT_PUBLIC_BRAND_PITCH` | Pitch comercial (párrafo) |
-| `NEXT_PUBLIC_OPERATOR_NAME` | Operado por Abel Serra |
 | `NEXT_PUBLIC_SERVICES_LIST` | JSON array o items separados por `\|` |
 | `NEXT_PUBLIC_SERVICES_VIDEO_URL` | `/media/buildforge-servicios.mp4` |
 | `NEXT_PUBLIC_SERVICES_POSTER_URL` | `/media/buildforge-servicios-poster.jpg` |
