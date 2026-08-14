@@ -68,8 +68,7 @@ export function obtenerConfigMarca(): SiteBrandConfig {
       process.env.NEXT_PUBLIC_BRAND_PITCH ??
       'Transformamos ideas en productos digitales: apps web, APIs robustas, soluciones móviles e integraciones con IA. Desde el MVP hasta producción, con enfoque en resultados para tu negocio.',
     servicesList: parseServicesList(process.env.NEXT_PUBLIC_SERVICES_LIST),
-    servicesVideoUrl:
-      process.env.NEXT_PUBLIC_SERVICES_VIDEO_URL ?? '/media/buildforge-servicios.mp4',
+    servicesVideoUrl: process.env.NEXT_PUBLIC_SERVICES_VIDEO_URL?.trim() ?? '',
     servicesPosterUrl:
       process.env.NEXT_PUBLIC_SERVICES_POSTER_URL ??
       '/media/banner_frame.png',
