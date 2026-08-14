@@ -17,7 +17,32 @@ pnpm dev
 
 Abre [http://localhost:3000](http://localhost:3000).
 
-Variables: crea `.env` o `.env.local` con `NEXT_PUBLIC_API_URL` apuntando al backend (p. ej. `http://localhost:8010/api/v1`).
+Variables: crea `.env` o `.env.local` con al menos:
+
+| Variable | Descripción |
+|----------|-------------|
+| `NEXT_PUBLIC_API_URL` | Backend (p. ej. `http://localhost:8010/api/v1`) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Correo de contacto freelance |
+
+Opcionales (marca Buildforge — defaults en `lib/site-config.ts`):
+
+| Variable | Default |
+|----------|---------|
+| `NEXT_PUBLIC_BRAND_NAME` | `Buildforge` |
+| `NEXT_PUBLIC_LOGO_TEXT` | `</BUILDFORGE>` |
+| `NEXT_PUBLIC_BRAND_ROLE` | Estudio de desarrollo de software |
+| `NEXT_PUBLIC_BRAND_TAGLINE` | Desarrollo de software a medida |
+| `NEXT_PUBLIC_BRAND_PITCH` | Pitch comercial (párrafo) |
+| `NEXT_PUBLIC_OPERATOR_NAME` | Operado por Abel Serra |
+| `NEXT_PUBLIC_SERVICES_LIST` | JSON array o items separados por `\|` |
+| `NEXT_PUBLIC_SERVICES_VIDEO_URL` | `/media/buildforge-servicios.mp4` |
+| `NEXT_PUBLIC_SERVICES_POSTER_URL` | `/media/buildforge-servicios-poster.jpg` |
+| `NEXT_PUBLIC_INSTAGRAM_URL` | `https://www.instagram.com/buildforge.work/` |
+| `NEXT_PUBLIC_GITHUB_URL` | GitHub |
+| `NEXT_PUBLIC_LINKEDIN_URL` | LinkedIn |
+| `NEXT_PUBLIC_CONTACT_STATUS` | Línea de estado en contacto |
+
+Media promocional: ver [`public/media/README.md`](public/media/README.md).
 
 ## Scripts
 

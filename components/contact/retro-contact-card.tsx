@@ -1,65 +1,11 @@
 import { Mail, Database, Terminal } from 'lucide-react';
+import {
+  obtenerConfigContacto,
+  obtenerConfigMarca,
+  obtenerEnlacesSociales,
+  type CanalContactoVisual,
+} from '@/lib/site-config';
 
-type CanalContactoVisual = 'mail' | 'github' | 'linkedin';
-
-interface SocialLinkDescriptor {
-  readonly etiqueta: string;
-  readonly canal: CanalContactoVisual;
-  readonly url: string;
-  readonly color: string;
-}
-
-function obtenerEnlacesSociales(contactData: ContactDataResolved): SocialLinkDescriptor[] {
-  const filas: SocialLinkDescriptor[] = [
-    {
-      etiqueta: 'mail',
-      canal: 'mail',
-      url: `mailto:${contactData.email}`,
-      color: 'text-red-400',
-    },
-    {
-      etiqueta: 'github',
-      canal: 'github',
-      url: contactData.githubFullUrl,
-      color: 'text-white',
-    },
-    {
-      etiqueta: 'linkedin',
-      canal: 'linkedin',
-      url: contactData.linkedinFullUrl,
-      color: 'text-cyan-400',
-    },
-  ];
-  return filas;
-}
-
-/** Valores públicos (NEXT_PUBLIC_*) o estos por defecto; edita lo que aplique */
-interface ContactDataResolved {
-  readonly name: string;
-  readonly title: string;
-  readonly status: string;
-  readonly email: string;
-  readonly githubFullUrl: string;
-  readonly linkedinFullUrl: string;
-}
-
-function resolverDatosContacto(): ContactDataResolved {
-  return {
-    name: process.env.NEXT_PUBLIC_DISPLAY_NAME ?? 'ABEL SERRA',
-    title: process.env.NEXT_PUBLIC_JOB_TITLE ?? 'AI Solutions Engineer',
-    status:
-      process.env.NEXT_PUBLIC_CONTACT_STATUS ??
-      'EN LÍNEA // SECTOR: CARACAS_NODE_42',
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'tucorreo@ejemplo.com',
-    githubFullUrl:
-      process.env.NEXT_PUBLIC_GITHUB_URL ?? 'https://github.com/Abelserradev',
-    linkedinFullUrl:
-      process.env.NEXT_PUBLIC_LINKEDIN_URL ??
-      'https://linkedin.com/in/tuusuario',
-  };
-}
-
-/** Lucide omitió logos de marca en bundles recientes — SVG livianos con currentColor */
 function IconoGithubMarca(props: Readonly<{ size?: number; className?: string }>) {
   const { size = 20, className } = props;
   return (
@@ -94,6 +40,23 @@ function IconoLinkedinMarca(props: Readonly<{ size?: number; className?: string 
   );
 }
 
+function IconoInstagramMarca(props: Readonly<{ size?: number; className?: string }>) {
+  const { size = 20, className } = props;
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+    </svg>
+  );
+}
+
 function renderizarIconoCanal(canal: CanalContactoVisual) {
   const animar = 'transition-transform duration-300 group-hover:scale-110';
   switch (canal) {
@@ -103,12 +66,15 @@ function renderizarIconoCanal(canal: CanalContactoVisual) {
       return <IconoGithubMarca size={20} className={animar} />;
     case 'linkedin':
       return <IconoLinkedinMarca size={20} className={animar} />;
+    case 'instagram':
+      return <IconoInstagramMarca size={20} className={animar} />;
   }
 }
 
 export default function RetroContactCard() {
-  const contactData = resolverDatosContacto();
-  const socialLinks = obtenerEnlacesSociales(contactData);
+  const marca = obtenerConfigMarca();
+  const contacto = obtenerConfigContacto();
+  const socialLinks = obtenerEnlacesSociales(contacto);
 
   return (
     <div className="flex items-center justify-center px-4 py-8 sm:p-4">
@@ -122,7 +88,7 @@ export default function RetroContactCard() {
               <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_#34d399]" />
             </div>
             <span className="min-w-0 truncate text-[10px] font-bold uppercase tracking-wider text-fuchsia-400">
-              PERFIL DE USUARIO.SYS
+              CANALES_BUILDFORGE.SYS
             </span>
             <div className="flex shrink-0 space-x-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-red-600 border border-red-900" />
@@ -136,29 +102,35 @@ export default function RetroContactCard() {
               <Terminal size={28} className="shrink-0 text-cyan-400 sm:size-8" />
               <div className="min-w-0">
                 <h3 className="truncate text-lg font-black italic tracking-tight text-white sm:text-xl">
-                  {contactData.name}
+                  {marca.brandName}
                 </h3>
                 <p className="mt-0.5 truncate text-[10px] font-extrabold uppercase tracking-widest text-fuchsia-500 sm:text-[11px]">
-                  &gt; {contactData.title}
+                  &gt; {marca.brandRole}
                 </p>
+                {marca.operatorName ? (
+                  <p className="mt-1 truncate text-[9px] text-slate-500 sm:text-[10px]">
+                    {marca.operatorName}
+                  </p>
+                ) : null}
               </div>
             </div>
 
             <p className="wrap-break-word pl-1 text-[10px] leading-relaxed text-slate-400">
-              &gt; STATUS: {contactData.status}
+              &gt; STATUS: {contacto.status}
               <br />
               &gt; ENCRIPTACIÓN PROTOCOL_A_90... OK<br />
               &gt; ESPERANDO TRANSMISIÓN...
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 rounded border border-slate-700 bg-slate-950/80 p-2">
-            {socialLinks.map(({ etiqueta, canal, url, color }) => {
+          <div className="grid grid-cols-2 gap-2 rounded border border-slate-700 bg-slate-950/80 p-2 sm:grid-cols-4">
+            {socialLinks.map(({ etiqueta, canal, url, color, ariaLabel }) => {
               const enlazarExterno = url.startsWith('http');
               return (
                 <a
                   key={etiqueta}
                   href={url}
+                  aria-label={ariaLabel}
                   {...(enlazarExterno
                     ? ({ target: '_blank', rel: 'noopener noreferrer' } as const)
                     : {})}
@@ -172,7 +144,7 @@ export default function RetroContactCard() {
 
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-cyan-800/30 pt-3 text-[9px] text-slate-500">
             <span className="min-w-0 truncate">
-              © {new Date().getFullYear()} {contactData.name}. // NEON_ARCH
+              © {new Date().getFullYear()} {marca.brandName}. // NEON_ARCH
             </span>
             <div className="h-1 w-12 shrink-0 bg-cyan-600 shadow-[0_0_5px_#22d3ee] sm:w-16" />
           </div>

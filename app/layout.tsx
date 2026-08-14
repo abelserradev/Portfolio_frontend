@@ -27,8 +27,9 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Buildforge - Portafolio",
-  description: "development, AI, innovation",
+  title: "Buildforge — Desarrollo de software a medida",
+  description:
+    "Estudio freelance: apps web y móvil, APIs, integraciones con IA y despliegue a producción. Proyectos reales bajo la marca Buildforge.",
 };
 
 export default function RootLayout({
@@ -38,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${shareTechMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
