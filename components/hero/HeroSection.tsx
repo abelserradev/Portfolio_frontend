@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
+import { dispararAbrirChat } from '@/lib/chat-events';
 
 export default function HeroSection() {
   return (
@@ -55,10 +56,14 @@ export default function HeroSection() {
           <span className="text-magenta-400">↓</span>
           <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-cyan-400 group-hover:w-full transition-all duration-500" />
         </a>
-        <a href="#contacto" className="group relative inline-flex items-center justify-center gap-2 border border-magenta-500/50 bg-black/40 px-5 py-3 font-mono text-sm text-magenta-300 transition-colors hover:bg-magenta-500/10 sm:px-8 sm:text-base">
+        <button
+          type="button"
+          onClick={() => dispararAbrirChat({ intent: 'cotizacion' })}
+          className="group relative inline-flex items-center justify-center gap-2 border border-magenta-500/50 bg-black/40 px-5 py-3 font-mono text-sm text-magenta-300 transition-colors hover:bg-magenta-500/10 sm:px-8 sm:text-base"
+        >
           <span>SOLICITAR_COTIZACIÓN</span>
           <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-magenta-400 group-hover:w-full transition-all duration-500" />
-        </a>
+        </button>
       </div>
     </section>
   );
