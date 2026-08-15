@@ -297,7 +297,7 @@ export default function BuildforgeChatWidget() {
                 Asistente BuildForge
               </h2>
               <p className="truncate text-xs text-slate-400">
-                Cotizaciones y consultas · respuesta al instante
+                Cotizaciones y consultas
               </p>
             </div>
             <div className="flex shrink-0 gap-1">
