@@ -65,7 +65,9 @@ export async function enviarCotizacionChat(input: {
   readonly sessionId: string;
   readonly clientEmail: string;
   readonly clientName?: string;
-  readonly clientPhone?: string;
+  readonly clientPhone: string;
+  readonly projectDescription: string;
+  readonly clientBudget?: string;
   readonly preferredChannel: 'email' | 'whatsapp';
 }): Promise<QuoteSubmitResponse> {
   const resp = await fetch(`${baseChatUrl()}/quote/submit`, {
@@ -76,6 +78,8 @@ export async function enviarCotizacionChat(input: {
       client_email: input.clientEmail,
       client_name: input.clientName,
       client_phone: input.clientPhone,
+      project_description: input.projectDescription,
+      client_budget: input.clientBudget,
       preferred_channel: input.preferredChannel,
     }),
   });

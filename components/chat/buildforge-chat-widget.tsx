@@ -14,8 +14,6 @@ import { useChatSession } from '@/app/hooks/useChatSession';
 import {
   enviarCotizacionChat,
   enviarMensajeChat,
-  obtenerConfigChat,
-  type ChatConfig,
   type QuoteDraft,
 } from '@/lib/chat-api';
 import { EVENTO_ABRIR_CHAT, type AbrirChatDetalle } from '@/lib/chat-events';
@@ -98,7 +96,6 @@ function BotonWhatsApp({
 export default function BuildforgeChatWidget() {
   const { sessionId, persistirSession, reiniciarSession } = useChatSession();
   const [abierto, setAbierto] = useState(false);
-  const [config, setConfig] = useState<ChatConfig | null>(null);
   const [mensajes, setMensajes] = useState<MensajeUi[]>([]);
   const [entrada, setEntrada] = useState('');
   const [cargando, setCargando] = useState(false);
@@ -107,17 +104,14 @@ export default function BuildforgeChatWidget() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [email, setEmail] = useState('');
   const [nombre, setNombre] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [presupuesto, setPresupuesto] = useState('');
   const [canal, setCanal] = useState<'email' | 'whatsapp'>('email');
   const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
   const [enviado, setEnviado] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    obtenerConfigChat()
-      .then(setConfig)
-      .catch(() => setConfig(null));
-  }, []);
 
   useEffect(() => {
     if (abierto && scrollRef.current) {
@@ -160,6 +154,9 @@ export default function BuildforgeChatWidget() {
         ]);
         if (resp.quote_draft) {
           setDraft(resp.quote_draft);
+          if (resp.quote_draft.scope_summary) {
+            setDescripcion(resp.quote_draft.scope_summary);
+          }
         }
         if (resp.flow_state === 'contact' || resp.flow_state === 'estimate') {
           setMostrarFormulario(true);
@@ -208,6 +205,17 @@ export default function BuildforgeChatWidget() {
     ev.preventDefault();
     if (!sessionId || !email.trim()) return;
 
+    const desc = descripcion.trim();
+    const tel = telefono.trim();
+    if (desc.length < 10) {
+      setError('Describe tu proyecto en al menos 10 caracteres.');
+      return;
+    }
+    if (tel.length < 6) {
+      setError('Indica un número de contacto válido.');
+      return;
+    }
+
     setCargando(true);
     setError(null);
     try {
@@ -215,6 +223,9 @@ export default function BuildforgeChatWidget() {
         sessionId,
         clientEmail: email.trim(),
         clientName: nombre.trim() || undefined,
+        clientPhone: tel,
+        projectDescription: desc,
+        clientBudget: presupuesto.trim() || undefined,
         preferredChannel: canal,
       });
       setEnviado(true);
@@ -229,14 +240,13 @@ export default function BuildforgeChatWidget() {
           rol: 'assistant',
           texto:
             canal === 'whatsapp'
-              ? `Cotización registrada. Puedes continuar la conversación por WhatsApp (${resp.whatsapp_display ?? config?.whatsapp_display}).`
+              ? 'Cotización registrada. Puedes continuar la conversación por WhatsApp con el botón de abajo.'
               : 'Tu solicitud ya nos ha llegado al correo. La evaluará nuestro equipo y te responderemos lo antes posible.',
           whatsappUrl: resp.whatsapp_url ?? undefined,
-          whatsappDisplay: resp.whatsapp_display ?? config?.whatsapp_display,
         },
       ]);
     } catch {
-      setError('No se pudo enviar la solicitud. Verifica tu correo e intenta de nuevo.');
+      setError('No se pudo enviar la solicitud. Revisa los datos e intenta de nuevo.');
     } finally {
       setCargando(false);
     }
@@ -251,11 +261,14 @@ export default function BuildforgeChatWidget() {
     setWhatsappUrl(null);
     setEmail('');
     setNombre('');
+    setTelefono('');
+    setDescripcion('');
+    setPresupuesto('');
     setCanal('email');
     setError(null);
   };
 
-  const whatsappLabel = config?.whatsapp_display ?? '+58 412-8034283';
+  const estimacionReferencia = draft?.estimated_range_usd ?? null;
 
   return (
     <>
@@ -473,6 +486,71 @@ export default function BuildforgeChatWidget() {
                   />
                 </div>
 
+                <div>
+                  <label
+                    htmlFor="chat-telefono"
+                    className="mb-1 block text-xs font-medium text-slate-400"
+                  >
+                    Teléfono de contacto
+                  </label>
+                  <input
+                    id="chat-telefono"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    required
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                    placeholder="+58 412 1234567"
+                    className="w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="chat-descripcion"
+                    className="mb-1 block text-xs font-medium text-slate-400"
+                  >
+                    ¿Qué quieres construir?
+                  </label>
+                  <textarea
+                    id="chat-descripcion"
+                    required
+                    rows={3}
+                    value={descripcion}
+                    onChange={(e) => setDescripcion(e.target.value)}
+                    placeholder="Ej. landing con catálogo, formulario de contacto y panel admin básico"
+                    className="w-full resize-none rounded-lg border border-slate-600 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="chat-presupuesto"
+                    className="mb-1 block text-xs font-medium text-slate-400"
+                  >
+                    Presupuesto aproximado{' '}
+                    <span className="text-slate-500">(opcional)</span>
+                  </label>
+                  {estimacionReferencia && (
+                    <p className="mb-1.5 text-xs text-amber-300/90">
+                      Referencia del chat: {estimacionReferencia}
+                    </p>
+                  )}
+                  <input
+                    id="chat-presupuesto"
+                    type="text"
+                    value={presupuesto}
+                    onChange={(e) => setPresupuesto(e.target.value)}
+                    placeholder={
+                      estimacionReferencia
+                        ? `Ej. dentro de ${estimacionReferencia}`
+                        : 'Ej. USD 300 – 800'
+                    }
+                    className="w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30"
+                  />
+                </div>
+
                 <fieldset>
                   <legend className="mb-2 text-xs font-medium text-slate-400">
                     ¿Cómo prefieres que te contactemos?
@@ -496,9 +574,7 @@ export default function BuildforgeChatWidget() {
                         onChange={() => setCanal('whatsapp')}
                         className="h-4 w-4 accent-violet-500"
                       />
-                      <span className="text-sm text-slate-200">
-                        WhatsApp · {whatsappLabel}
-                      </span>
+                      <span className="text-sm text-slate-200">WhatsApp</span>
                     </label>
                   </div>
                 </fieldset>
@@ -515,7 +591,7 @@ export default function BuildforgeChatWidget() {
 
             {whatsappUrl && enviado && (
               <div className="ml-[46px]">
-                <BotonWhatsApp url={whatsappUrl} display={whatsappLabel} />
+                <BotonWhatsApp url={whatsappUrl} />
               </div>
             )}
           </div>
