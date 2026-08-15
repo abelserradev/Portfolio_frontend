@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { obtenerConfigMarca } from '@/lib/site-config';
+import { dispararAbrirChat } from '@/lib/chat-events';
 import ServicesMediaPlayer from './services-media-player';
 
 export default function BuildforgeServicesSection() {
@@ -58,12 +59,13 @@ export default function BuildforgeServicesSection() {
           >
             VER_PROYECTOS
           </a>
-          <a
-            href="#contacto"
+          <button
+            type="button"
+            onClick={() => dispararAbrirChat({ intent: 'cotizacion' })}
             className="inline-flex justify-center border border-fuchsia-500/50 bg-fuchsia-500/10 px-6 py-2.5 font-mono text-sm text-fuchsia-200 transition-colors hover:bg-fuchsia-500/15"
           >
             SOLICITAR_COTIZACIÓN
-          </a>
+          </button>
         </div>
       </motion.div>
     </section>

@@ -40,7 +40,7 @@ export default function MissionGrid() {
             {'// MISIÓN DESTACADA'}
           </h2>
           <p className="mb-8 text-center font-mono text-xs text-gray-500 sm:mb-10">
-            Producto con desarrollo activo y salida al mercado en curso
+            Demos activas y en desarrollo
           </p>
           <div className="grid grid-cols-1 gap-5 sm:gap-8">
             {destacados.map((project) => (

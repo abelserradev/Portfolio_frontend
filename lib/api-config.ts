@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE = 'http://localhost:8000/api/v1';
+const DEFAULT_API_BASE = 'http://127.0.0.1:8010/api/v1';
 
 export function obtenerBaseApiPortfolio(): string {
   return process.env.NEXT_PUBLIC_API_URL ?? DEFAULT_API_BASE;

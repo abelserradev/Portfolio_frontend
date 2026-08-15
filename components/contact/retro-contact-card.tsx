@@ -107,11 +107,6 @@ export default function RetroContactCard() {
                 <p className="mt-0.5 truncate text-[10px] font-extrabold uppercase tracking-widest text-fuchsia-500 sm:text-[11px]">
                   &gt; {marca.brandRole}
                 </p>
-                {marca.operatorName ? (
-                  <p className="mt-1 truncate text-[9px] text-slate-500 sm:text-[10px]">
-                    {marca.operatorName}
-                  </p>
-                ) : null}
               </div>
             </div>
 
