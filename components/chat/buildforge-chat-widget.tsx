@@ -17,6 +17,7 @@ import {
   type QuoteDraft,
 } from '@/lib/chat-api';
 import { EVENTO_ABRIR_CHAT, type AbrirChatDetalle } from '@/lib/chat-events';
+import { registrarEventoAnalytics } from '@/lib/analytics-api';
 
 const ASSISTANT_IMAGE = '/media/buildforge-assistant.png';
 
@@ -208,6 +209,11 @@ export default function BuildforgeChatWidget() {
         }
         if (resp.flow_state === 'contact' || resp.flow_state === 'estimate') {
           setMostrarFormulario(true);
+          registrarEventoAnalytics({
+            event: 'chat.form.visible',
+            sessionId: resp.session_id,
+            metadata: { flow_state: resp.flow_state },
+          });
         }
       } catch (err) {
         const esTimeout =
@@ -232,6 +238,10 @@ export default function BuildforgeChatWidget() {
       setWhatsappUrl(null);
       setWhatsappPrefill(null);
       setWhatsappPopupBloqueado(false);
+      registrarEventoAnalytics({
+        event: 'chat.widget.open',
+        cta: custom.detail?.intent === 'cotizacion' ? 'cta_cotizacion' : 'evento_custom',
+      });
       const intent = custom.detail?.intent;
       const msg =
         custom.detail?.mensajeInicial ??
@@ -334,7 +344,10 @@ export default function BuildforgeChatWidget() {
       {!abierto && (
         <button
           type="button"
-          onClick={() => setAbierto(true)}
+          onClick={() => {
+            setAbierto(true);
+            registrarEventoAnalytics({ event: 'chat.widget.open', cta: 'floating_button' });
+          }}
           className="group fixed bottom-5 right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg shadow-cyan-500/20 ring-2 ring-cyan-400/50 transition-transform hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/60 motion-reduce:transition-none sm:bottom-6 sm:right-6"
           aria-label="Abrir asistente de cotización BuildForge"
         >
