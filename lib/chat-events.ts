@@ -11,6 +11,13 @@ export function dispararAbrirChat(detalle: AbrirChatDetalle = {}): void {
   if (typeof window === 'undefined') {
     return;
   }
+  void import('@/lib/analytics-api').then(({ registrarEventoAnalytics }) => {
+    registrarEventoAnalytics({
+      event: 'cta.click',
+      cta: detalle.intent === 'cotizacion' ? 'solicitar_cotizacion' : 'abrir_chat',
+      metadata: { intent: detalle.intent ?? 'general' },
+    });
+  });
   window.dispatchEvent(
     new CustomEvent<AbrirChatDetalle>(EVENTO_ABRIR_CHAT, { detail: detalle }),
   );
