@@ -41,6 +41,15 @@ function generarId(): string {
   return `msg-${Date.now()}`;
 }
 
+function extraerTextoDesdeWaUrl(url: string): string | null {
+  try {
+    const texto = new URL(url).searchParams.get('text');
+    return texto ? decodeURIComponent(texto.replace(/\+/g, ' ')) : null;
+  } catch {
+    return null;
+  }
+}
+
 function AssistantAvatar({
   size = 40,
   className = '',
@@ -70,10 +79,12 @@ function BotonWhatsApp({
   url,
   display,
   compacto = false,
+  etiqueta = 'Abrir WhatsApp',
 }: {
   readonly url: string;
   readonly display?: string;
   readonly compacto?: boolean;
+  readonly etiqueta?: string;
 }) {
   return (
     <a
@@ -83,13 +94,48 @@ function BotonWhatsApp({
       className={
         compacto
           ? 'mt-2 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-emerald-600/60 bg-emerald-950/40 px-3 py-2 text-sm font-medium text-emerald-300 transition-colors hover:bg-emerald-900/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400'
-          : 'mt-2 flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-emerald-600/60 bg-emerald-950/40 py-2.5 text-sm font-medium text-emerald-300 transition-colors hover:bg-emerald-900/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400'
+          : 'flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/70 bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition-colors hover:bg-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400'
       }
     >
       <MessageSquare size={16} className="shrink-0" aria-hidden />
-      Abrir WhatsApp{display ? ` · ${display}` : ''}
+      {etiqueta}
+      {display && compacto ? ` · ${display}` : ''}
       <ExternalLink size={14} className="shrink-0 opacity-70" aria-hidden />
     </a>
+  );
+}
+
+function PanelWhatsAppCotizacion({
+  url,
+  prefill,
+  popupBloqueado,
+}: {
+  readonly url: string;
+  readonly prefill?: string | null;
+  readonly popupBloqueado: boolean;
+}) {
+  return (
+    <div className="ml-[46px] space-y-3 rounded-xl border border-emerald-600/40 bg-emerald-950/20 p-4">
+      <p className="text-sm font-medium text-emerald-200">
+        {popupBloqueado
+          ? 'Tu solicitud quedó registrada. Pulsa el botón para abrir WhatsApp con el mensaje listo.'
+          : 'Abrimos WhatsApp con tu mensaje preparado. Revisa y pulsa enviar allí.'}
+      </p>
+      {prefill ? (
+        <div>
+          <p className="mb-1 text-xs font-medium text-slate-400">
+            Vista previa del mensaje
+          </p>
+          <pre className="max-h-40 overflow-y-auto whitespace-pre-wrap rounded-lg border border-slate-700 bg-slate-950/80 p-3 text-xs leading-relaxed text-slate-300">
+            {prefill}
+          </pre>
+        </div>
+      ) : null}
+      <BotonWhatsApp url={url} etiqueta="Enviar en WhatsApp" />
+      <p className="text-xs text-slate-500">
+        También te notificamos por correo con el resumen de tu solicitud.
+      </p>
+    </div>
   );
 }
 
@@ -109,6 +155,8 @@ export default function BuildforgeChatWidget() {
   const [presupuesto, setPresupuesto] = useState('');
   const [canal, setCanal] = useState<'email' | 'whatsapp'>('email');
   const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
+  const [whatsappPrefill, setWhatsappPrefill] = useState<string | null>(null);
+  const [whatsappPopupBloqueado, setWhatsappPopupBloqueado] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -182,6 +230,8 @@ export default function BuildforgeChatWidget() {
       setAbierto(true);
       setEnviado(false);
       setWhatsappUrl(null);
+      setWhatsappPrefill(null);
+      setWhatsappPopupBloqueado(false);
       const intent = custom.detail?.intent;
       const msg =
         custom.detail?.mensajeInicial ??
@@ -232,6 +282,14 @@ export default function BuildforgeChatWidget() {
       setMostrarFormulario(false);
       if (resp.whatsapp_url) {
         setWhatsappUrl(resp.whatsapp_url);
+        setWhatsappPrefill(
+          resp.whatsapp_prefill_text ??
+            extraerTextoDesdeWaUrl(resp.whatsapp_url),
+        );
+        if (canal === 'whatsapp') {
+          const ventana = window.open(resp.whatsapp_url, '_blank', 'noopener,noreferrer');
+          setWhatsappPopupBloqueado(ventana === null);
+        }
       }
       setMensajes((prev) => [
         ...prev,
@@ -240,9 +298,8 @@ export default function BuildforgeChatWidget() {
           rol: 'assistant',
           texto:
             canal === 'whatsapp'
-              ? 'Cotización registrada. Puedes continuar la conversación por WhatsApp con el botón de abajo.'
+              ? 'Listo. Tu cotización quedó registrada. En WhatsApp verás un mensaje con tus datos: solo revísalo y pulsa enviar.'
               : 'Tu solicitud ya nos ha llegado al correo. La evaluará nuestro equipo y te responderemos lo antes posible.',
-          whatsappUrl: resp.whatsapp_url ?? undefined,
         },
       ]);
     } catch {
@@ -259,6 +316,8 @@ export default function BuildforgeChatWidget() {
     setMostrarFormulario(false);
     setEnviado(false);
     setWhatsappUrl(null);
+    setWhatsappPrefill(null);
+    setWhatsappPopupBloqueado(false);
     setEmail('');
     setNombre('');
     setTelefono('');
@@ -392,7 +451,7 @@ export default function BuildforgeChatWidget() {
                   >
                     <p className="whitespace-pre-wrap">{m.texto}</p>
                   </div>
-                  {m.whatsappUrl ? (
+                  {m.whatsappUrl && !enviado ? (
                     <BotonWhatsApp
                       url={m.whatsappUrl}
                       display={m.whatsappDisplay}
@@ -417,7 +476,7 @@ export default function BuildforgeChatWidget() {
               </div>
             )}
 
-            {draft?.estimated_range_usd && (
+            {draft?.estimated_range_usd && !enviado && (
               <div className="ml-[46px] rounded-xl border border-amber-500/30 bg-amber-950/20 px-3 py-2.5">
                 <p className="text-sm font-semibold text-amber-300">
                   Estimación: {draft.estimated_range_usd}
@@ -577,6 +636,13 @@ export default function BuildforgeChatWidget() {
                       <span className="text-sm text-slate-200">WhatsApp</span>
                     </label>
                   </div>
+                  {canal === 'whatsapp' && (
+                    <p className="mt-2 text-xs text-slate-500">
+                      Al enviar, abriremos WhatsApp con un mensaje que incluye tu
+                      descripción, presupuesto y datos de contacto. Solo tendrás
+                      que pulsar enviar allí.
+                    </p>
+                  )}
                 </fieldset>
 
                 <button
@@ -584,15 +650,23 @@ export default function BuildforgeChatWidget() {
                   disabled={cargando}
                   className="flex min-h-[44px] w-full items-center justify-center rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
                 >
-                  {cargando ? 'Enviando…' : 'Enviar solicitud'}
+                  {cargando
+                    ? 'Enviando…'
+                    : canal === 'whatsapp'
+                      ? 'Enviar y abrir WhatsApp'
+                      : 'Enviar solicitud'}
                 </button>
               </form>
             )}
 
-            {whatsappUrl && enviado && (
-              <div className="ml-[46px]">
-                <BotonWhatsApp url={whatsappUrl} />
-              </div>
+            {whatsappUrl && enviado && canal === 'whatsapp' && (
+              <PanelWhatsAppCotizacion
+                url={whatsappUrl}
+                prefill={
+                  whatsappPrefill ?? extraerTextoDesdeWaUrl(whatsappUrl)
+                }
+                popupBloqueado={whatsappPopupBloqueado}
+              />
             )}
           </div>
 

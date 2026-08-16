@@ -27,6 +27,7 @@ export interface QuoteSubmitResponse {
   readonly lead_id: number;
   readonly status: string;
   readonly whatsapp_url?: string | null;
+  readonly whatsapp_prefill_text?: string | null;
   readonly whatsapp_display?: string | null;
   readonly email_notified?: boolean;
 }
