@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Orbitron, Share_Tech_Mono } from "next/font/google";
+import ChatProvider from "@/components/chat/chat-provider";
+import PortfolioAnalytics from "@/components/analytics/portfolio-analytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,8 +29,9 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Abelserradev - Portafolio",
-  description: "development, AI, innovation",
+  title: "Buildforge — Desarrollo de software a medida",
+  description:
+    "Estudio freelance: apps web y móvil, APIs, integraciones con IA y despliegue a producción. Proyectos reales bajo la marca Buildforge.",
 };
 
 export default function RootLayout({
@@ -38,10 +41,14 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${shareTechMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <PortfolioAnalytics />
+        <ChatProvider />
+      </body>
     </html>
   );
 }

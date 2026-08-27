@@ -1,4 +1,5 @@
 import type { PortfolioProject, PortfolioProjectStatus } from '@/lib/types/portfolio-project';
+import { obtenerConfigContacto } from '@/lib/site-config';
 
 export interface EtiquetaMision {
   readonly texto: string;
@@ -79,8 +80,7 @@ export function obtenerTextoCtaMision(
 }
 
 export function obtenerEnlaceEarlyAdopter(): string {
-  const email =
-    process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'tucorreo@ejemplo.com';
+  const email = obtenerConfigContacto().email;
   const asunto = encodeURIComponent('Mobile Gastos — early adopter');
   const cuerpo = encodeURIComponent(
     'Hola, me interesa seguir el lanzamiento de Mobile Gastos (beta / app móvil).',

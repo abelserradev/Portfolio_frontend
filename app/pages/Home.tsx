@@ -2,6 +2,7 @@ import Navbar from '../../components/layout/navbar';
 import CyberBackground from '../../components/layout/cyberBackground';
 import HeroSection from '../../components/hero/HeroSection';
 import FeaturedBannerSlot from '../../components/missions/featured-banner-slot';
+import BuildforgeServicesSection from '../../components/services/buildforge-services-section';
 import StatusPanel from '../../components/status/Status';
 import ActivityGraph from '../../components/status/ActivityGraph';
 import MissionGrid from '../../components/missions/missionGrid';
@@ -18,6 +19,7 @@ export default function Home() {
         <main>
           <HeroSection />
           <FeaturedBannerSlot />
+          <BuildforgeServicesSection />
           <StatusPanel />
           <ActivityGraph />
           <MissionGrid />

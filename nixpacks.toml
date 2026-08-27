@@ -1,0 +1,12 @@
+# Nixpacks (fallback si Coolify no usa Dockerfile). Preferir Build Pack = Dockerfile.
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
+[phases.install]
+cmds = ["pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["pnpm run build"]
+
+[start]
+cmd = "pnpm run start"
