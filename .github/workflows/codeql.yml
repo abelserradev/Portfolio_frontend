@@ -46,7 +46,7 @@ jobs:
           languages: javascript
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@0daab03d71ff584ef619d027a3fd9146679c5d84 # v3.35.3
+        uses: github/codeql-action/autobuild@db488ddef3bf6cb639b32c2e9a7c0a7ea8271d28 # v4.37.8
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@0daab03d71ff584ef619d027a3fd9146679c5d84 # v3.35.3
