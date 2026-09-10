@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { useGithub } from '../../app/hooks/useGithub';
+import { useGithub } from '@/hooks/useGithub';
 
 /** Clases Tailwind completas por acento: no concatenar huecos (--color--), que el compilador omitiría las utilidades */
 function obtenerClasesTemaAccent(accento: string) {

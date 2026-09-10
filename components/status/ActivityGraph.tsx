@@ -1,7 +1,7 @@
 "use client";
 
 import { Tooltip } from 'react-tooltip';
-import { useGithubActivity } from '../../app/hooks/useGithub';
+import { useGithubActivity } from '@/hooks/useGithub';
 
 const levelColors = ['bg-gray-800', 'bg-cyan-900', 'bg-cyan-500', 'bg-magenta-500'];
 

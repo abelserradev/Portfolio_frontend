@@ -1,13 +1,13 @@
-import Navbar from '../../components/layout/navbar';
-import CyberBackground from '../../components/layout/cyberBackground';
-import HeroSection from '../../components/hero/HeroSection';
-import FeaturedBannerSlot from '../../components/missions/featured-banner-slot';
-import BuildforgeServicesSection from '../../components/services/buildforge-services-section';
-import StatusPanel from '../../components/status/Status';
-import ActivityGraph from '../../components/status/ActivityGraph';
-import MissionGrid from '../../components/missions/missionGrid';
-import RetroContactCard from '../../components/contact/retro-contact-card';
-import CodeFooter from '../../components/layout/CoderFooter';
+import Navbar from '@/components/layout/navbar';
+import CyberBackground from '@/components/layout/cyberBackground';
+import HeroSection from '@/components/hero/HeroSection';
+import FeaturedBannerSlot from '@/components/missions/featured-banner-slot';
+import BuildforgeServicesSection from '@/components/services/buildforge-services-section';
+import StatusPanel from '@/components/status/Status';
+import ActivityGraph from '@/components/status/ActivityGraph';
+import MissionGrid from '@/components/missions/missionGrid';
+import RetroContactCard from '@/components/contact/retro-contact-card';
+import CodeFooter from '@/components/layout/CoderFooter';
 import { SectionBoundary } from '@/components/errors/section-boundary';
 
 export default function Home() {
@@ -15,7 +15,6 @@ export default function Home() {
     <div className="text-white bg-black min-h-screen">
       <CyberBackground />
       <Navbar />
-      {/* overflow-x aquí y no en html/body: overflow-x hidden en la raíz rompe position:sticky en varios navegadores */}
       <div className="overflow-x-hidden">
         <main>
           <HeroSection />
