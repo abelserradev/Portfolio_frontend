@@ -1,4 +1,5 @@
 import { obtenerBaseApiPortfolio } from '@/lib/api-config';
+import { generarIdCliente } from '@/lib/ids';
 
 export type EventoAnalyticsCliente =
   | 'page.load'
@@ -10,18 +11,11 @@ export type EventoAnalyticsCliente =
 
 const VISITOR_KEY = 'buildforge_visitor_id';
 
-function generarVisitorId(): string {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();
-  }
-  return `v-${Date.now()}`;
-}
-
 export function obtenerVisitorId(): string {
   if (typeof window === 'undefined') return '';
   let id = localStorage.getItem(VISITOR_KEY);
   if (!id) {
-    id = generarVisitorId();
+    id = generarIdCliente();
     localStorage.setItem(VISITOR_KEY, id);
   }
   return id;

@@ -8,6 +8,7 @@ import ActivityGraph from '../../components/status/ActivityGraph';
 import MissionGrid from '../../components/missions/missionGrid';
 import RetroContactCard from '../../components/contact/retro-contact-card';
 import CodeFooter from '../../components/layout/CoderFooter';
+import { SectionBoundary } from '@/components/errors/section-boundary';
 
 export default function Home() {
   return (
@@ -19,10 +20,18 @@ export default function Home() {
         <main>
           <HeroSection />
           <FeaturedBannerSlot />
-          <BuildforgeServicesSection />
-          <StatusPanel />
-          <ActivityGraph />
-          <MissionGrid />
+          <SectionBoundary section="servicios">
+            <BuildforgeServicesSection />
+          </SectionBoundary>
+          <SectionBoundary section="estado del núcleo">
+            <StatusPanel />
+          </SectionBoundary>
+          <SectionBoundary section="actividad GitHub">
+            <ActivityGraph />
+          </SectionBoundary>
+          <SectionBoundary section="misiones">
+            <MissionGrid />
+          </SectionBoundary>
           <section
             id="contacto"
             className="scroll-mt-24"
