@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { obtenerBaseApiPortfolio } from '@/lib/api-config';
+import { listarProyectos } from '@/lib/projects-api';
 import type { PortfolioProject } from '@/lib/types/portfolio-project';
 
 export function useProjects() {
@@ -10,13 +10,8 @@ export function useProjects() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const baseApi = obtenerBaseApiPortfolio();
-    fetch(`${baseApi}/projects/`)
-      .then(res => {
-        if (!res.ok) throw new Error('Error al cargar');
-        return res.json();
-      })
-      .then((data: PortfolioProject[]) => {
+    listarProyectos()
+      .then((data) => {
         setProjects(data);
         setIsLoading(false);
       })
