@@ -16,13 +16,6 @@ export interface ChatMessageResponse {
   readonly whatsapp_display?: string | null;
 }
 
-export interface ChatConfig {
-  readonly whatsapp_display: string;
-  readonly whatsapp_e164: string;
-  readonly disclaimer: string;
-  readonly brand_name: string;
-}
-
 export interface QuoteSubmitResponse {
   readonly lead_id: number;
   readonly status: string;
@@ -34,14 +27,6 @@ export interface QuoteSubmitResponse {
 
 function baseChatUrl(): string {
   return `${obtenerBaseApiPortfolio()}/chat`;
-}
-
-export async function obtenerConfigChat(): Promise<ChatConfig> {
-  const resp = await fetch(`${baseChatUrl()}/config`, { cache: 'no-store' });
-  if (!resp.ok) {
-    throw new Error('No se pudo cargar configuración del chat');
-  }
-  return resp.json() as Promise<ChatConfig>;
 }
 
 export async function enviarMensajeChat(
@@ -89,9 +74,4 @@ export async function enviarCotizacionChat(input: {
     throw new Error(detalle || 'Error al enviar cotización');
   }
   return resp.json() as Promise<QuoteSubmitResponse>;
-}
-
-export function construirEnlaceWhatsApp(e164: string, texto: string): string {
-  const digits = e164.replace(/\D/g, '');
-  return `https://wa.me/${digits}?text=${encodeURIComponent(texto)}`;
 }
