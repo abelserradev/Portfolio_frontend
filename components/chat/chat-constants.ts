@@ -1,4 +1,4 @@
-export const ASSISTANT_IMAGE = '/media/buildforge-assistant.png';
+export const ASSISTANT_IMAGE = '/media/buildforge-assistant.svg';
 
 export const SUGERENCIAS_CHAT = [
   '¿Cuánto cuesta una página web?',

@@ -1,14 +1,27 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import {
+  analyticsHabilitado,
+  EVENTO_CONSENTIMIENTO_ANALYTICS,
+} from '@/lib/analytics-consent';
 import { registrarEventoAnalytics } from '@/lib/analytics-api';
 
 const SECCIONES = ['inicio', 'servicios', 'skills', 'misiones', 'contacto'] as const;
 
 export default function PortfolioAnalytics() {
   const vistasRef = useRef<Set<string>>(new Set());
+  const [habilitado, setHabilitado] = useState(false);
 
   useEffect(() => {
+    const sync = () => setHabilitado(analyticsHabilitado());
+    sync();
+    window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, sync);
+    return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, sync);
+  }, []);
+
+  useEffect(() => {
+    if (!habilitado) return;
     registrarEventoAnalytics({ event: 'page.load', section: 'home' });
 
     const observadores: IntersectionObserver[] = [];
@@ -44,7 +57,7 @@ export default function PortfolioAnalytics() {
       document.removeEventListener('click', onNavClick);
       for (const obs of observadores) obs.disconnect();
     };
-  }, []);
+  }, [habilitado]);
 
   return null;
 }

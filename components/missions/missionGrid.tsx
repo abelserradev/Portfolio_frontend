@@ -1,6 +1,6 @@
 "use client";
 
-import { useProjects } from '../../app/hooks/useProjects';
+import { useProjects } from '@/hooks/useProjects';
 import { particionarProyectosMisiones } from '@/lib/mission-presentation';
 import MissionCard from './missioncard';
 import MissionsIntroBlock from './missions-intro-block';

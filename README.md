@@ -17,7 +17,7 @@ pnpm dev
 
 Abre [http://localhost:3000](http://localhost:3000).
 
-Variables: crea `.env` o `.env.local` con al menos:
+Variables: copia [`.env.example`](.env.example) a `.env.local`. Mínimo:
 
 | Variable | Descripción |
 |----------|-------------|
@@ -34,14 +34,21 @@ Opcionales (marca Buildforge — defaults en `lib/site-config.ts`):
 | `NEXT_PUBLIC_BRAND_TAGLINE` | Desarrollo de software a medida |
 | `NEXT_PUBLIC_BRAND_PITCH` | Pitch comercial (párrafo) |
 | `NEXT_PUBLIC_SERVICES_LIST` | JSON array o items separados por `\|` |
-| `NEXT_PUBLIC_SERVICES_VIDEO_URL` | `/media/buildforge-servicios.mp4` |
-| `NEXT_PUBLIC_SERVICES_POSTER_URL` | `/media/buildforge-servicios-poster.jpg` |
+| `NEXT_PUBLIC_SERVICES_VIDEO_URL` | URL HTTPS del video; `none`/`off` lo desactiva |
+| `NEXT_PUBLIC_SERVICES_POSTER_URL` | `/media/banner_frame.svg` (placeholder incluido) |
+| `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` desactiva banner GDPR y eventos |
 | `NEXT_PUBLIC_INSTAGRAM_URL` | `https://www.instagram.com/buildforge.work/` |
 | `NEXT_PUBLIC_GITHUB_URL` | GitHub |
 | `NEXT_PUBLIC_LINKEDIN_URL` | LinkedIn |
 | `NEXT_PUBLIC_CONTACT_STATUS` | Línea de estado en contacto |
 
 Media promocional: ver [`public/media/README.md`](public/media/README.md).
+
+Hooks compartidos en [`hooks/`](hooks/) (`useProjects`, `useGithub`, `useChatSession`).
+
+## Privacidad (analytics)
+
+El banner GDPR pide consentimiento antes de enviar eventos anónimos al backend (`page.load`, `section.view`, etc.). Sin aceptar, la navegación funciona con normalidad.
 
 ## Scripts
 
@@ -51,6 +58,8 @@ Media promocional: ver [`public/media/README.md`](public/media/README.md).
 | `pnpm build` | Build de producción |
 | `pnpm start` | Servir build |
 | `pnpm lint` | ESLint |
+| `pnpm test` | Vitest (unitarios) |
+| `pnpm test:e2e` | Playwright smoke (requiere `pnpm exec playwright install`) |
 | `pnpm audit` | Auditoría de dependencias |
 
 En CI se usa `pnpm install --frozen-lockfile` para instalar exactamente lo del lockfile.

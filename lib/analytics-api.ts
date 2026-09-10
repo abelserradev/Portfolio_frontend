@@ -1,3 +1,4 @@
+import { analyticsHabilitado } from '@/lib/analytics-consent';
 import { obtenerBaseApiPortfolio } from '@/lib/api-config';
 import { generarIdCliente } from '@/lib/ids';
 
@@ -13,6 +14,7 @@ const VISITOR_KEY = 'buildforge_visitor_id';
 
 export function obtenerVisitorId(): string {
   if (typeof window === 'undefined') return '';
+  if (!analyticsHabilitado()) return '';
   let id = localStorage.getItem(VISITOR_KEY);
   if (!id) {
     id = generarIdCliente();
@@ -29,6 +31,7 @@ export function registrarEventoAnalytics(input: {
   readonly metadata?: Record<string, string | number | boolean>;
 }): void {
   if (typeof window === 'undefined') return;
+  if (!analyticsHabilitado()) return;
   const url = `${obtenerBaseApiPortfolio()}/analytics/event`;
   const body = JSON.stringify({
     event: input.event,

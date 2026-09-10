@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useChatSession } from '@/app/hooks/useChatSession';
+import { useChatSession } from '@/hooks/useChatSession';
 import {
   enviarCotizacionChat,
   enviarMensajeChat,
