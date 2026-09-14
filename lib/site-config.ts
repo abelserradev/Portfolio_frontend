@@ -38,6 +38,27 @@ const DEFAULT_SERVICES = [
 
 const DEFAULT_INSTAGRAM = 'https://www.instagram.com/buildforge.work/';
 
+/** Solo http(s) o vacío; evita javascript: y esquemas raros en el reproductor. */
+export function normalizarUrlVideoServicios(raw: string | undefined): string {
+  const trimmed = raw?.trim() ?? '';
+  if (!trimmed) {
+    return '';
+  }
+  const lower = trimmed.toLowerCase();
+  if (lower === 'none' || lower === 'false' || lower === 'off') {
+    return '';
+  }
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+      return '';
+    }
+    return trimmed;
+  } catch {
+    return '';
+  }
+}
+
 function parseServicesList(raw: string | undefined): readonly string[] {
   if (!raw?.trim()) {
     return DEFAULT_SERVICES;
@@ -68,10 +89,12 @@ export function obtenerConfigMarca(): SiteBrandConfig {
       process.env.NEXT_PUBLIC_BRAND_PITCH ??
       'Transformamos ideas en productos digitales: apps web, APIs robustas, soluciones móviles e integraciones con IA. Desde el MVP hasta producción, con enfoque en resultados para tu negocio.',
     servicesList: parseServicesList(process.env.NEXT_PUBLIC_SERVICES_LIST),
-    servicesVideoUrl: process.env.NEXT_PUBLIC_SERVICES_VIDEO_URL?.trim() ?? '',
+    servicesVideoUrl: normalizarUrlVideoServicios(
+      process.env.NEXT_PUBLIC_SERVICES_VIDEO_URL,
+    ),
     servicesPosterUrl:
-      process.env.NEXT_PUBLIC_SERVICES_POSTER_URL ??
-      '/media/banner_frame.png',
+      process.env.NEXT_PUBLIC_SERVICES_POSTER_URL?.trim() ||
+      '/media/banner_frame.svg',
   };
 }
 

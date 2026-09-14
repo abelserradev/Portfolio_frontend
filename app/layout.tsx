@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Orbitron, Share_Tech_Mono } from "next/font/google";
 import ChatProvider from "@/components/chat/chat-provider";
+import AnalyticsConsentBanner from "@/components/analytics/analytics-consent-banner";
 import PortfolioAnalytics from "@/components/analytics/portfolio-analytics";
 import { SectionBoundary } from "@/components/errors/section-boundary";
 import "./globals.css";
@@ -50,6 +51,7 @@ export default function RootLayout({
         <SectionBoundary section="analytics" compact>
           <PortfolioAnalytics />
         </SectionBoundary>
+        <AnalyticsConsentBanner />
         <ChatProvider />
       </body>
     </html>

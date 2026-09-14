@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
+  normalizarUrlVideoServicios,
   obtenerConfigContacto,
   obtenerConfigMarca,
   obtenerEnlacesSociales,
@@ -21,6 +22,14 @@ describe('obtenerConfigMarca', () => {
     vi.stubEnv('NEXT_PUBLIC_SERVICES_LIST', 'Web|APIs|IA');
     const cfg = obtenerConfigMarca();
     expect(cfg.servicesList).toEqual(['Web', 'APIs', 'IA']);
+  });
+
+  it('rechaza video con esquema no http(s)', () => {
+    expect(normalizarUrlVideoServicios('javascript:alert(1)')).toBe('');
+    expect(normalizarUrlVideoServicios('https://cdn.ejemplo.com/v.mp4')).toBe(
+      'https://cdn.ejemplo.com/v.mp4',
+    );
+    expect(normalizarUrlVideoServicios('none')).toBe('');
   });
 });
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useProjects } from '@/app/hooks/useProjects';
+import { useProjects } from '@/hooks/useProjects';
 import FeaturedProductBanner from './featured-product-banner';
 
 export default function FeaturedBannerSlot() {
