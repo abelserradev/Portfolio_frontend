@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useState, useSyncExternalStore } from 'react';
 import {
   consentimientoAnalyticsPendiente,
   EVENTO_CONSENTIMIENTO_ANALYTICS,
@@ -14,7 +14,11 @@ function suscribirConsentimiento(onStoreChange: () => void): () => void {
     return () => undefined;
   }
   window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
-  return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
+  window.addEventListener('storage', onStoreChange);
+  return () => {
+    window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
+    window.removeEventListener('storage', onStoreChange);
+  };
 }
 
 function snapshotConsentimientoCliente(): EstadoConsentimientoAnalytics {
@@ -41,18 +45,23 @@ export default function AnalyticsConsentBanner() {
     snapshotEsServidor,
   );
 
-  const estado = useSyncExternalStore(
+  const estadoStore = useSyncExternalStore(
     suscribirConsentimiento,
     snapshotConsentimientoCliente,
     snapshotConsentimientoServidor,
   );
+  // Optimista en handlers (no en useEffect): oculta el banner aunque falle un re-render tardío
+  const [estadoUi, setEstadoUi] = useState<EstadoConsentimientoAnalytics | null>(null);
+  const estado = estadoUi ?? estadoStore;
 
   const aceptar = useCallback(() => {
     guardarConsentimiento('accepted');
+    setEstadoUi('accepted');
   }, []);
 
   const rechazar = useCallback(() => {
     guardarConsentimiento('rejected');
+    setEstadoUi('rejected');
   }, []);
 
   if (!esCliente || estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
