@@ -16,6 +16,11 @@ describe('obtenerBaseApiPortfolio', () => {
     vi.stubEnv('NEXT_PUBLIC_API_URL', 'https://api.example.com/api/v1');
     expect(obtenerBaseApiPortfolio()).toBe('https://api.example.com/api/v1');
   });
+
+  it('añade /api/v1 si la env solo trae el host', () => {
+    vi.stubEnv('NEXT_PUBLIC_API_URL', 'https://api.example.com');
+    expect(obtenerBaseApiPortfolio()).toBe('https://api.example.com/api/v1');
+  });
 });
 
 describe('obtenerUrlRedirectVisita', () => {

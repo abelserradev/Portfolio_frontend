@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   consentimientoAnalyticsPendiente,
   EVENTO_CONSENTIMIENTO_ANALYTICS,
@@ -9,38 +9,32 @@ import {
   type EstadoConsentimientoAnalytics,
 } from '@/lib/analytics-consent';
 
-function suscribirConsentimiento(onStoreChange: () => void): () => void {
-  if (typeof window === 'undefined') {
-    return () => undefined;
-  }
-  window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
-  return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
-}
-
-function leerEstadoConsentimiento(): EstadoConsentimientoAnalytics {
-  return obtenerEstadoConsentimiento();
-}
-
-function estadoConsentimientoServidor(): EstadoConsentimientoAnalytics {
-  return 'pending';
-}
-
 export default function AnalyticsConsentBanner() {
-  const estado = useSyncExternalStore(
-    suscribirConsentimiento,
-    leerEstadoConsentimiento,
-    estadoConsentimientoServidor,
-  );
+  // Evita banner en SSR: el servidor siempre asumía "pending" y en prod rompía hidratación/clicks
+  const [clienteListo, setClienteListo] = useState(false);
+  const [estado, setEstado] = useState<EstadoConsentimientoAnalytics>('pending');
+
+  useEffect(() => {
+    setEstado(obtenerEstadoConsentimiento());
+    setClienteListo(true);
+    const sync = (): void => {
+      setEstado(obtenerEstadoConsentimiento());
+    };
+    window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, sync);
+    return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, sync);
+  }, []);
 
   const aceptar = useCallback(() => {
     guardarConsentimiento('accepted');
+    setEstado('accepted');
   }, []);
 
   const rechazar = useCallback(() => {
     guardarConsentimiento('rejected');
+    setEstado('rejected');
   }, []);
 
-  if (estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
+  if (!clienteListo || estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
     return null;
   }
 
