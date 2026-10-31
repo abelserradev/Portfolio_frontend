@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 import {
   consentimientoAnalyticsPendiente,
   EVENTO_CONSENTIMIENTO_ANALYTICS,
@@ -9,32 +9,53 @@ import {
   type EstadoConsentimientoAnalytics,
 } from '@/lib/analytics-consent';
 
-export default function AnalyticsConsentBanner() {
-  // Evita banner en SSR: el servidor siempre asumía "pending" y en prod rompía hidratación/clicks
-  const [clienteListo, setClienteListo] = useState(false);
-  const [estado, setEstado] = useState<EstadoConsentimientoAnalytics>('pending');
+function suscribirConsentimiento(onStoreChange: () => void): () => void {
+  if (typeof window === 'undefined') {
+    return () => undefined;
+  }
+  window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
+  return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
+}
 
-  useEffect(() => {
-    setEstado(obtenerEstadoConsentimiento());
-    setClienteListo(true);
-    const sync = (): void => {
-      setEstado(obtenerEstadoConsentimiento());
-    };
-    window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, sync);
-    return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, sync);
-  }, []);
+function snapshotConsentimientoCliente(): EstadoConsentimientoAnalytics {
+  return obtenerEstadoConsentimiento();
+}
+
+function snapshotConsentimientoServidor(): EstadoConsentimientoAnalytics {
+  return 'pending';
+}
+
+/** SSR: false; cliente: true — sin useEffect ni setState en efecto (eslint react-hooks/set-state-in-effect). */
+function snapshotEsCliente(): boolean {
+  return true;
+}
+
+function snapshotEsServidor(): boolean {
+  return false;
+}
+
+export default function AnalyticsConsentBanner() {
+  const esCliente = useSyncExternalStore(
+    () => () => undefined,
+    snapshotEsCliente,
+    snapshotEsServidor,
+  );
+
+  const estado = useSyncExternalStore(
+    suscribirConsentimiento,
+    snapshotConsentimientoCliente,
+    snapshotConsentimientoServidor,
+  );
 
   const aceptar = useCallback(() => {
     guardarConsentimiento('accepted');
-    setEstado('accepted');
   }, []);
 
   const rechazar = useCallback(() => {
     guardarConsentimiento('rejected');
-    setEstado('rejected');
   }, []);
 
-  if (!clienteListo || estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
+  if (!esCliente || estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
     return null;
   }
 
