@@ -114,6 +114,12 @@
       box-shadow: 0 6px 20px rgba(40, 30, 21, 0.14);
       z-index: 11;
     }
+    .controles label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-right: 0.15rem;
+    }
     .controles button, .controles select {
       border: 1px solid #ebe5e0;
       background: #fff;
@@ -187,7 +193,8 @@
     <button id="btn-play" title="Pausa / reanudar (espacio)">Pausa</button>
     <button id="btn-next" title="Siguiente (→)">▶</button>
     <div id="puntos"></div>
-    <select id="velocidad" title="Velocidad">
+    <label for="velocidad">Velocidad</label>
+    <select id="velocidad" name="velocidad" title="Velocidad de la guía">
       <option value="0.75">0.75×</option>
       <option value="1" selected>1×</option>
       <option value="1.5">1.5×</option>
