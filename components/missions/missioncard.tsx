@@ -15,9 +15,12 @@ const nivelesSenal = ['senal-baja', 'senal-media', 'senal-alta', 'senal-maxima']
 export default function MissionCard({
   mission,
   destacada = false,
+  enLayoutDestacado = false,
 }: {
   readonly mission: PortfolioProject;
   readonly destacada?: boolean;
+  /** Cuando la tarjeta va junto al visor 3D, no ocupar todo el ancho del grid. */
+  readonly enLayoutDestacado?: boolean;
 }) {
   const visitUrl = obtenerUrlRedirectVisita(mission.id);
   const tecnologias = (mission.tech_stack ?? '')
@@ -36,9 +39,11 @@ export default function MissionCard({
   return (
     <motion.div
       whileHover={{ scale: 1.02, boxShadow: esMvpActivo ? '0 0 30px #facc1580' : '0 0 25px #ff00ff80' }}
-      className={`group relative overflow-hidden rounded-sm border bg-black/60 p-4 backdrop-blur sm:p-5 ${
+      className={`group relative h-full overflow-hidden rounded-sm border bg-black/60 p-4 backdrop-blur sm:p-5 ${
         destacada
-          ? 'border-yellow-400/60 ring-1 ring-yellow-400/25 md:col-span-2 lg:col-span-3'
+          ? `border-yellow-400/60 ring-1 ring-yellow-400/25 ${
+              enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3'
+            }`
           : 'border-cyan-500/50'
       }`}
       style={{ clipPath: 'polygon(0% 0%, 95% 0%, 100% 10%, 100% 100%, 5% 100%, 0% 90%)' }}

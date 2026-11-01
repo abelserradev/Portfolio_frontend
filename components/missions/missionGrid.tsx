@@ -3,6 +3,7 @@
 import { useProjects } from '@/hooks/useProjects';
 import { particionarProyectosMisiones } from '@/lib/mission-presentation';
 import MissionCard from './missioncard';
+import FeaturedMissionBlock from './featured-mission-block';
 import MissionsIntroBlock from './missions-intro-block';
 
 export default function MissionGrid() {
@@ -42,9 +43,9 @@ export default function MissionGrid() {
           <p className="mb-8 text-center font-mono text-xs text-gray-500 sm:mb-10">
             Demos activas y en desarrollo
           </p>
-          <div className="grid grid-cols-1 gap-5 sm:gap-8">
+          <div className="flex flex-col gap-10 sm:gap-12">
             {destacados.map((project) => (
-              <MissionCard key={project.id} mission={project} destacada />
+              <FeaturedMissionBlock key={project.id} mission={project} />
             ))}
           </div>
         </div>
