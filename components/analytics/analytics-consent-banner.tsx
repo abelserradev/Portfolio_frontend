@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useState, useSyncExternalStore } from 'react';
 import {
   consentimientoAnalyticsPendiente,
   EVENTO_CONSENTIMIENTO_ANALYTICS,
@@ -14,33 +14,57 @@ function suscribirConsentimiento(onStoreChange: () => void): () => void {
     return () => undefined;
   }
   window.addEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
-  return () => window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
+  window.addEventListener('storage', onStoreChange);
+  return () => {
+    window.removeEventListener(EVENTO_CONSENTIMIENTO_ANALYTICS, onStoreChange);
+    window.removeEventListener('storage', onStoreChange);
+  };
 }
 
-function leerEstadoConsentimiento(): EstadoConsentimientoAnalytics {
+function snapshotConsentimientoCliente(): EstadoConsentimientoAnalytics {
   return obtenerEstadoConsentimiento();
 }
 
-function estadoConsentimientoServidor(): EstadoConsentimientoAnalytics {
+function snapshotConsentimientoServidor(): EstadoConsentimientoAnalytics {
   return 'pending';
 }
 
+/** SSR: false; cliente: true — sin useEffect ni setState en efecto (eslint react-hooks/set-state-in-effect). */
+function snapshotEsCliente(): boolean {
+  return true;
+}
+
+function snapshotEsServidor(): boolean {
+  return false;
+}
+
 export default function AnalyticsConsentBanner() {
-  const estado = useSyncExternalStore(
-    suscribirConsentimiento,
-    leerEstadoConsentimiento,
-    estadoConsentimientoServidor,
+  const esCliente = useSyncExternalStore(
+    () => () => undefined,
+    snapshotEsCliente,
+    snapshotEsServidor,
   );
+
+  const estadoStore = useSyncExternalStore(
+    suscribirConsentimiento,
+    snapshotConsentimientoCliente,
+    snapshotConsentimientoServidor,
+  );
+  // Optimista en handlers (no en useEffect): oculta el banner aunque falle un re-render tardío
+  const [estadoUi, setEstadoUi] = useState<EstadoConsentimientoAnalytics | null>(null);
+  const estado = estadoUi ?? estadoStore;
 
   const aceptar = useCallback(() => {
     guardarConsentimiento('accepted');
+    setEstadoUi('accepted');
   }, []);
 
   const rechazar = useCallback(() => {
     guardarConsentimiento('rejected');
+    setEstadoUi('rejected');
   }, []);
 
-  if (estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
+  if (!esCliente || estado !== 'pending' || !consentimientoAnalyticsPendiente()) {
     return null;
   }
 
