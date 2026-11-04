@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
   MENSAJE_FUERA_DE_ALCANCE,
+  MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esPreguntaIdentidadBuildforge,
 } from '@/lib/chat-scope';
 
 describe('esFueraDeAlcance', () => {
@@ -32,6 +34,16 @@ describe('esFueraDeAlcance', () => {
     expect(esFueraDeAlcance('que hace google')).toBe(true);
   });
 
+  it('responde identidad de marca en lugar de rechazar', () => {
+    expect(esPreguntaIdentidadBuildforge('que es buildforge')).toBe(true);
+    expect(esPreguntaIdentidadBuildforge('¿Qué es Buildforge?')).toBe(true);
+    expect(esPreguntaIdentidadBuildforge('quién eres')).toBe(true);
+    expect(esFueraDeAlcance('que es buildforge')).toBe(false);
+    expect(MENSAJE_IDENTIDAD_BUILDFORGE).toMatch(/fullstack/i);
+    expect(MENSAJE_IDENTIDAD_BUILDFORGE).toMatch(/portafolio/i);
+    expect(MENSAJE_IDENTIDAD_BUILDFORGE).not.toBe(MENSAJE_FUERA_DE_ALCANCE);
+  });
+
   it('trata vacío como fuera de alcance', () => {
     expect(esFueraDeAlcance('')).toBe(true);
     expect(esFueraDeAlcance('   ')).toBe(true);
@@ -42,3 +54,4 @@ describe('esFueraDeAlcance', () => {
     expect(MENSAJE_FUERA_DE_ALCANCE).toMatch(/cotizaciones/);
   });
 });
+

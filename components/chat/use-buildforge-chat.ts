@@ -12,7 +12,9 @@ import { registrarEventoAnalytics } from '@/lib/analytics-api';
 import { validarFormularioCotizacion } from '@/lib/chat-quote-validation';
 import {
   MENSAJE_FUERA_DE_ALCANCE,
+  MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esPreguntaIdentidadBuildforge,
 } from '@/lib/chat-scope';
 import { generarIdCliente } from '@/lib/ids';
 import {
@@ -81,6 +83,19 @@ export function useBuildforgeChat() {
         { id: generarIdCliente(), rol: 'user', texto: limpio },
       ]);
       setEntrada('');
+
+      // Brand FAQ first — LLM used to parrot the refuse template for "qué es Buildforge"
+      if (esPreguntaIdentidadBuildforge(limpio)) {
+        setMensajes((prev) => [
+          ...prev,
+          {
+            id: generarIdCliente(),
+            rol: 'assistant',
+            texto: MENSAJE_IDENTIDAD_BUILDFORGE,
+          },
+        ]);
+        return;
+      }
 
       // Soft-block obvious off-topic / jailbreak before spending an API call
       if (esFueraDeAlcance(limpio)) {
