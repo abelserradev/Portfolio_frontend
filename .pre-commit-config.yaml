@@ -1,0 +1,33 @@
+default_stages: [pre-commit]
+
+# Skip generated artifacts, deps, and Next.js build output.
+exclude: "^(dist/|node_modules/|coverage/|\\.pnpm-store/|\\.next/|out/)"
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.24.2
+    hooks:
+      - id: gitleaks
+        name: gitleaks — detect secrets
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint — lint staged TS/TSX files
+        entry: pnpm exec eslint --max-warnings 0
+        language: system
+        types_or: [ts, tsx]
+        pass_filenames: true
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: pre-push-frontend
+        name: frontend lint + unit tests
+        # language:system argv-splits; bash -c keeps the lint&&test chain intact
+        entry: bash -c 'pnpm run lint && pnpm test'
+        language: system
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true

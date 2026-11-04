@@ -76,6 +76,20 @@ No uses `npm install` en este repo; `package-lock.json` está ignorado a propós
 
 El despliegue lo orquesta **Coolify** desde la rama configurada.
 
+### GitHub Actions → webhook
+
+Tras un **CI** exitoso en `main` o `develop` (o con *Run workflow* manual), el workflow [`Deploy Coolify`](.github/workflows/coolify-deploy.yml) hace POST al webhook de Coolify.
+
+Secret de repositorio en GitHub (**Settings → Secrets and variables → Actions**):
+
+| Secret | Uso |
+|--------|-----|
+| `COOLIFY_WEBHOOK_FRONTEND` | URL completa del **Deploy Webhook (auth required)** del recurso frontend en Coolify |
+| `COOLIFY_TOKEN` | API token de Coolify con permiso **deploy** (header `Authorization: Bearer`) |
+
+Sin ambos secrets el job falla a propósito (no hay deploy silencioso). En Coolify, preferir **Manual deployments only** si Actions ya dispara el webhook tras CI (evita doble deploy).
+
+
 ### Recomendado: Build Pack **Dockerfile**
 
 Evita Nixpacks (descargas de `nixpkgs` desde GitHub, builds más lentos e inestables).
