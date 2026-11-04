@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  MENSAJE_ESTADO_MISION,
   MENSAJE_FUERA_DE_ALCANCE,
   MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esPreguntaEstadoMision,
   esPreguntaIdentidadBuildforge,
 } from '@/lib/chat-scope';
 
@@ -42,6 +44,16 @@ describe('esFueraDeAlcance', () => {
     expect(MENSAJE_IDENTIDAD_BUILDFORGE).toMatch(/fullstack/i);
     expect(MENSAJE_IDENTIDAD_BUILDFORGE).toMatch(/portafolio/i);
     expect(MENSAJE_IDENTIDAD_BUILDFORGE).not.toBe(MENSAJE_FUERA_DE_ALCANCE);
+  });
+
+  it('explica etiquetas EN PRODUCCIÓN / EN DESARROLLO del portafolio', () => {
+    expect(esPreguntaEstadoMision('que significa en produccion?')).toBe(true);
+    expect(esPreguntaEstadoMision('¿Qué significa en desarrollo?')).toBe(true);
+    expect(esFueraDeAlcance('que significa en produccion')).toBe(false);
+    expect(esPreguntaEstadoMision('necesito desarrollo de una app')).toBe(false);
+    expect(MENSAJE_ESTADO_MISION).toMatch(/EN PRODUCCIÓN/);
+    expect(MENSAJE_ESTADO_MISION).toMatch(/EN DESARROLLO/);
+    expect(MENSAJE_ESTADO_MISION).not.toBe(MENSAJE_FUERA_DE_ALCANCE);
   });
 
   it('trata vacío como fuera de alcance', () => {

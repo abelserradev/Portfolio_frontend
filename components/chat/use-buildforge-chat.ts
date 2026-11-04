@@ -11,9 +11,11 @@ import { EVENTO_ABRIR_CHAT, type AbrirChatDetalle } from '@/lib/chat-events';
 import { registrarEventoAnalytics } from '@/lib/analytics-api';
 import { validarFormularioCotizacion } from '@/lib/chat-quote-validation';
 import {
+  MENSAJE_ESTADO_MISION,
   MENSAJE_FUERA_DE_ALCANCE,
   MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esPreguntaEstadoMision,
   esPreguntaIdentidadBuildforge,
 } from '@/lib/chat-scope';
 import { generarIdCliente } from '@/lib/ids';
@@ -92,6 +94,19 @@ export function useBuildforgeChat() {
             id: generarIdCliente(),
             rol: 'assistant',
             texto: MENSAJE_IDENTIDAD_BUILDFORGE,
+          },
+        ]);
+        return;
+      }
+
+      // Mission badges on the portfolio cards (EN PRODUCCIÓN / EN DESARROLLO)
+      if (esPreguntaEstadoMision(limpio)) {
+        setMensajes((prev) => [
+          ...prev,
+          {
+            id: generarIdCliente(),
+            rol: 'assistant',
+            texto: MENSAJE_ESTADO_MISION,
           },
         ]);
         return;
