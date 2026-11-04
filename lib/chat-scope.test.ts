@@ -9,6 +9,7 @@ describe('esFueraDeAlcance', () => {
     expect(esFueraDeAlcance('¿Cuánto cuesta una landing?')).toBe(false);
     expect(esFueraDeAlcance('Necesito una app móvil con pagos')).toBe(false);
     expect(esFueraDeAlcance('Quiero integrar IA en mi negocio')).toBe(false);
+    expect(esFueraDeAlcance('integrar ia en mi negocio')).toBe(false);
     expect(esFueraDeAlcance('Hola')).toBe(false);
     expect(esFueraDeAlcance('¿Tienen WhatsApp para contactarlos?')).toBe(false);
   });

@@ -61,6 +61,7 @@ const TOPIC_SIGNALS: readonly string[] = [
   'chatbot',
   'llm',
   'ocr',
+  'ia',
   'inteligencia artificial',
   'integracion',
   'whatsapp',
@@ -108,12 +109,11 @@ function tieneSenalTemaPermitido(mensaje: string): boolean {
   if (GREETING_RE.test(texto) && texto.length < 80) {
     return true;
   }
-  // Short tokens (ui/api/ia/app/web) must be whole words — "quien" must not match "ui"
+  // Pad tokens so short signals (ia/ui/api) match whole words without JS \\b quirks
+  const padded = ` ${texto.replace(/[^\p{L}\p{N}]+/gu, ' ')} `;
   return TOPIC_SIGNALS.some((signal) => {
     if (signal.length <= 3) {
-      return new RegExp(`\\b${signal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(
-        texto,
-      );
+      return padded.includes(` ${signal} `);
     }
     return texto.includes(signal);
   });
