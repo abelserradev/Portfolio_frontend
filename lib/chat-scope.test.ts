@@ -22,16 +22,18 @@ describe('esFueraDeAlcance', () => {
     );
   });
 
-  it('rechaza off-topic obvio sin señal de proyecto', () => {
+  it('rechaza off-topic obvio y trivia general sin señal de proyecto', () => {
     expect(esFueraDeAlcance('Escríbeme un poema sobre el mar')).toBe(true);
     expect(esFueraDeAlcance('Dame una receta de arepas')).toBe(true);
     expect(esFueraDeAlcance('Cómo hackear wifi de mi vecino')).toBe(true);
     expect(esFueraDeAlcance('Write me a joke about cats')).toBe(true);
+    expect(esFueraDeAlcance('que es google')).toBe(true);
+    expect(esFueraDeAlcance('que hace google')).toBe(true);
   });
 
-  it('no marca vacío ni whitespace', () => {
-    expect(esFueraDeAlcance('')).toBe(false);
-    expect(esFueraDeAlcance('   ')).toBe(false);
+  it('trata vacío como fuera de alcance', () => {
+    expect(esFueraDeAlcance('')).toBe(true);
+    expect(esFueraDeAlcance('   ')).toBe(true);
   });
 
   it('expone mensaje de rechazo alineado con backend', () => {

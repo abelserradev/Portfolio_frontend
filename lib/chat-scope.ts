@@ -31,21 +31,6 @@ const JAILBREAK_PATTERNS: readonly RegExp[] = [
   /roleplay\s+as\s+(an?\s+)?(unrestricted|uncensored)/i,
 ];
 
-const OFFTOPIC_PATTERNS: readonly RegExp[] = [
-  /\b(poema|poem|poesia|poetry|haiku|soneto)\b/i,
-  /\b(receta|recipe|cocinar|cocina|baking)\b/i,
-  /\b(tarea|homework|ensayo|essay)\b.{0,30}\b(escuela|colegio|universidad|school|college)\b/i,
-  /\b(politica|politics|elecciones|election)\b/i,
-  /\b(diagnostico|medical advice|consejo medico|receta medica)\b/i,
-  /\b(asesoria legal|legal advice|demanda judicial)\b/i,
-  /como\s+hacke(ar|o)\b/i,
-  /\b(hackear|crackear|piratear)\b.{0,40}\b(wifi|wi-?fi|contrasena|password|cuenta)\b/i,
-  /escribe(me)?\s+(un|una)\s+(cuento|chiste|cancion|letra)\b/i,
-  /write\s+(me\s+)?(a\s+)?(poem|story|song|joke)\b/i,
-  /genera(me)?\s+(un|una)\s+(poema|receta|chiste)\b/i,
-  /\b(credenciales|api[_ ]?keys?|secret[_ ]?key|password\s+de\s+produccion)\b/i,
-];
-
 const TOPIC_SIGNALS: readonly string[] = [
   'buildforge',
   'portfolio',
@@ -123,29 +108,28 @@ function tieneSenalTemaPermitido(mensaje: string): boolean {
   if (GREETING_RE.test(texto) && texto.length < 80) {
     return true;
   }
-  // bare "ia" needs a word boundary so "familia" does not count
-  if (/\bia\b/.test(texto)) {
-    return true;
-  }
-  return TOPIC_SIGNALS.some((signal) => texto.includes(signal));
+  // Short tokens (ui/api/ia/app/web) must be whole words — "quien" must not match "ui"
+  return TOPIC_SIGNALS.some((signal) => {
+    if (signal.length <= 3) {
+      return new RegExp(`\\b${signal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(
+        texto,
+      );
+    }
+    return texto.includes(signal);
+  });
 }
 
-function esClaramenteFueraDeTema(mensaje: string): boolean {
-  if (tieneSenalTemaPermitido(mensaje)) {
-    return false;
-  }
-  const texto = normalizar(mensaje);
-  return OFFTOPIC_PATTERNS.some((p) => p.test(texto));
-}
-
-/** True when the client should soft-refuse without calling the chat API. */
+/**
+ * Allowlist soft-block: only greetings + Buildforge/project signals call the API.
+ * General trivia ("qué es Google") has no signal → refuse without hitting the backend.
+ */
 export function esFueraDeAlcance(texto: string): boolean {
   const limpio = texto.trim();
   if (!limpio) {
-    return false;
+    return true;
   }
   if (esIntentoJailbreak(limpio)) {
     return true;
   }
-  return esClaramenteFueraDeTema(limpio);
+  return !tieneSenalTemaPermitido(limpio);
 }
