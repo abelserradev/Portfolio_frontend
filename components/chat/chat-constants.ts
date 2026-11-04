@@ -5,3 +5,6 @@ export const SUGERENCIAS_CHAT = [
   'Necesito una app móvil',
   'Quiero integrar IA en mi negocio',
 ] as const;
+
+export const CHAT_COMPOSER_PLACEHOLDER =
+  'Pregunta por un proyecto, servicio o cotización…';

@@ -22,8 +22,9 @@ export function ChatIntroPanel({
         Hola, soy tu asistente BuildForge
       </p>
       <p className="mb-4 max-w-[280px] text-sm leading-relaxed text-slate-400">
-        Cuéntame qué proyecto tienes en mente y te doy una estimación orientativa.
-        También puedes dejarnos tus datos para contactarte.
+        Te ayudo solo con proyectos, servicios, estimaciones y contacto de
+        Buildforge — no con preguntas generales. Cuéntame qué quieres construir
+        y te oriento; también puedes dejarnos tus datos para contactarte.
       </p>
       <p className="mb-2 text-xs font-medium uppercase tracking-wider text-slate-500">
         Preguntas frecuentes

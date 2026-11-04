@@ -1,5 +1,6 @@
 import { FormEvent, RefObject } from 'react';
 import { SendHorizontal } from 'lucide-react';
+import { CHAT_COMPOSER_PLACEHOLDER } from '@/components/chat/chat-constants';
 
 export function ChatComposer({
   entrada,
@@ -23,7 +24,7 @@ export function ChatComposer({
     >
       <div className="flex items-end gap-2">
         <label htmlFor="chat-input" className="sr-only">
-          Escribe tu mensaje
+          Pregunta por un proyecto, servicio o cotización
         </label>
         <textarea
           id="chat-input"
@@ -37,7 +38,7 @@ export function ChatComposer({
               onEnviarTexto(entrada);
             }
           }}
-          placeholder="Escribe tu mensaje…"
+          placeholder={CHAT_COMPOSER_PLACEHOLDER}
           maxLength={2000}
           disabled={cargando}
           className="max-h-28 min-h-[44px] flex-1 resize-none rounded-xl border border-slate-600 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 disabled:opacity-60"
