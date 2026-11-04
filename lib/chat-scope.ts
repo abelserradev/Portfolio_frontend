@@ -15,6 +15,15 @@ export const MENSAJE_IDENTIDAD_BUILDFORGE =
   'móvil e integraciones con IA). Aquí puedes ver esos trabajos, conocer ' +
   'los servicios y pedir una cotización orientativa.';
 
+/** FAQ: mission-card badges (EN PRODUCCIÓN / EN DESARROLLO / …). */
+export const MENSAJE_ESTADO_MISION =
+  'En las tarjetas del portafolio, esas etiquetas indican el estado de cada proyecto:\n' +
+  '• EN PRODUCCIÓN: ya está publicado y puedes abrirlo con el enlace de la tarjeta.\n' +
+  '• EN DESARROLLO: aún se construye o despliega; el acceso público puede no estar listo.\n' +
+  '• MVP ACTIVO: hay una demo usable mientras el producto sigue evolucionando.\n' +
+  '• PRÓXIMAMENTE: anunciado, todavía sin demo pública.\n' +
+  'Si te interesa uno en concreto, dime el nombre y te oriento o cotizamos algo similar.';
+
 const JAILBREAK_PATTERNS: readonly RegExp[] = [
   /ignore\s+(all\s+)?(previous|prior|above|earlier)\s+instructions?/i,
   /disregard\s+(all\s+)?(previous|prior|your)\s+(instructions?|rules?)/i,
@@ -78,6 +87,9 @@ const TOPIC_SIGNALS: readonly string[] = [
   'telefono',
   'proyecto',
   'desarrollo',
+  'produccion',
+  'mision',
+  'etiqueta',
   'software',
   'stack',
   'react',
@@ -162,17 +174,49 @@ export function esPreguntaIdentidadBuildforge(mensaje: string): boolean {
   ].some((p) => texto.includes(p));
 }
 
+/** Mission-card status badges — canned answer, never the generic refuse. */
+export function esPreguntaEstadoMision(mensaje: string): boolean {
+  const texto = normalizar(mensaje);
+  if (!texto.trim()) {
+    return false;
+  }
+  const pregunta = [
+    'que significa',
+    'que quiere decir',
+    'significa',
+    'quiere decir',
+    'diferencia entre',
+    'que es en ',
+    'etiqueta',
+    'badge',
+    'estado de',
+    'estado del',
+  ].some((p) => texto.includes(p));
+  if (!pregunta) {
+    return false;
+  }
+  return [
+    'en produccion',
+    'en desarrollo',
+    'mvp activo',
+    'proximamente',
+    'en curso',
+    'produccion',
+    'mvp',
+  ].some((e) => texto.includes(e));
+}
+
 /**
  * Allowlist soft-block: only greetings + Buildforge/project signals call the API.
  * General trivia ("qué es Google") has no signal → refuse without hitting the backend.
- * Brand identity is never treated as out of scope.
+ * Brand/status FAQs are never treated as out of scope.
  */
 export function esFueraDeAlcance(texto: string): boolean {
   const limpio = texto.trim();
   if (!limpio) {
     return true;
   }
-  if (esPreguntaIdentidadBuildforge(limpio)) {
+  if (esPreguntaIdentidadBuildforge(limpio) || esPreguntaEstadoMision(limpio)) {
     return false;
   }
   if (esIntentoJailbreak(limpio)) {
