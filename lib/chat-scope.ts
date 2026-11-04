@@ -8,6 +8,13 @@ export const MENSAJE_FUERA_DE_ALCANCE =
   'servicios, cotizaciones y contacto. Cuéntame qué quieres construir ' +
   '(landing, MVP, API, app o integración con IA) y te oriento.';
 
+/** FAQ: "qué es Buildforge" — must never show the generic refuse. */
+export const MENSAJE_IDENTIDAD_BUILDFORGE =
+  'Buildforge es la marca y el dominio de un desarrollador fullstack: ' +
+  'representa el portafolio de sus proyectos de software (apps web, APIs, ' +
+  'móvil e integraciones con IA). Aquí puedes ver esos trabajos, conocer ' +
+  'los servicios y pedir una cotización orientativa.';
+
 const JAILBREAK_PATTERNS: readonly RegExp[] = [
   /ignore\s+(all\s+)?(previous|prior|above|earlier)\s+instructions?/i,
   /disregard\s+(all\s+)?(previous|prior|your)\s+(instructions?|rules?)/i,
@@ -119,14 +126,54 @@ function tieneSenalTemaPermitido(mensaje: string): boolean {
   });
 }
 
+/** Brand/portfolio identity — canned answer, never the generic refuse. */
+export function esPreguntaIdentidadBuildforge(mensaje: string): boolean {
+  const texto = normalizar(mensaje);
+  if (!texto.trim()) {
+    return false;
+  }
+  if (
+    texto.includes('buildforge') &&
+    [
+      'que es',
+      'quien es',
+      'que hace',
+      'que significa',
+      'sobre',
+      'acerca de',
+      'marca',
+      'dominio',
+      'portafolio',
+      'portfolio',
+      'estudio',
+      'empresa',
+    ].some((p) => texto.includes(p))
+  ) {
+    return true;
+  }
+  return [
+    'quien eres',
+    'que eres',
+    'que es esto',
+    'sobre ti',
+    'hablame de ti',
+    'cuentame de ti',
+    'para que sirve este chat',
+  ].some((p) => texto.includes(p));
+}
+
 /**
  * Allowlist soft-block: only greetings + Buildforge/project signals call the API.
  * General trivia ("qué es Google") has no signal → refuse without hitting the backend.
+ * Brand identity is never treated as out of scope.
  */
 export function esFueraDeAlcance(texto: string): boolean {
   const limpio = texto.trim();
   if (!limpio) {
     return true;
+  }
+  if (esPreguntaIdentidadBuildforge(limpio)) {
+    return false;
   }
   if (esIntentoJailbreak(limpio)) {
     return true;
