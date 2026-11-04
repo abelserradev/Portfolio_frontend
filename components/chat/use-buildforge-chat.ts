@@ -10,6 +10,10 @@ import {
 import { EVENTO_ABRIR_CHAT, type AbrirChatDetalle } from '@/lib/chat-events';
 import { registrarEventoAnalytics } from '@/lib/analytics-api';
 import { validarFormularioCotizacion } from '@/lib/chat-quote-validation';
+import {
+  MENSAJE_FUERA_DE_ALCANCE,
+  esFueraDeAlcance,
+} from '@/lib/chat-scope';
 import { generarIdCliente } from '@/lib/ids';
 import {
   extraerTextoDesdeWaUrl,
@@ -72,13 +76,26 @@ export function useBuildforgeChat() {
       if (!limpio || cargando) return;
 
       setError(null);
-      setCargando(true);
       setMensajes((prev) => [
         ...prev,
         { id: generarIdCliente(), rol: 'user', texto: limpio },
       ]);
       setEntrada('');
 
+      // Soft-block obvious off-topic / jailbreak before spending an API call
+      if (esFueraDeAlcance(limpio)) {
+        setMensajes((prev) => [
+          ...prev,
+          {
+            id: generarIdCliente(),
+            rol: 'assistant',
+            texto: MENSAJE_FUERA_DE_ALCANCE,
+          },
+        ]);
+        return;
+      }
+
+      setCargando(true);
       try {
         const resp = await enviarMensajeChat(limpio, sessionId);
         persistirSession(resp.session_id);

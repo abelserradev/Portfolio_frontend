@@ -18,7 +18,9 @@ export function ChatHeader({
         >
           Asistente BuildForge
         </h2>
-        <p className="truncate text-xs text-slate-400">Cotizaciones y consultas</p>
+        <p className="truncate text-xs text-slate-400">
+          Proyectos, servicios y cotizaciones
+        </p>
       </div>
       <div className="flex shrink-0 gap-1">
         <button

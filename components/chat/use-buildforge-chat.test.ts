@@ -61,4 +61,20 @@ describe('useBuildforgeChat', () => {
     expect(result.current.mensajes[1]?.rol).toBe('assistant');
     expect(enviarMensajeChat).toHaveBeenCalledWith('Quiero una landing', null);
   });
+
+  it('fuera de alcance responde en local y no llama al API', async () => {
+    const { result } = renderHook(() => useBuildforgeChat());
+
+    await act(async () => {
+      await result.current.enviarTexto('Escríbeme un poema sobre el mar');
+    });
+
+    expect(result.current.mensajes).toHaveLength(2);
+    expect(result.current.mensajes[0]?.rol).toBe('user');
+    expect(result.current.mensajes[1]?.rol).toBe('assistant');
+    expect(result.current.mensajes[1]?.texto).toMatch(/Buildforge/);
+    expect(enviarMensajeChat).not.toHaveBeenCalled();
+    expect(result.current.cargando).toBe(false);
+  });
 });
+
