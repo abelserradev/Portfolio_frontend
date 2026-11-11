@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { PortfolioProject } from '@/lib/types/portfolio-project';
 import { obtenerUrlRedirectVisita } from '@/lib/api-config';
 import {
@@ -20,6 +20,25 @@ function claseBordePlaca(destacada: boolean, enLayoutDestacado: boolean): string
   }
   const span = enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3';
   return `border-foundry-brass/70 ${span}`.trim();
+}
+
+function subscribeReducedMotion(onChange: () => void): () => void {
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  mq.addEventListener('change', onChange);
+  return () => mq.removeEventListener('change', onChange);
+}
+
+function getReducedMotionSnapshot(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/** Prefer reduced-motion via store so we never setState synchronously inside an effect. */
+function usePrefersReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    () => false,
+  );
 }
 
 export default function MissionCard({
@@ -49,14 +68,12 @@ export default function MissionCard({
   // Badge visual comes from mission-presentation; keep plate chrome foundry-only here.
   const badgeFoundry = etiqueta.claseBadge;
   const plateRef = useRef<HTMLElement>(null);
-  const [registered, setRegistered] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [plateVisible, setPlateVisible] = useState(false);
+  const registered = prefersReducedMotion || plateVisible;
 
   useEffect(() => {
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      setRegistered(true);
+    if (prefersReducedMotion) {
       return;
     }
     const el = plateRef.current;
@@ -64,7 +81,7 @@ export default function MissionCard({
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setRegistered(true);
+          setPlateVisible(true);
           obs.disconnect();
         }
       },
@@ -72,7 +89,7 @@ export default function MissionCard({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <article
