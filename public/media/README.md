@@ -11,5 +11,5 @@ Video de servicios: configurar `NEXT_PUBLIC_SERVICES_VIDEO_URL` (HTTPS). Valores
 
 | Archivo | Uso |
 |---------|-----|
-| `portfolio-launch-cyber-reel.webm` | Reel ~55s del launch (grabar con `scripts/record-portfolio-launch-video.mjs`) |
-| `VIDEO-PROMPT-portfolio-launch.md` | Guion + prompts IA + comando de regeneración |
+| `portfolio-launch-cyber-reel.webm` | Reel local del launch (no versionado; generar fuera del PR) |
+| `VIDEO-PROMPT-portfolio-launch.md` | Guion + prompts IA para regenerar el reel |
