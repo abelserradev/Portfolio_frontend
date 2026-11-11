@@ -14,6 +14,14 @@ function padPlateId(n: number): string {
   return `PAT-${String(n).padStart(3, '0')}`;
 }
 
+function claseBordePlaca(destacada: boolean, enLayoutDestacado: boolean): string {
+  if (!destacada) {
+    return '';
+  }
+  const span = enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3';
+  return `border-foundry-brass/70 ${span}`.trim();
+}
+
 export default function MissionCard({
   mission,
   destacada = false,
@@ -38,14 +46,8 @@ export default function MissionCard({
   const etiqueta = obtenerEtiquetaMision(status, hayUrlPublica);
   const subtitulo = obtenerSubtituloMision(status);
   const cta = obtenerTextoCtaMision(status, hayUrlPublica);
-  const badgeFoundry =
-    status === 'mvp_active'
-      ? 'border-foundry-brass/70 bg-foundry-brass/15 text-foundry-brass'
-      : status === 'coming_soon'
-        ? 'border-foundry-seam bg-foundry-ground text-foundry-type-dim'
-        : hayUrlPublica && status === 'live'
-          ? 'border-foundry-brass/50 bg-foundry-brass/10 text-foundry-type-bright'
-          : 'border-foundry-seam bg-foundry-chrome text-foundry-type-mute';
+  // Badge visual comes from mission-presentation; keep plate chrome foundry-only here.
+  const badgeFoundry = etiqueta.claseBadge;
   const plateRef = useRef<HTMLElement>(null);
   const [registered, setRegistered] = useState(false);
 
@@ -77,11 +79,7 @@ export default function MissionCard({
       ref={plateRef}
       className={`foundry-plate foundry-plate-register foundry-mission-plate group relative flex h-full flex-col overflow-hidden p-4 sm:p-5 ${
         registered ? 'is-registered' : 'is-unsettled'
-      } ${
-        destacada
-          ? `border-foundry-brass/70 ${enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3'}`
-          : ''
-      }`}
+      } ${claseBordePlaca(destacada, enLayoutDestacado)}`}
     >
       <div className="absolute left-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
       <div className="absolute right-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
