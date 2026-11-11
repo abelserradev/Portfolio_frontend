@@ -9,6 +9,7 @@ import {
   obtenerSubtituloMision,
   obtenerTextoCtaMision,
 } from '@/lib/mission-presentation';
+import { obtenerImagenMision } from '@/lib/mission-images';
 
 function padPlateId(n: number): string {
   return `PAT-${String(n).padStart(3, '0')}`;
@@ -71,6 +72,7 @@ export default function MissionCard({
   const prefersReducedMotion = usePrefersReducedMotion();
   const [plateVisible, setPlateVisible] = useState(false);
   const registered = prefersReducedMotion || plateVisible;
+  const imagenMision = obtenerImagenMision(mission);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -98,10 +100,22 @@ export default function MissionCard({
         registered ? 'is-registered' : 'is-unsettled'
       } ${claseBordePlaca(destacada, enLayoutDestacado)}`}
     >
-      <div className="absolute left-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
-      <div className="absolute right-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
-      <div className="absolute bottom-2 left-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
-      <div className="absolute bottom-2 right-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute left-2 top-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute right-2 top-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute bottom-2 left-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute bottom-2 right-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+
+      {imagenMision ? (
+        <div className="relative mb-3 aspect-[16/10] w-full overflow-hidden border border-foundry-seam bg-foundry-chrome">
+          {/* Catalog stills are local fallbacks or absolute API URLs */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imagenMision}
+            alt=""
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+      ) : null}
 
       <div className="mb-3 flex items-start justify-between gap-3">
         <span className="foundry-plate-id">{padPlateId(plateIndex)}</span>
