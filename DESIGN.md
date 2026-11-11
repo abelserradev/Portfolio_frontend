@@ -219,7 +219,7 @@ Do not introduce pill CTAs or large rounded cards into the plate system. Circula
 - Fixed chrome bar, `border-b-2` deep brass; logo as stencil `</BUILDFORGE>` (no glitch clones). Links: display uppercase, mute → bright on hover, brass underline grows from left. Spacer equals measured nav height (~64px default).
 
 ### Signature — Process Teach Diagram
-Single didactic figure in Services: Forma → Molde → Desarrollo → Producto. Desktop SVG with ground fills, seam strokes, dashed deep-brass inners, brass arrows; mobile falls back to a 2×2 plate grid. Do not multiply teach-diagrams across the page.
+Single didactic figure in Services: Idea → Arquitectura → Desarrollo → Producto. Desktop SVG with ground fills, seam strokes, dashed deep-brass inners, brass arrows; mobile falls back to a 2×2 plate grid. Do not multiply teach-diagrams across the page.
 
 ### Signature — Mission Plate Registration
 `.foundry-mission-plate` starts unsettled (opacity 0.35, `translateY(18px)`) then registers (520ms ease-out-expo) on intersection. Prefer-reduced-motion ships already registered.
