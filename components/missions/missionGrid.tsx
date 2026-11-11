@@ -12,8 +12,8 @@ export default function MissionGrid() {
   if (isLoading) {
     return (
       <section id="misiones" className="container mx-auto scroll-mt-28 px-4 py-12 sm:scroll-mt-24 sm:py-16">
-        <div className="text-cyan-400 font-mono text-center py-20">
-          <span className="animate-pulse">Cargando misiones...</span>
+        <div className="py-20 text-center font-mono text-sm text-foundry-brass">
+          <span>Registrando placas…</span>
         </div>
       </section>
     );
@@ -21,7 +21,9 @@ export default function MissionGrid() {
   if (error) {
     return (
       <section id="misiones" className="container mx-auto scroll-mt-28 px-4 py-12 sm:scroll-mt-24 sm:py-16">
-        <div className="text-magenta-500 font-mono text-center py-20">Error al conectar con el núcleo</div>
+        <div className="py-20 text-center font-mono text-sm text-foundry-type-mute">
+          No se pudo leer el catálogo de misiones
+        </div>
       </section>
     );
   }
@@ -37,26 +39,35 @@ export default function MissionGrid() {
 
       {destacados.length > 0 ? (
         <div className="mb-14 sm:mb-16">
-          <h2 className="mb-2 text-center font-orbitron text-2xl tracking-widest text-yellow-300 sm:text-3xl">
-            {'// MISIÓN DESTACADA'}
+          <h2 className="mb-2 text-center font-display text-2xl tracking-wide text-foundry-brass sm:text-3xl">
+            Misión destacada
           </h2>
-          <p className="mb-8 text-center font-mono text-xs text-gray-500 sm:mb-10">
+          <p className="mb-8 text-center text-xs text-foundry-type-dim sm:mb-10">
             Demos activas y en desarrollo
           </p>
           <div className="flex flex-col gap-10 sm:gap-12">
-            {destacados.map((project) => (
-              <FeaturedMissionBlock key={project.id} mission={project} />
+            {destacados.map((project, i) => (
+              <FeaturedMissionBlock
+                key={project.id}
+                mission={project}
+                plateIndex={i + 1}
+              />
             ))}
           </div>
         </div>
       ) : null}
 
-      <h2 className="mb-10 text-center font-orbitron text-2xl tracking-widest text-cyan-300 sm:mb-12 sm:text-3xl">
-        {destacados.length > 0 ? '// OTRAS MISIONES' : '// MISIONES COMPLETADAS'}
+      <h2 className="mb-10 text-center font-display text-2xl tracking-wide text-foundry-type-bright sm:mb-12 sm:text-3xl">
+        {destacados.length > 0 ? 'Otras misiones' : 'Misiones'}
       </h2>
-      <div className="grid grid-cols-1 gap-5 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {resto.map((project) => (
-          <MissionCard key={project.id} mission={project} />
+      {/* Billing-rank density: tight gaps, fixed-scale plates */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-3">
+        {resto.map((project, i) => (
+          <MissionCard
+            key={project.id}
+            mission={project}
+            plateIndex={destacados.length + i + 1}
+          />
         ))}
       </div>
     </section>

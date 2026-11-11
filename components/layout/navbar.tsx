@@ -4,17 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import GlitchLogo from '../ui/GlitchLogo';
 
 const enlacesNav = [
-  { etiqueta: '_inicio', href: '#inicio' },
-  { etiqueta: '_servicios', href: '#servicios' },
-  { etiqueta: '_skills', href: '#skills' },
-  { etiqueta: '_misiones', href: '#misiones' },
-  { etiqueta: '_contacto', href: '#contacto' },
+  { etiqueta: 'Servicios', href: '#servicios' },
+  { etiqueta: 'Misiones', href: '#misiones' },
+  { etiqueta: 'Contacto', href: '#contacto' },
 ];
 
-/** Fixed + spacer: mismo patrón que headers tipo LinkedIn; sticky suele fallar si html/body tienen overflow-x oculto */
+/** Barra fija de cromo de fundición; spacer evita saltos de layout. */
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
-  const [alturaReserva, setAlturaReserva] = useState(72);
+  const [alturaReserva, setAlturaReserva] = useState(64);
 
   useEffect(() => {
     const barra = navRef.current;
@@ -31,18 +29,24 @@ export default function Navbar() {
       <div aria-hidden className="shrink-0" style={{ height: alturaReserva }} />
       <nav
         ref={navRef}
-        className="fixed left-0 right-0 top-0 z-50 flex flex-col gap-3 border-b border-cyan-500/30 bg-black/90 px-4 py-3 backdrop-blur-md sm:flex-row sm:items-center sm:justify-between sm:px-6"
+        className="fixed left-0 right-0 top-0 z-50 flex flex-col gap-3 border-b-2 border-foundry-brass-deep bg-foundry-chrome px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-7"
       >
-        <a href="#inicio" className="relative group shrink-0 self-start hover:opacity-90 transition-opacity">
+        <a
+          href="#inicio"
+          className="shrink-0 self-start transition-opacity hover:opacity-90"
+        >
           <GlitchLogo />
         </a>
-        <ul className="flex w-full items-center justify-between gap-3 overflow-x-auto pb-1 font-mono text-xs text-cyan-300 sm:w-auto sm:justify-end sm:gap-8 sm:overflow-visible sm:pb-0 sm:text-base">
+        <ul className="flex w-full flex-wrap items-center gap-x-4 gap-y-2 font-display text-[11px] uppercase tracking-[0.14em] text-foundry-type-mute sm:w-auto sm:justify-end sm:gap-6 sm:text-[13px]">
           {enlacesNav.map(({ etiqueta, href }) => (
             <li key={etiqueta} className="relative group shrink-0">
-              <a href={href} className="cursor-pointer hover:text-white transition-colors">
+              <a
+                href={href}
+                className="cursor-pointer transition-colors hover:text-foundry-type-bright"
+              >
                 {etiqueta}
               </a>
-              <span className="pointer-events-none absolute -bottom-1 left-0 h-0.5 w-0 bg-magenta-500 transition-all duration-300 group-hover:w-full" />
+              <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-0 bg-foundry-brass transition-all duration-300 group-hover:w-full" />
             </li>
           ))}
         </ul>

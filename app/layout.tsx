@@ -1,31 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Orbitron, Share_Tech_Mono } from "next/font/google";
+import { Big_Shoulders_Stencil, JetBrains_Mono, Literata } from "next/font/google";
 import ChatProvider from "@/components/chat/chat-provider";
 import AnalyticsConsentBanner from "@/components/analytics/analytics-consent-banner";
 import PortfolioAnalytics from "@/components/analytics/portfolio-analytics";
 import { SectionBoundary } from "@/components/errors/section-boundary";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Variables distintas al token de @theme para evitar referencia circular (mismo patrón que Geist → --font-sans)
-const orbitron = Orbitron({
-  variable: "--font-orbitron-stack",
+const display = Big_Shoulders_Stencil({
+  variable: "--font-display-stack",
   subsets: ["latin"],
   display: "swap",
 });
 
-const shareTechMono = Share_Tech_Mono({
-  variable: "--font-tech-stack",
-  weight: "400",
+const body = Literata({
+  variable: "--font-body-stack",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const plateMono = JetBrains_Mono({
+  variable: "--font-plate-stack",
   subsets: ["latin"],
   display: "swap",
 });
@@ -44,9 +38,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${shareTechMono.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${plateMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col foundry-sand text-foundry-type">
         {children}
         <SectionBoundary section="analytics" compact>
           <PortfolioAnalytics />

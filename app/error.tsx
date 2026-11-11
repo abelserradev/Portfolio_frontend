@@ -17,26 +17,21 @@ export default function ErrorPage({
   }, [error]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-black px-4 text-white">
-      <div className="max-w-md rounded-xl border border-red-500/30 bg-red-950/20 p-8 text-center font-mono">
-        <p className="text-sm uppercase tracking-wider text-red-400">Error de página</p>
-        <h1 className="mt-3 text-xl font-semibold text-slate-100">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-foundry-ground px-4 text-foundry-type">
+      <div className="foundry-plate max-w-md p-8 text-center">
+        <h1 className="font-display text-xl font-semibold text-foundry-type-bright">
           No pudimos cargar esta vista
         </h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-foundry-type-mute">
           Puede ser un fallo temporal. Intenta de nuevo o vuelve al inicio.
         </p>
         <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <button
-            type="button"
-            onClick={reset}
-            className="rounded-lg border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 text-sm text-cyan-300 hover:bg-cyan-900/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
-          >
+          <button type="button" onClick={reset} className="foundry-cta">
             Reintentar
           </button>
           <Link
             href="/"
-            className="rounded-lg border border-slate-600 px-4 py-2 text-sm text-slate-300 hover:bg-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+            className="inline-flex items-center justify-center border border-foundry-seam px-4 py-2 text-sm text-foundry-type-mute transition-colors hover:border-foundry-brass hover:text-foundry-type"
           >
             Ir al inicio
           </Link>

@@ -17,18 +17,30 @@ export default function GlobalError({
 
   return (
     <html lang="es">
-      <body className="min-h-screen bg-black text-white antialiased">
+      <body
+        className="min-h-screen antialiased"
+        style={{ background: '#2a2218', color: '#e8dcc8' }}
+      >
         <div className="flex min-h-screen flex-col items-center justify-center px-4">
-          <div className="max-w-md rounded-xl border border-red-500/30 bg-red-950/20 p-8 text-center font-mono">
-            <p className="text-sm uppercase tracking-wider text-red-400">Error crítico</p>
-            <h1 className="mt-3 text-xl font-semibold">Buildforge no pudo iniciarse</h1>
-            <p className="mt-2 text-sm text-slate-400">
+          <div
+            className="max-w-md p-8 text-center"
+            style={{
+              border: '1px solid #5c4a2e',
+              background: '#1c1710',
+              boxShadow: '6px 10px 28px rgba(14, 10, 6, 0.55)',
+            }}
+          >
+            <h1 className="text-xl font-semibold" style={{ color: '#f3ead8' }}>
+              Buildforge no pudo iniciarse
+            </h1>
+            <p className="mt-2 text-sm" style={{ color: '#c4b49a' }}>
               Recarga la página. Si persiste, prueba más tarde.
             </p>
             <button
               type="button"
               onClick={reset}
-              className="mt-6 rounded-lg border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 text-sm text-cyan-300 hover:bg-cyan-900/40"
+              className="mt-6 px-4 py-2 text-sm font-semibold uppercase tracking-wide"
+              style={{ background: '#c9a227', color: '#1c1710' }}
             >
               Reintentar
             </button>

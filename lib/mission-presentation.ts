@@ -30,28 +30,32 @@ export function obtenerEtiquetaMision(
       return {
         texto: 'MVP ACTIVO',
         claseBadge:
-          'border-yellow-400/60 bg-yellow-400/15 text-yellow-300 animate-pulse',
+          'border-foundry-brass/70 bg-foundry-brass/15 text-foundry-brass',
       };
     case 'in_development':
       return {
         texto: 'EN DESARROLLO',
-        claseBadge: 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400',
+        claseBadge:
+          'border-foundry-seam bg-foundry-chrome text-foundry-type-mute',
       };
     case 'coming_soon':
       return {
         texto: 'PRÓXIMAMENTE',
-        claseBadge: 'border-fuchsia-500/50 bg-fuchsia-500/10 text-fuchsia-400',
+        claseBadge:
+          'border-foundry-seam/80 bg-foundry-wood/40 text-foundry-type-dim',
       };
     case 'live':
     default:
       return hayUrlPublica
         ? {
             texto: 'EN PRODUCCIÓN',
-            claseBadge: 'border-magenta-500/50 bg-magenta-500/10 text-magenta-400',
+            claseBadge:
+              'border-foundry-brass/50 bg-foundry-brass/10 text-foundry-brass',
           }
         : {
             texto: 'EN CURSO',
-            claseBadge: 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400',
+            claseBadge:
+              'border-foundry-seam bg-foundry-chrome text-foundry-type-mute',
           };
   }
 }

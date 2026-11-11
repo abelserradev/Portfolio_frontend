@@ -50,3 +50,16 @@ next-env.d.ts
 .cursor/
 CLAUDE.md
 skills-lock.json
+# Local AI runtime state
+.atl/
+.playwright-cli/
+
+# Impeccable ephemeral (decision rounds / captures)
+.impeccable/questions/
+.impeccable/review/
+.impeccable/mocks/
+
+# Large local promo media (generate via pnpm media:* scripts)
+public/media/*.mp4
+public/media/*.webm
+public/media/audio/

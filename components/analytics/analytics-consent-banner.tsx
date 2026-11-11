@@ -50,7 +50,6 @@ export default function AnalyticsConsentBanner() {
     snapshotConsentimientoCliente,
     snapshotConsentimientoServidor,
   );
-  // Optimista en handlers (no en useEffect): oculta el banner aunque falle un re-render tardío
   const [estadoUi, setEstadoUi] = useState<EstadoConsentimientoAnalytics | null>(null);
   const estado = estadoUi ?? estadoStore;
 
@@ -73,17 +72,20 @@ export default function AnalyticsConsentBanner() {
       role="dialog"
       aria-labelledby="analytics-consent-title"
       aria-describedby="analytics-consent-desc"
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-cyan-500/30 bg-slate-950/95 p-4 shadow-[0_-8px_32px_rgba(6,182,212,0.12)] backdrop-blur-sm sm:p-5"
+      className="fixed inset-x-0 bottom-0 z-[60] border-t border-foundry-seam bg-foundry-chrome p-4 shadow-[0_-8px_28px_rgba(14,10,6,0.45)] sm:p-5"
     >
       <div className="container mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0 flex-1">
           <p
             id="analytics-consent-title"
-            className="font-mono text-xs tracking-widest text-cyan-400/90"
+            className="font-display text-xs tracking-widest text-foundry-brass"
           >
-            {'// PRIVACIDAD_ANALYTICS'}
+            Privacidad · analytics
           </p>
-          <p id="analytics-consent-desc" className="mt-1 font-tech text-sm text-gray-300">
+          <p
+            id="analytics-consent-desc"
+            className="mt-1 text-sm text-foundry-type-mute"
+          >
             Usamos eventos anónimos (secciones visitadas, clics en navegación) para mejorar el
             portfolio. No vendemos datos. Puedes rechazar y seguir navegando con normalidad.
           </p>
@@ -92,16 +94,16 @@ export default function AnalyticsConsentBanner() {
           <button
             type="button"
             onClick={rechazar}
-            className="border border-gray-600 px-4 py-2 font-mono text-xs text-gray-300 transition-colors hover:border-gray-500 hover:bg-gray-900"
+            className="border border-foundry-seam px-4 py-2 font-display text-xs uppercase tracking-wider text-foundry-type-mute transition-colors hover:border-foundry-type-dim hover:bg-foundry-ground"
           >
-            RECHAZAR
+            Rechazar
           </button>
           <button
             type="button"
             onClick={aceptar}
-            className="border border-cyan-500/60 bg-cyan-500/15 px-4 py-2 font-mono text-xs text-cyan-100 transition-colors hover:bg-cyan-500/25"
+            className="foundry-cta !py-2 !text-xs"
           >
-            ACEPTAR
+            Aceptar
           </button>
         </div>
       </div>

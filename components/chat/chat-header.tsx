@@ -9,16 +9,16 @@ export function ChatHeader({
   readonly onCerrar: () => void;
 }) {
   return (
-    <header className="flex items-center gap-3 border-b border-slate-800 bg-slate-900/80 px-4 py-3">
+    <header className="flex items-center gap-3 border-b border-foundry-seam bg-foundry-chrome px-4 py-3">
       <AssistantAvatar size={44} />
       <div className="min-w-0 flex-1">
         <h2
           id="chat-titulo"
-          className="truncate font-orbitron text-sm font-semibold tracking-wide text-cyan-300"
+          className="truncate font-display text-sm font-semibold tracking-wide text-foundry-type-bright"
         >
           Asistente BuildForge
         </h2>
-        <p className="truncate text-xs text-slate-400">
+        <p className="truncate text-xs text-foundry-type-dim">
           Proyectos, servicios y cotizaciones
         </p>
       </div>
@@ -26,7 +26,7 @@ export function ChatHeader({
         <button
           type="button"
           onClick={onReiniciar}
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="flex h-11 w-11 items-center justify-center rounded text-foundry-type-dim transition-colors hover:bg-foundry-ground hover:text-foundry-type focus:outline-none focus-visible:ring-2 focus-visible:ring-foundry-brass"
           aria-label="Reiniciar conversación"
         >
           <RotateCcw className="h-5 w-5" />
@@ -34,7 +34,7 @@ export function ChatHeader({
         <button
           type="button"
           onClick={onCerrar}
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="flex h-11 w-11 items-center justify-center rounded text-foundry-type-dim transition-colors hover:bg-foundry-ground hover:text-foundry-type focus:outline-none focus-visible:ring-2 focus-visible:ring-foundry-brass"
           aria-label="Cerrar chat"
         >
           <X className="h-5 w-5" />

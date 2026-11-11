@@ -1,0 +1,107 @@
+{
+  "repo": "C:\\Users\\aserra\\OneDrive - VENEMERGENCIA AG, C.A\\Documentos\\buildforge\\Portfolio_frontend",
+  "stacks": [
+    {
+      "stack": "nextjs",
+      "dir": ".",
+      "evidence": "package.json:next"
+    },
+    {
+      "stack": "vitejs",
+      "dir": ".",
+      "evidence": "package.json:vite"
+    },
+    {
+      "stack": "reactjs",
+      "dir": ".",
+      "evidence": "package.json:react"
+    }
+  ],
+  "dockerfiles": [
+    "Dockerfile"
+  ],
+  "compose_files": [],
+  "lockfiles": [
+    "pnpm-lock.yaml"
+  ],
+  "has_precommit": false,
+  "tests": {
+    "unit_count": 16,
+    "integration_count": 1,
+    "unit_sample": [
+      "lib\\analytics-api.test.ts",
+      "lib\\analytics-consent.test.ts",
+      "lib\\api-config.test.ts",
+      "lib\\chat-api.test.ts",
+      "lib\\chat-events.test.ts",
+      "lib\\chat-quote-validation.test.ts",
+      "lib\\github-api.test.ts",
+      "lib\\ids.test.ts",
+      "lib\\mission-presentation.test.ts",
+      "lib\\projects-api.test.ts",
+      "lib\\section-error-boundary.test.tsx",
+      "lib\\site-config.test.ts",
+      "lib\\url-safety.test.ts",
+      "components\\chat\\boton-whatsapp.test.tsx",
+      "components\\chat\\use-buildforge-chat.test.ts"
+    ],
+    "integration_sample": [
+      "e2e\\smoke.spec.ts"
+    ]
+  },
+  "gaps": {
+    "sources_scanned": [
+      "package.json",
+      ".github\\dependabot.yml",
+      ".github\\workflows\\ci.yml",
+      ".github\\workflows\\codeql.yml",
+      ".github\\workflows\\gitleaks.yml",
+      ".github\\workflows\\pr-validation.yml"
+    ],
+    "matrix": {
+      "DRY": {
+        "covered": false,
+        "tools_found": []
+      },
+      "SOLID": {
+        "covered": false,
+        "tools_found": [],
+        "note": "always manual evaluation (Phase 2)"
+      },
+      "unit_tests": {
+        "covered": true,
+        "tools_found": [
+          "vitest"
+        ]
+      },
+      "integration_tests": {
+        "covered": true,
+        "tools_found": [
+          "e2e"
+        ]
+      },
+      "SAST": {
+        "covered": true,
+        "tools_found": [
+          "codeql"
+        ]
+      },
+      "SCA": {
+        "covered": true,
+        "tools_found": [
+          "npm audit"
+        ]
+      },
+      "secrets": {
+        "covered": true,
+        "tools_found": [
+          "gitleaks"
+        ]
+      },
+      "containers": {
+        "covered": false,
+        "tools_found": []
+      }
+    }
+  }
+}

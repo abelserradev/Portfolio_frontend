@@ -19,10 +19,10 @@ export function ChatMessageList({
           {m.rol === 'assistant' && <AssistantAvatar size={36} />}
           <div className="max-w-[85%] space-y-1">
             <div
-              className={`rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+              className={`px-3.5 py-2.5 text-sm leading-relaxed ${
                 m.rol === 'user'
-                  ? 'rounded-tr-md bg-violet-700/90 text-white'
-                  : 'rounded-tl-md border border-slate-700/80 bg-slate-900/90 text-slate-100'
+                  ? 'bg-foundry-brass text-foundry-chrome'
+                  : 'border border-foundry-seam bg-foundry-chrome text-foundry-type'
               }`}
             >
               <p className="whitespace-pre-wrap">{m.texto}</p>

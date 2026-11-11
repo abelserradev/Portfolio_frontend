@@ -44,7 +44,7 @@ export default function BuildforgeChatWidget() {
 
       {abierto && (
         <div
-          className="fixed inset-x-3 bottom-3 z-50 flex max-h-[min(85dvh,640px)] flex-col overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-950/95 font-sans shadow-2xl shadow-black/50 backdrop-blur-md sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[min(100vw-2rem,420px)]"
+          className="fixed inset-x-3 bottom-3 z-50 flex max-h-[min(85dvh,640px)] flex-col overflow-hidden border border-foundry-seam bg-foundry-ground font-sans shadow-[6px_14px_36px_rgba(14,10,6,0.65)] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[min(100vw-2rem,420px)]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="chat-titulo"

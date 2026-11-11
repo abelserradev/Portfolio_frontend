@@ -20,7 +20,7 @@ export function ChatComposer({
   return (
     <form
       onSubmit={onSubmit}
-      className="border-t border-slate-800 bg-slate-900/80 p-3"
+      className="border-t border-foundry-seam bg-foundry-chrome p-3"
     >
       <div className="flex items-end gap-2">
         <label htmlFor="chat-input" className="sr-only">
@@ -41,12 +41,12 @@ export function ChatComposer({
           placeholder={CHAT_COMPOSER_PLACEHOLDER}
           maxLength={2000}
           disabled={cargando}
-          className="max-h-28 min-h-[44px] flex-1 resize-none rounded-xl border border-slate-600 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 disabled:opacity-60"
+          className="max-h-28 min-h-[44px] flex-1 resize-none border border-foundry-seam bg-foundry-ground px-3 py-2.5 text-sm text-foundry-type placeholder:text-foundry-type-dim focus:border-foundry-brass focus:outline-none focus:ring-2 focus:ring-foundry-brass/30 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={cargando || !entrada.trim()}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-600 text-white transition-colors hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="flex h-11 w-11 shrink-0 items-center justify-center bg-foundry-brass text-foundry-chrome transition-colors hover:bg-[#d4b03a] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-foundry-brass"
           aria-label="Enviar mensaje"
         >
           <SendHorizontal className="h-5 w-5" />
