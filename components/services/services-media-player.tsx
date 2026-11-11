@@ -2,7 +2,6 @@
 
 import { useCallback, useState, type ReactNode } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 
 interface ServicesMediaPlayerProps {
   readonly videoUrl: string;
@@ -20,32 +19,24 @@ function MediaFrame({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.98 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      className="relative aspect-video w-full overflow-hidden rounded-sm border border-cyan-500/40 bg-black/60 shadow-[0_0_24px_rgba(6,182,212,0.15)]"
-      style={{
-        clipPath: 'polygon(0% 0%, 97% 0%, 100% 6%, 100% 100%, 3% 100%, 0% 94%)',
-      }}
-    >
+    <div className="foundry-plate relative aspect-video w-full overflow-hidden">
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 function PlaceholderMedia() {
   return (
     <div
-      className="flex h-full min-h-[200px] flex-col items-center justify-center bg-linear-to-br from-cyan-950/80 via-black to-fuchsia-950/60 p-6 text-center"
+      className="flex h-full min-h-[200px] flex-col items-center justify-center bg-foundry-chrome p-6 text-center"
       role="img"
       aria-label="Material promocional próximamente"
     >
-      <p className="font-mono text-xs tracking-widest text-cyan-400/80">
-        {'// MEDIA_PRÓXIMAMENTE'}
+      <p className="font-mono text-xs tracking-widest text-foundry-brass">
+        MEDIA EN PREPARACIÓN
       </p>
-      <p className="mt-2 font-tech text-sm text-gray-400">
-        Video e imagen de servicios en preparación
+      <p className="mt-2 text-sm text-foundry-type-dim">
+        Video e imagen de servicios próximamente
       </p>
     </div>
   );

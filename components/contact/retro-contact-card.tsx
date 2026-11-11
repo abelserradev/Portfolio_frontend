@@ -1,4 +1,4 @@
-import { Mail, Database, Terminal } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import {
   obtenerConfigContacto,
   obtenerConfigMarca,
@@ -58,7 +58,7 @@ function IconoInstagramMarca(props: Readonly<{ size?: number; className?: string
 }
 
 function renderizarIconoCanal(canal: CanalContactoVisual) {
-  const animar = 'transition-transform duration-300 group-hover:scale-110';
+  const animar = 'transition-transform duration-300 group-hover:scale-105';
   switch (canal) {
     case 'mail':
       return <Mail size={20} className={animar} />;
@@ -77,72 +77,49 @@ export default function RetroContactCard() {
   const socialLinks = obtenerEnlacesSociales(contacto);
 
   return (
-    <div className="flex items-center justify-center px-4 py-8 sm:p-4">
-      <div className="relative group w-full max-w-2xl">
-        <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-fuchsia-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+    <div className="flex items-center justify-center px-4 py-16 sm:py-20">
+      <div className="foundry-plate w-full max-w-2xl p-5 sm:p-7">
+        <div className="mb-6 flex min-w-0 items-center justify-between gap-3 border-b border-foundry-seam pb-4">
+          <span className="foundry-plate-id">PLATE · CONTACTO</span>
+          <span className="h-2 w-2 rounded-full bg-foundry-brass shadow-[2px_3px_8px_rgba(201,162,39,0.35)]" />
+        </div>
 
-        <div className="relative flex flex-col rounded-lg border border-slate-700/50 bg-slate-900/90 p-4 font-mono leading-none text-cyan-100 sm:p-6">
-          <div className="mb-5 flex min-w-0 items-center justify-between gap-3 border-b border-cyan-800/50 pb-3">
-            <div className="flex items-center gap-3">
-              <Database size={20} className="text-fuchsia-500 animate-pulse" />
-              <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_#34d399]" />
-            </div>
-            <span className="min-w-0 truncate text-[10px] font-bold uppercase tracking-wider text-fuchsia-400">
-              CANALES_BUILDFORGE.SYS
-            </span>
-            <div className="flex shrink-0 space-x-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-600 border border-red-900" />
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-500 border border-amber-800" />
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-600 border border-emerald-900" />
-            </div>
+        <div className="mb-6 space-y-3">
+          <div>
+            <h3 className="font-display text-2xl tracking-wide text-foundry-type-bright sm:text-3xl">
+              {marca.brandName}
+            </h3>
+            <p className="mt-1 text-sm text-foundry-type-mute">{marca.brandRole}</p>
           </div>
+          <p className="text-sm leading-relaxed text-foundry-type-dim">
+            {contacto.status}
+          </p>
+        </div>
 
-          <div className="space-y-3 mb-6">
-            <div className="flex min-w-0 items-center gap-3 rounded border border-cyan-800/40 bg-slate-950/50 p-3 shadow-[inset_0_0_10px_rgba(6,182,212,0.1)] sm:gap-4">
-              <Terminal size={28} className="shrink-0 text-cyan-400 sm:size-8" />
-              <div className="min-w-0">
-                <h3 className="truncate text-lg font-black italic tracking-tight text-white sm:text-xl">
-                  {marca.brandName}
-                </h3>
-                <p className="mt-0.5 truncate text-[10px] font-extrabold uppercase tracking-widest text-fuchsia-500 sm:text-[11px]">
-                  &gt; {marca.brandRole}
-                </p>
-              </div>
-            </div>
+        <div className="grid grid-cols-2 gap-2 border border-foundry-seam bg-foundry-chrome/80 p-2 sm:grid-cols-4">
+          {socialLinks.map(({ etiqueta, canal, url, color, ariaLabel }) => {
+            const enlazarExterno = url.startsWith('http');
+            return (
+              <a
+                key={etiqueta}
+                href={url}
+                aria-label={ariaLabel}
+                {...(enlazarExterno
+                  ? ({ target: '_blank', rel: 'noopener noreferrer' } as const)
+                  : {})}
+                className={`group flex items-center justify-center border border-foundry-seam bg-foundry-ground p-3.5 transition-colors hover:border-foundry-brass hover:text-foundry-brass sm:p-4 ${color}`}
+              >
+                {renderizarIconoCanal(canal)}
+              </a>
+            );
+          })}
+        </div>
 
-            <p className="wrap-break-word pl-1 text-[10px] leading-relaxed text-slate-400">
-              &gt; STATUS: {contacto.status}
-              <br />
-              &gt; ENCRIPTACIÓN PROTOCOL_A_90... OK<br />
-              &gt; ESPERANDO TRANSMISIÓN...
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 rounded border border-slate-700 bg-slate-950/80 p-2 sm:grid-cols-4">
-            {socialLinks.map(({ etiqueta, canal, url, color, ariaLabel }) => {
-              const enlazarExterno = url.startsWith('http');
-              return (
-                <a
-                  key={etiqueta}
-                  href={url}
-                  aria-label={ariaLabel}
-                  {...(enlazarExterno
-                    ? ({ target: '_blank', rel: 'noopener noreferrer' } as const)
-                    : {})}
-                  className={`group flex items-center justify-center rounded border border-slate-600/50 bg-slate-800 p-3 transition-all duration-300 hover:border-cyan-500 hover:bg-slate-700/50 hover:shadow-[0_0_12px_#22d3ee] sm:p-3.5 ${color}`}
-                >
-                  {renderizarIconoCanal(canal)}
-                </a>
-              );
-            })}
-          </div>
-
-          <div className="mt-5 flex items-center justify-between gap-3 border-t border-cyan-800/30 pt-3 text-[9px] text-slate-500">
-            <span className="min-w-0 truncate">
-              © {new Date().getFullYear()} {marca.brandName}. // NEON_ARCH
-            </span>
-            <div className="h-1 w-12 shrink-0 bg-cyan-600 shadow-[0_0_5px_#22d3ee] sm:w-16" />
-          </div>
+        <div className="mt-6 flex items-center justify-between gap-3 border-t border-foundry-seam pt-4 text-[10px] text-foundry-type-dim">
+          <span className="min-w-0 truncate">
+            © {new Date().getFullYear()} {marca.brandName}
+          </span>
+          <span className="font-mono tracking-wider">REGISTERED</span>
         </div>
       </div>
     </div>

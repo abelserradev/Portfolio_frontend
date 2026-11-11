@@ -1,69 +1,108 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { TypeAnimation } from 'react-type-animation';
-import { dispararAbrirChat } from '@/lib/chat-events';
+import { obtenerConfigMarca } from '@/lib/site-config';
+
+const TEASER_PLATES = [
+  {
+    id: 'PLATE 01',
+    title: 'Misión destacada',
+    meta: 'Desde el catálogo API',
+    href: '#misiones',
+  },
+  {
+    id: 'PLATE 02',
+    title: 'Servicios',
+    meta: 'Misma escala, distinto metal',
+    href: '#servicios',
+  },
+  {
+    id: 'PLATE 03',
+    title: 'Contacto',
+    meta: 'Cotización sin neon',
+    href: '#contacto',
+  },
+] as const;
 
 export default function HeroSection() {
+  const marca = obtenerConfigMarca();
+
   return (
     <section
       id="inicio"
-      className="relative flex min-h-[calc(100svh-96px)] scroll-mt-28 flex-col items-center justify-center px-4 pt-16 text-center sm:min-h-[90vh] sm:scroll-mt-24 sm:pt-20"
+      className="relative scroll-mt-20 border-b border-foundry-seam"
+      aria-label="Presentación Buildforge"
     >
-      {/* Marco de escaneo (layout anterior); el tamaño del título se mantiene con el clamp actual */}
-      <motion.div
-        className="pointer-events-none absolute left-6 top-1/4 z-0 h-1/2 w-[calc(100%-3rem)] border border-cyan-500/30 sm:left-1/4 sm:w-1/2"
-        animate={{ opacity: [0.2, 0.8, 0.2] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        aria-hidden
-      />
-
-      <div className="relative z-10 mb-6 max-w-full font-orbitron text-[clamp(1.625rem,min(9vw,7vmin),6rem)] font-bold leading-tight text-white md:text-8xl">
-        <span className="relative z-10 inline-block max-w-full">Buildforge</span>
-        <span className="absolute left-1/2 top-0 -translate-x-1/2 text-cyan-500 opacity-70 animate-pulse" aria-hidden="true">
-          Buildforge
-        </span>
-        <span
-          className="absolute left-1/2 top-0 -translate-x-1/2 text-magenta-500 opacity-70 animate-ping"
-          style={{ animationDuration: '3s' }}
-          aria-hidden="true"
+      <div className="grid min-h-[calc(100svh-64px)] grid-cols-1 lg:grid-cols-[72px_minmax(0,1fr)_minmax(240px,420px)]">
+        <aside
+          className="flex items-center justify-center border-b border-foundry-seam bg-foundry-chrome px-4 py-3 lg:border-b-0 lg:border-r lg:px-2 lg:py-6"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(0deg, #241c14 0 18px, #2e241a 18px 36px)',
+          }}
+          aria-hidden
         >
-          Buildforge
-        </span>
+          <p className="font-display text-[10px] uppercase tracking-[0.22em] text-[#a89060] lg:text-[11px]">
+            <span className="lg:hidden">PATRÓN · FUNDICIÓN · FORMA → PRODUCTO</span>
+            <span
+              className="hidden lg:inline-block"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              PATRÓN · FUNDICIÓN · FORMA → PRODUCTO
+            </span>
+          </p>
+        </aside>
+
+        <div className="relative flex flex-col justify-center gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:flex-row lg:items-center lg:gap-6 xl:gap-10 xl:px-12">
+          <div className="foundry-plate foundry-plate-register foundry-pattern-wood relative mx-auto aspect-square w-full max-w-[min(100%,420px)] shrink-0 border-[3px] border-foundry-brass lg:mx-0 lg:max-w-[min(42vw,440px)]">
+            <span className="foundry-plate-id absolute left-4 top-4 z-10">
+              PAT-001 · ESCALA 1:1
+            </span>
+            <span
+              className="pointer-events-none absolute inset-[18%] border border-foundry-brass/25"
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute bottom-5 right-5 font-display text-[10px] uppercase tracking-[0.18em] text-foundry-brass/70"
+              aria-hidden
+            >
+              Madera de patrón
+            </span>
+          </div>
+
+          <div className="mx-auto w-full min-w-0 max-w-md shrink-0 lg:mx-0 lg:max-w-[20rem] xl:max-w-[22rem]">
+            <h1 className="font-display text-[clamp(2.5rem,5.5vw,3.75rem)] font-bold leading-[0.95] tracking-tight text-foundry-type-bright break-words">
+              {marca.brandName}
+            </h1>
+            <p className="mt-4 max-w-[36ch] text-base leading-snug text-foundry-type-mute sm:text-lg">
+              Estudio de software. El trabajo lidera: cada misión es un patrón listo
+              para fundir en producto.
+            </p>
+            <a href="#misiones" className="foundry-cta mt-7">
+              Ver misiones
+            </a>
+          </div>
+        </div>
+
+        <aside className="flex flex-col gap-3 border-t border-foundry-seam bg-foundry-chrome p-4 sm:p-5 lg:border-l lg:border-t-0 lg:gap-4 lg:p-7">
+          {TEASER_PLATES.map((plate) => (
+            <a
+              key={plate.id}
+              href={plate.href}
+              className="foundry-plate foundry-plate-register flex min-h-[5.5rem] flex-1 flex-col justify-between p-3.5 transition-[border-color,box-shadow] hover:border-foundry-brass/70 hover:shadow-[4px_8px_22px_rgba(14,10,6,0.45)] lg:min-h-0"
+            >
+              <span className="foundry-plate-id">{plate.id}</span>
+              <span className="font-display text-lg text-foundry-type-bright sm:text-xl">
+                {plate.title}
+              </span>
+              <span className="text-xs text-foundry-type-dim">{plate.meta}</span>
+            </a>
+          ))}
+        </aside>
       </div>
 
-      <h2 className="mb-8 min-h-12 px-2 font-tech text-lg text-gray-400 md:text-2xl">
-        <TypeAnimation
-          sequence={[
-            'Apps web y mobile',
-            2000,
-            'APIs y backends escalables',
-            2000,
-            'Integraciones con IA',
-            2000,
-            'MVP → producción',
-            2000,
-          ]}
-          wrapper="span"
-          cursor={true}
-          repeat={Infinity}
-        />
-      </h2>
-
-      <div className="flex w-full max-w-sm flex-col gap-4 sm:max-w-none sm:flex-row sm:justify-center sm:gap-6">
-        <a href="#servicios" className="group relative inline-flex items-center justify-center gap-2 border border-cyan-500/50 bg-black/40 px-5 py-3 font-mono text-sm text-cyan-300 transition-colors hover:bg-cyan-500/10 sm:px-8 sm:text-base">
-          <span>VER_SERVICIOS</span>
-          <span className="text-magenta-400">↓</span>
-          <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-cyan-400 group-hover:w-full transition-all duration-500" />
-        </a>
-        <button
-          type="button"
-          onClick={() => dispararAbrirChat({ intent: 'cotizacion' })}
-          className="group relative inline-flex items-center justify-center gap-2 border border-magenta-500/50 bg-black/40 px-5 py-3 font-mono text-sm text-magenta-300 transition-colors hover:bg-magenta-500/10 sm:px-8 sm:text-base"
-        >
-          <span>SOLICITAR_COTIZACIÓN</span>
-          <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-magenta-400 group-hover:w-full transition-all duration-500" />
-        </button>
+      <div className="flex items-center justify-between border-t border-foundry-seam bg-foundry-chrome px-5 py-3 font-mono text-[11px] text-foundry-type-dim sm:px-7">
+        <span>REGISTER · FIXED SCALE</span>
+        <span>buildforge.work</span>
       </div>
     </section>
   );

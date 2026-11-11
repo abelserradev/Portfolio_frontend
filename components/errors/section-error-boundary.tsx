@@ -57,7 +57,7 @@ export class SectionErrorBoundary extends Component<
           <button
             type="button"
             onClick={this.reiniciar}
-            className="mt-2 text-xs text-cyan-300 underline hover:text-cyan-200"
+            className="mt-2 text-xs text-foundry-brass underline hover:text-foundry-type-bright"
           >
             Reintentar
           </button>
@@ -67,17 +67,17 @@ export class SectionErrorBoundary extends Component<
     return (
       <div
         role="alert"
-        className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/20 px-6 py-8 text-center font-mono"
+        className="foundry-plate mx-auto max-w-lg px-6 py-8 text-center"
       >
-        <p className="text-sm uppercase tracking-wider text-red-400/90">Sección no disponible</p>
-        <p className="mt-2 text-base text-slate-200">{titulo}</p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="font-display text-base text-foundry-type-bright">Sección no disponible</p>
+        <p className="mt-2 text-base text-foundry-type">{titulo}</p>
+        <p className="mt-2 text-xs text-foundry-type-dim">
           El resto del sitio sigue funcionando. Puedes recargar esta parte.
         </p>
         <button
           type="button"
           onClick={this.reiniciar}
-          className="mt-5 rounded-lg border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 text-sm text-cyan-300 transition-colors hover:bg-cyan-900/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="foundry-cta mt-5"
         >
           Reintentar
         </button>

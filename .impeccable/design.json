@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-11T20:07:00.000Z",
+  "title": "Design System: Buildforge - Foundry Pattern Shop",
+  "extensions": {
+    "colorMeta": {
+      "foundry-ground": {
+        "role": "neutral",
+        "displayName": "Foundry Ground",
+        "canonical": "#2a2218",
+        "tonalRamp": ["#140f0b", "#1c1710", "#2a2218", "#3d3124", "#5c4a2e", "#8a7a62", "#c4b49a", "#e8dcc8"]
+      },
+      "foundry-chrome": {
+        "role": "neutral",
+        "displayName": "Foundry Chrome",
+        "canonical": "#1c1710",
+        "tonalRamp": ["#0e0a06", "#14100c", "#1c1710", "#2a2218", "#3d3124", "#5c4a2e", "#8a7a62", "#c4b49a"]
+      },
+      "foundry-brass": {
+        "role": "primary",
+        "displayName": "Foundry Brass",
+        "canonical": "#c9a227",
+        "tonalRamp": ["#3d2e08", "#5c4510", "#8b6914", "#a87d1c", "#c9a227", "#d4b03a", "#e0c56a", "#f0e2a8"]
+      },
+      "foundry-brass-deep": {
+        "role": "primary",
+        "displayName": "Deep Brass",
+        "canonical": "#8b6914",
+        "tonalRamp": ["#2a1f06", "#3d2e08", "#5c4510", "#8b6914", "#a87d1c", "#c9a227", "#d4b03a", "#e0c56a"]
+      },
+      "foundry-type": {
+        "role": "neutral",
+        "displayName": "Foundry Type",
+        "canonical": "#e8dcc8",
+        "tonalRamp": ["#5c4a2e", "#8a7a62", "#a89060", "#c4b49a", "#d4c8b0", "#e8dcc8", "#f3ead8", "#faf6ee"]
+      },
+      "foundry-type-bright": {
+        "role": "neutral",
+        "displayName": "Type Bright",
+        "canonical": "#f3ead8",
+        "tonalRamp": ["#8a7a62", "#a89060", "#c4b49a", "#d4c8b0", "#e8dcc8", "#f3ead8", "#f7f1e4", "#fcf9f3"]
+      },
+      "foundry-type-mute": {
+        "role": "neutral",
+        "displayName": "Type Mute",
+        "canonical": "#c4b49a",
+        "tonalRamp": ["#3d3124", "#5c4a2e", "#8a7a62", "#a89060", "#c4b49a", "#d4c8b0", "#e8dcc8", "#f3ead8"]
+      },
+      "foundry-type-dim": {
+        "role": "neutral",
+        "displayName": "Type Dim",
+        "canonical": "#8a7a62",
+        "tonalRamp": ["#2a2218", "#3d3124", "#5c4a2e", "#6e5c42", "#8a7a62", "#a89060", "#c4b49a", "#e8dcc8"]
+      },
+      "foundry-seam": {
+        "role": "neutral",
+        "displayName": "Seam",
+        "canonical": "#5c4a2e",
+        "tonalRamp": ["#1c1710", "#2a2218", "#3d3124", "#4a3a28", "#5c4a2e", "#8a7a62", "#a89060", "#c4b49a"]
+      },
+      "foundry-wood": {
+        "role": "secondary",
+        "displayName": "Pattern Wood",
+        "canonical": "#3d3124",
+        "tonalRamp": ["#1c1710", "#2a2218", "#32281e", "#3d3124", "#4a3a28", "#5c4a2e", "#8a7a62", "#c4b49a"]
+      },
+      "foundry-wood-light": {
+        "role": "secondary",
+        "displayName": "Wood Light",
+        "canonical": "#4a3a28",
+        "tonalRamp": ["#2a2218", "#3d3124", "#443422", "#4a3a28", "#5c4a2e", "#8a7a62", "#a89060", "#c4b49a"]
+      },
+      "rail-stripe-dark": {
+        "role": "neutral",
+        "displayName": "Rail Stripe Dark",
+        "canonical": "#241c14",
+        "tonalRamp": ["#0e0a06", "#14100c", "#1c1710", "#241c14", "#2a2218", "#3d3124", "#5c4a2e", "#8a7a62"]
+      },
+      "rail-stripe-mid": {
+        "role": "neutral",
+        "displayName": "Rail Stripe Mid",
+        "canonical": "#2e241a",
+        "tonalRamp": ["#14100c", "#1c1710", "#241c14", "#2a2218", "#2e241a", "#3d3124", "#5c4a2e", "#8a7a62"]
+      },
+      "rail-caption": {
+        "role": "neutral",
+        "displayName": "Rail Caption",
+        "canonical": "#a89060",
+        "tonalRamp": ["#5c4a2e", "#6e5c42", "#8a7a62", "#a89060", "#c4b49a", "#d4c8b0", "#e8dcc8", "#f3ead8"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Stencil",
+        "purpose": "Hero brand name and high-impact workshop titles only."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Section titles across services, missions, and contact."
+      },
+      "title": {
+        "displayName": "Plate Title",
+        "purpose": "Plate titles, teaser labels, CTA lettering weight."
+      },
+      "body": {
+        "displayName": "Body Literata",
+        "purpose": "Pitches, descriptions, and readable craft copy (~36–65ch)."
+      },
+      "label": {
+        "displayName": "Plate Mono",
+        "purpose": "Plate IDs, scales, tech chips, register metadata only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "foundry-shadow-soft",
+        "value": "4px 8px 20px rgba(14, 10, 6, 0.4)",
+        "purpose": "Default plate and primary CTA rest elevation."
+      },
+      {
+        "name": "foundry-shadow",
+        "value": "6px 10px 28px rgba(14, 10, 6, 0.55)",
+        "purpose": "Hero pattern plate cast and strong panel weight."
+      },
+      {
+        "name": "teaser-hover",
+        "value": "4px 8px 22px rgba(14, 10, 6, 0.45)",
+        "purpose": "Right-rail teaser plate hover."
+      },
+      {
+        "name": "consent-lift",
+        "value": "0 -8px 28px rgba(14, 10, 6, 0.45)",
+        "purpose": "Bottom analytics consent banner only."
+      },
+      {
+        "name": "hero-plate-inset",
+        "value": "inset 0 0 0 12px #1c1710, 6px 12px 28px rgba(14, 10, 6, 0.55)",
+        "purpose": "Hero PAT-001 collar + cast combined shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.19, 1, 0.22, 1)",
+        "purpose": "CTA transitions and mission plate register settle."
+      },
+      {
+        "name": "cta-transition",
+        "value": "180ms cubic-bezier(0.19, 1, 0.22, 1)",
+        "purpose": "Primary button background and active press."
+      },
+      {
+        "name": "mission-register",
+        "value": "opacity 520ms / transform 520ms ease-out-expo",
+        "purpose": "Mission plates settle onto shared baseline on scroll-in."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Brass foundry CTA — Ver misiones / Ver proyectos.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#misiones\">Ver misiones</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; padding: 0.875rem 1.375rem; background: var(--foundry-brass, #c9a227); color: var(--foundry-chrome, #1c1710); font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border: none; border-radius: 0; box-shadow: 4px 8px 20px rgba(14, 10, 6, 0.4); transition: background-color 180ms cubic-bezier(0.19, 1, 0.22, 1), transform 180ms cubic-bezier(0.19, 1, 0.22, 1); } .ds-btn-primary:hover { background: color-mix(in srgb, #c9a227 88%, white); } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Brass Outline",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Transparent brass-border CTA for cotización and secondary actions.",
+      "html": "<button type=\"button\" class=\"ds-btn-secondary\">Solicitar cotización</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; justify-content: center; padding: 0.625rem 1.5rem; background: transparent; color: var(--foundry-brass, #c9a227); font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid color-mix(in srgb, #c9a227 70%, transparent); border-radius: 0; cursor: pointer; transition: background-color 180ms cubic-bezier(0.19, 1, 0.22, 1), border-color 180ms cubic-bezier(0.19, 1, 0.22, 1); } .ds-btn-secondary:hover { background: color-mix(in srgb, #c9a227 10%, transparent); } .ds-btn-secondary:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Seam Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Seam-border mute control used for decline/secondary chrome actions.",
+      "html": "<button type=\"button\" class=\"ds-btn-ghost\">Rechazar</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; background: transparent; color: var(--foundry-type-mute, #c4b49a); font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--foundry-seam, #5c4a2e); border-radius: 0; cursor: pointer; transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease; } .ds-btn-ghost:hover { border-color: var(--foundry-type-dim, #8a7a62); background: var(--foundry-ground, #2a2218); } .ds-btn-ghost:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }"
+    },
+    {
+      "name": "Pattern Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "Wooden pattern plate with seam border, soft shadow, and dashed brass register.",
+      "html": "<article class=\"ds-plate\"><span class=\"ds-plate-id\">PAT-001 · ESCALA 1:1</span><h3 class=\"ds-plate-title\">Misión ejemplo</h3><p class=\"ds-plate-body\">Descripción breve del patrón listo para fundir.</p></article>",
+      "css": ".ds-plate { position: relative; border: 1px solid var(--foundry-seam, #5c4a2e); background: linear-gradient(145deg, #4a3a28 0%, #2a2218 48%, #3d3124 100%); box-shadow: 4px 8px 20px rgba(14, 10, 6, 0.4); padding: 1.25rem; color: var(--foundry-type, #e8dcc8); border-radius: 0; } .ds-plate::before { content: \"\"; position: absolute; inset: 10px; border: 1px dashed #8b6914; pointer-events: none; opacity: 0.55; } .ds-plate-id { display: block; position: relative; font-family: \"JetBrains Mono\", ui-monospace, Consolas, monospace; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--foundry-brass, #c9a227); margin-bottom: 0.75rem; } .ds-plate-title { position: relative; margin: 0; font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--foundry-type-bright, #f3ead8); } .ds-plate:hover .ds-plate-title { color: var(--foundry-brass, #c9a227); } .ds-plate-body { position: relative; margin: 0.5rem 0 0; font-family: Literata, \"Palatino Linotype\", Palatino, serif; font-size: 0.875rem; line-height: 1.625; color: var(--foundry-type-mute, #c4b49a); }"
+    },
+    {
+      "name": "Chat Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Squared ground field with seam border and brass focus ring.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Correo</span><input class=\"ds-input\" type=\"email\" placeholder=\"tu@email.com\" /></label>",
+      "css": ".ds-field { display: block; } .ds-field-label { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; font-weight: 500; color: var(--foundry-type-mute, #c4b49a); } .ds-input { width: 100%; border: 1px solid var(--foundry-seam, #5c4a2e); background: var(--foundry-ground, #2a2218); color: var(--foundry-type, #e8dcc8); padding: 0.625rem 0.75rem; font-size: 0.875rem; border-radius: 0; } .ds-input::placeholder { color: var(--foundry-type-dim, #8a7a62); } .ds-input:hover { border-color: color-mix(in srgb, #c9a227 40%, #5c4a2e); } .ds-input:focus { outline: none; border-color: var(--foundry-brass, #c9a227); box-shadow: 0 0 0 2px color-mix(in srgb, #c9a227 30%, transparent); } .ds-input:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }"
+    },
+    {
+      "name": "Foundry Nav",
+      "kind": "nav",
+      "refersTo": "nav-chrome",
+      "description": "Fixed chrome bar with deep-brass bottom edge and stencil section links.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-logo\" href=\"#inicio\">&lt;/BUILDFORGE&gt;</a><ul class=\"ds-nav-list\"><li><a class=\"ds-nav-link\" href=\"#servicios\">Servicios</a></li><li><a class=\"ds-nav-link\" href=\"#misiones\">Misiones</a></li><li><a class=\"ds-nav-link\" href=\"#contacto\">Contacto</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 1.75rem; background: var(--foundry-chrome, #1c1710); border-bottom: 2px solid var(--foundry-brass-deep, #8b6914); } .ds-nav-logo { font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.14em; color: var(--foundry-type-bright, #f3ead8); text-decoration: none; } .ds-nav-logo:hover { opacity: 0.9; } .ds-nav-list { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; } .ds-nav-link { position: relative; font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--foundry-type-mute, #c4b49a); text-decoration: none; } .ds-nav-link::after { content: \"\"; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0; background: var(--foundry-brass, #c9a227); transition: width 300ms ease; } .ds-nav-link:hover { color: var(--foundry-type-bright, #f3ead8); } .ds-nav-link:hover::after { width: 100%; } .ds-nav-link:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }"
+    },
+    {
+      "name": "Tech Chip",
+      "kind": "chip",
+      "refersTo": "chip-tech",
+      "description": "Mono tech inventory stamp on mission plates.",
+      "html": "<span class=\"ds-chip\">Next.js</span>",
+      "css": ".ds-chip { display: inline-block; border: 1px solid var(--foundry-seam, #5c4a2e); background: color-mix(in srgb, #1c1710 60%, transparent); padding: 0.125rem 0.5rem; font-family: \"JetBrains Mono\", ui-monospace, Consolas, monospace; font-size: 0.625rem; color: var(--foundry-type-mute, #c4b49a); border-radius: 0; } .ds-chip:hover { border-color: color-mix(in srgb, #c9a227 50%, #5c4a2e); color: var(--foundry-type-bright, #f3ead8); }"
+    },
+    {
+      "name": "Process Teach Diagram",
+      "kind": "custom",
+      "refersTo": "plate",
+      "description": "Single didactic Forma → Molde → Desarrollo → Producto figure used in Services.",
+      "html": "<figure class=\"ds-teach\" aria-label=\"Proceso de taller\"><figcaption class=\"ds-teach-caption\">Del patrón al producto</figcaption><ol class=\"ds-teach-steps\"><li class=\"ds-teach-step\"><span class=\"ds-plate-id\">01</span><span class=\"ds-teach-label\">Forma</span><span class=\"ds-teach-hint\">Idea / brief</span></li><li class=\"ds-teach-step\"><span class=\"ds-plate-id\">02</span><span class=\"ds-teach-label\">Molde</span><span class=\"ds-teach-hint\">Arquitectura</span></li><li class=\"ds-teach-step\"><span class=\"ds-plate-id\">03</span><span class=\"ds-teach-label\">Desarrollo</span><span class=\"ds-teach-hint\">Implementación</span></li><li class=\"ds-teach-step\"><span class=\"ds-plate-id\">04</span><span class=\"ds-teach-label\">Producto</span><span class=\"ds-teach-hint\">Entrega</span></li></ol></figure>",
+      "css": ".ds-teach { margin: 0; max-width: 48rem; border: 1px solid var(--foundry-seam, #5c4a2e); background: color-mix(in srgb, #1c1710 70%, transparent); padding: 1.5rem; } .ds-teach-caption { margin-bottom: 1.25rem; text-align: center; font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 0.875rem; letter-spacing: 0.04em; color: var(--foundry-type-mute, #c4b49a); } .ds-teach-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; list-style: none; margin: 0; padding: 0; } .ds-teach-step { display: flex; flex-direction: column; gap: 0.25rem; border: 1px solid var(--foundry-seam, #5c4a2e); background: linear-gradient(145deg, #4a3a28 0%, #2a2218 48%, #3d3124 100%); padding: 0.75rem; box-shadow: 4px 8px 20px rgba(14, 10, 6, 0.4); } .ds-plate-id { font-family: \"JetBrains Mono\", ui-monospace, Consolas, monospace; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--foundry-brass, #c9a227); } .ds-teach-label { font-family: \"Big Shoulders Stencil\", sans-serif; font-size: 1rem; color: var(--foundry-type-bright, #f3ead8); } .ds-teach-hint { font-size: 0.75rem; color: var(--foundry-type-dim, #8a7a62); } @media (max-width: 639px) { .ds-teach-steps { grid-template-columns: repeat(2, 1fr); } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Foundry Pattern Shop",
+    "overview": "Buildforge’s public face reads as a warm workshop bench, not a neon agency template. The ground is sand-mold dark; surfaces are wooden pattern plates with brass registration marks; type is workshop-stenciled for brand and serif for craft reading. Density paces from a registered first viewport (rail + hero plate + teaser stack) into quieter mid-page teaching, then a denser mission catalog that settles onto a shared baseline.\n\nThe system refuses centered cyber-neon heroes, glitch clone logos, cyan/magenta scan frames, and icon-card service grids. Soft offset shadows with blur convey weight on wood; hard neobrutal blocks are out of world. Mono type is reserved for plate IDs, scales, and measurements — never for marketing headlines.",
+    "keyCharacteristics": [
+      "Warm foundry dark ground with sand-mold texture and chrome rails",
+      "Pattern-wood plates with dashed brass register frames and corner marks",
+      "Big Shoulders Stencil + Literata + JetBrains Mono triad",
+      "Soft brown-black offset shadows; brass as scarce accent metal",
+      "Mission plates register on scroll (ease-out-expo); reduced-motion ships already registered"
+    ],
+    "rules": [
+      {
+        "name": "The Scarce Brass Rule",
+        "body": "Brass fills CTAs, IDs, and focus — not large backgrounds. If a screen looks golden, pull brass back to chrome/wood.",
+        "section": "colors"
+      },
+      {
+        "name": "The Seam-Not-Glow Rule",
+        "body": "Separate surfaces with foundry-seam borders; never cyan/magenta glows or neon outlines.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Measurement Rule",
+        "body": "JetBrains Mono is for IDs, scales, status stamps, and tech chips — not for brand display or paragraph reading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Stencil Brand Rule",
+        "body": "</BUILDFORGE> and display headlines stay Big Shoulders Stencil; do not substitute Orbitron, Geist, Inter, or Space Grotesk.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Offset Rule",
+        "body": "Shadows always blur; hard 0-blur neobrutal offsets are out of world.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Flat Chrome Rule",
+        "body": "Nav and rails stay flat chrome with seam/brass borders — no drop shadow on the fixed bar.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do lead with craft: pattern plates, register marks, and real API missions before marketing claims.",
+      "Do keep brass scarce — CTAs, IDs, focus, and thin accents only.",
+      "Do use soft brown-black blurred shadows (4–6px offset, 20–28px blur).",
+      "Do reserve JetBrains Mono for plate IDs, scales, chips, and register metadata.",
+      "Do honor prefers-reduced-motion (mission plates pre-registered; no settle animation)."
+    ],
+    "donts": [
+      "Don't revive neon/cyan/magenta glitch clones, TypeAnimation hero loops, or scan-frame pulses.",
+      "Don't put marketing headlines in mono or swap display to Inter/Geist/Orbitron/Space Grotesk.",
+      "Don't invent hard neobrutal offset shadows or large rounded “SaaS cards” as the default plate.",
+      "Don't invent client logos, awards, or metrics not supplied by product/API content.",
+      "Don't spread icon-card service grids; services stay list + one teach-diagram + media."
+    ]
+  }
+}

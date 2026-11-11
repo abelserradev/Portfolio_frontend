@@ -1,9 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { obtenerConfigMarca } from '@/lib/site-config';
 import { dispararAbrirChat } from '@/lib/chat-events';
 import ServicesMediaPlayer from './services-media-player';
+import ProcessTeachDiagram from './process-teach-diagram';
 
 export default function BuildforgeServicesSection() {
   const marca = obtenerConfigMarca();
@@ -11,33 +11,27 @@ export default function BuildforgeServicesSection() {
   return (
     <section
       id="servicios"
-      className="container mx-auto scroll-mt-28 px-4 py-12 sm:scroll-mt-24 sm:py-16"
+      className="container mx-auto scroll-mt-28 px-4 py-16 sm:scroll-mt-24 sm:py-20"
       aria-label="Servicios de software Buildforge"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mx-auto max-w-4xl"
-      >
-        <p className="text-center font-mono text-xs tracking-widest text-cyan-400/90">
-          {'// SERVICIOS_BUILDFORGE'}
-        </p>
-        <h2 className="mt-2 text-center font-orbitron text-2xl tracking-wider text-white sm:text-3xl">
+      <div className="mx-auto max-w-4xl">
+        <h2 className="text-center font-display text-2xl tracking-wide text-foundry-type-bright sm:text-3xl">
           {marca.brandTagline}
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center font-tech text-sm leading-relaxed text-gray-300 sm:text-base">
+        <p className="mx-auto mt-4 max-w-[65ch] text-center text-sm leading-relaxed text-foundry-type-mute sm:text-base">
           {marca.brandPitch}
         </p>
 
-        <ul className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-2 sm:grid-cols-2">
+        <ProcessTeachDiagram />
+
+        <ul className="mx-auto mt-10 max-w-2xl space-y-2 border-t border-foundry-seam pt-8">
           {marca.servicesList.map((servicio) => (
             <li
               key={servicio}
-              className="flex items-center gap-2 rounded border border-cyan-800/30 bg-black/40 px-3 py-2 font-mono text-xs text-cyan-200/90 sm:text-sm"
+              className="flex items-baseline gap-3 border-b border-foundry-seam/60 py-2.5 text-sm text-foundry-type sm:text-base"
             >
-              <span className="text-fuchsia-400" aria-hidden="true">
-                ▸
+              <span className="foundry-plate-id shrink-0" aria-hidden>
+                ◆
               </span>
               {servicio}
             </li>
@@ -53,21 +47,18 @@ export default function BuildforgeServicesSection() {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-          <a
-            href="#misiones"
-            className="inline-flex justify-center border border-cyan-500/60 bg-cyan-500/10 px-6 py-2.5 font-mono text-sm text-cyan-200 transition-colors hover:bg-cyan-500/20"
-          >
-            VER_PROYECTOS
+          <a href="#misiones" className="foundry-cta">
+            Ver proyectos
           </a>
           <button
             type="button"
             onClick={() => dispararAbrirChat({ intent: 'cotizacion' })}
-            className="inline-flex justify-center border border-fuchsia-500/50 bg-fuchsia-500/10 px-6 py-2.5 font-mono text-sm text-fuchsia-200 transition-colors hover:bg-fuchsia-500/15"
+            className="inline-flex justify-center border border-foundry-brass/70 bg-transparent px-6 py-2.5 font-display text-sm uppercase tracking-wider text-foundry-brass transition-colors hover:bg-foundry-brass/10"
           >
-            SOLICITAR_COTIZACIÓN
+            Solicitar cotización
           </button>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,0 +1,18 @@
+{
+  "boot": 0.23,
+  "intro": 4.55,
+  "hero": 9.81,
+  "misiones": 15.01,
+  "stack": 20.56,
+  "grid": 29.03,
+  "demo": 31.32,
+  "producto": 44.14,
+  "cotizar": 48.89,
+  "chat_envio": 56.22,
+  "chat_espera_inicio": 60.18,
+  "chat_respuesta": 79.97,
+  "cierre": 89.94,
+  "contacto": 98.26,
+  "cta": 100.07,
+  "fin": 105.78
+}

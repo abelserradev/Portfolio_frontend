@@ -1,34 +1,14 @@
 "use client";
 
-import { motion } from 'framer-motion';
 import { obtenerConfigMarca } from '@/lib/site-config';
 
+/** Marca de taller — tipografía de fundición, sin clones glitch. */
 export default function GlitchLogo() {
   const { logoText } = obtenerConfigMarca();
 
   return (
-    <div className="relative inline-block font-orbitron text-lg font-bold tracking-[0.2em] text-white sm:text-2xl sm:tracking-widest">
-      <motion.div
-        className="relative z-10"
-        animate={{ x: [0, -2, 2, -1, 1, 0], opacity: [1, 0.8, 1] }}
-        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-      >
-        {logoText}
-      </motion.div>
-      <motion.div
-        className="absolute top-0 left-0 opacity-70 mix-blend-screen text-cyan-400"
-        animate={{ x: [0, 2, -2, 1, -1, 0], opacity: [0, 0.6, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-      >
-        {logoText}
-      </motion.div>
-      <motion.div
-        className="absolute top-0 left-0 opacity-70 mix-blend-screen text-magenta-500"
-        animate={{ x: [0, -1, 1, -2, 2, 0], opacity: [0, 0.4, 0] }}
-        transition={{ repeat: Infinity, duration: 1.8, ease: "linear" }}
-      >
-        {logoText}
-      </motion.div>
-    </div>
+    <span className="inline-block font-display text-lg font-bold tracking-[0.14em] text-foundry-type-bright sm:text-xl sm:tracking-[0.16em]">
+      {logoText}
+    </span>
   );
 }

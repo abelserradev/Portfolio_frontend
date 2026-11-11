@@ -34,10 +34,10 @@ describe('normalizarStatusProyecto', () => {
 });
 
 describe('obtenerEtiquetaMision', () => {
-  it('mvp_active tiene badge animado', () => {
+  it('mvp_active usa badge foundry brass', () => {
     const r = obtenerEtiquetaMision('mvp_active', true);
     expect(r.texto).toBe('MVP ACTIVO');
-    expect(r.claseBadge).toContain('animate-pulse');
+    expect(r.claseBadge).toContain('foundry-brass');
   });
 
   it('live con URL pública → EN PRODUCCIÓN', () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import type { PortfolioProject } from '@/lib/types/portfolio-project';
 import { obtenerUrlRedirectVisita } from '@/lib/api-config';
 import {
@@ -10,17 +10,21 @@ import {
   obtenerTextoCtaMision,
 } from '@/lib/mission-presentation';
 
-const nivelesSenal = ['senal-baja', 'senal-media', 'senal-alta', 'senal-maxima'] as const;
+function padPlateId(n: number): string {
+  return `PAT-${String(n).padStart(3, '0')}`;
+}
 
 export default function MissionCard({
   mission,
   destacada = false,
   enLayoutDestacado = false,
+  plateIndex = 1,
 }: {
   readonly mission: PortfolioProject;
   readonly destacada?: boolean;
   /** Cuando la tarjeta va junto al visor 3D, no ocupar todo el ancho del grid. */
   readonly enLayoutDestacado?: boolean;
+  readonly plateIndex?: number;
 }) {
   const visitUrl = obtenerUrlRedirectVisita(mission.id);
   const tecnologias = (mission.tech_stack ?? '')
@@ -34,82 +38,105 @@ export default function MissionCard({
   const etiqueta = obtenerEtiquetaMision(status, hayUrlPublica);
   const subtitulo = obtenerSubtituloMision(status);
   const cta = obtenerTextoCtaMision(status, hayUrlPublica);
-  const esMvpActivo = status === 'mvp_active';
+  const badgeFoundry =
+    status === 'mvp_active'
+      ? 'border-foundry-brass/70 bg-foundry-brass/15 text-foundry-brass'
+      : status === 'coming_soon'
+        ? 'border-foundry-seam bg-foundry-ground text-foundry-type-dim'
+        : hayUrlPublica && status === 'live'
+          ? 'border-foundry-brass/50 bg-foundry-brass/10 text-foundry-type-bright'
+          : 'border-foundry-seam bg-foundry-chrome text-foundry-type-mute';
+  const plateRef = useRef<HTMLElement>(null);
+  const [registered, setRegistered] = useState(false);
+
+  useEffect(() => {
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      setRegistered(true);
+      return;
+    }
+    const el = plateRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setRegistered(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.28, rootMargin: '0px 0px -8% 0px' },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02, boxShadow: esMvpActivo ? '0 0 30px #facc1580' : '0 0 25px #ff00ff80' }}
-      className={`group relative h-full overflow-hidden rounded-sm border bg-black/60 p-4 backdrop-blur sm:p-5 ${
+    <article
+      ref={plateRef}
+      className={`foundry-plate foundry-plate-register foundry-mission-plate group relative flex h-full flex-col overflow-hidden p-4 sm:p-5 ${
+        registered ? 'is-registered' : 'is-unsettled'
+      } ${
         destacada
-          ? `border-yellow-400/60 ring-1 ring-yellow-400/25 ${
-              enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3'
-            }`
-          : 'border-cyan-500/50'
+          ? `border-foundry-brass/70 ${enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3'}`
+          : ''
       }`}
-      style={{ clipPath: 'polygon(0% 0%, 95% 0%, 100% 10%, 100% 100%, 5% 100%, 0% 90%)' }}
     >
-      <div
-        className={`absolute top-0 left-0 h-1 w-full bg-linear-to-r ${
-          esMvpActivo ? 'from-yellow-400 via-cyan-400 to-fuchsia-500' : 'from-cyan-400 to-magenta-500'
-        }`}
-      />
-      <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-        <h3 className="min-w-0 wrap-break-word font-orbitron text-lg text-cyan-300 transition-colors group-hover:text-white sm:text-xl">
-          {mission.title}
-        </h3>
+      <div className="absolute left-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute right-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute bottom-2 left-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute bottom-2 right-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <span className="foundry-plate-id">{padPlateId(plateIndex)}</span>
         <span
-          className={`w-fit shrink-0 border px-2 py-0.5 font-mono text-xs ${etiqueta.claseBadge}`}
+          className={`w-fit shrink-0 border px-2 py-0.5 font-mono text-[10px] tracking-wide ${badgeFoundry}`}
         >
           {etiqueta.texto}
         </span>
       </div>
+
+      <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <h3 className="min-w-0 wrap-break-word font-display text-xl text-foundry-type-bright transition-colors group-hover:text-foundry-brass sm:text-2xl">
+          {mission.title}
+        </h3>
+      </div>
       {subtitulo ? (
-        <p className="mt-1 font-mono text-xs text-yellow-200/80">{subtitulo}</p>
+        <p className="mt-1 text-xs text-foundry-brass/90">{subtitulo}</p>
       ) : null}
-      <p className="mt-2 text-gray-400 font-tech text-sm line-clamp-3 sm:line-clamp-4">
+      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-foundry-type-mute sm:line-clamp-4">
         {mission.description}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         {tecnologias.map((tech) => (
           <span
             key={tech}
-            className={`text-xs font-mono border px-2 py-0.5 ${
-              tech === 'MVP' || tech === 'Web live' || tech === 'Mobile WIP'
-                ? 'border-yellow-500/40 bg-yellow-500/10 text-yellow-300'
-                : 'bg-cyan-500/10 border border-cyan-500/30 text-cyan-400'
-            }`}
+            className="border border-foundry-seam bg-foundry-chrome/60 px-2 py-0.5 font-mono text-[10px] text-foundry-type-mute"
           >
             {tech}
           </span>
         ))}
       </div>
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex items-center gap-1">
-          {nivelesSenal.map((senal) => (
-            <span
-              key={senal}
-              className={`w-2 h-2 rounded-full shadow-neon ${
-                esMvpActivo ? 'bg-yellow-400' : 'bg-yellow-400/70'
-              }`}
-            />
-          ))}
-        </div>
+      <div className="mt-auto flex flex-col gap-3 pt-5 sm:flex-row sm:items-end sm:justify-between">
+        <span className="font-mono text-[10px] tracking-widest text-foundry-type-dim">
+          ESCALA 1:1
+        </span>
         {cta.puedeVisitar ? (
           <a
             href={visitUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-xs text-magenta-400 underline decoration-dotted transition-colors hover:text-magenta-300 sm:shrink-0"
+            className="font-mono text-xs text-foundry-brass underline decoration-dotted underline-offset-4 transition-colors hover:text-foundry-type-bright sm:shrink-0"
           >
             {cta.texto}
           </a>
         ) : (
-          <span className="font-mono text-xs leading-none text-cyan-400/85 sm:shrink-0 sm:text-right">
+          <span className="font-mono text-xs leading-none text-foundry-type-dim sm:shrink-0 sm:text-right">
             {cta.texto}
           </span>
         )}
       </div>
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-linear-to-r from-transparent via-cyan-500 to-transparent transform -skew-x-12 -translate-x-1/2" />
-    </motion.div>
+    </article>
   );
 }

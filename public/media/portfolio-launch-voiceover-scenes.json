@@ -1,0 +1,121 @@
+{
+  "name": "portfolio-launch",
+  "voice": "JBFqnCBsd6RMkjVDRZzb",
+  "character": "narrator",
+  "model": "eleven_multilingual_v2",
+  "_syncNote": "Cada escena arranca en marker + offset (segundos). Los markers los escribe scripts/record-portfolio-launch.mjs en portfolio-launch-markers.json.",
+  "scenes": [
+    {
+      "id": "s01_boot",
+      "marker": "boot",
+      "offset": 0.3,
+      "text": "Buildforge: estudio de desarrollo de software a medida.",
+      "duration": 4,
+      "character": "expert"
+    },
+    {
+      "id": "s02_intro",
+      "marker": "intro",
+      "offset": 0.4,
+      "text": "Web, APIs, inteligencia artificial y MVPs listos para producción.",
+      "duration": 5,
+      "character": "narrator"
+    },
+    {
+      "id": "s03_hero",
+      "marker": "hero",
+      "offset": 0.3,
+      "text": "Así se ve nuestro portafolio en vivo, en portfolio buildforge work.",
+      "duration": 5,
+      "character": "narrator"
+    },
+    {
+      "id": "s04_misiones",
+      "marker": "misiones",
+      "offset": 0.2,
+      "text": "Misiones reales: proyectos en vivo, MVPs activos y demos interactivas.",
+      "duration": 5,
+      "character": "narrator"
+    },
+    {
+      "id": "s05_stack",
+      "marker": "stack",
+      "offset": 0.6,
+      "text": "Stack con Next.js, FastAPI y Docker, pensado para desplegar en serio.",
+      "duration": 5,
+      "character": "expert"
+    },
+    {
+      "id": "s06_grid",
+      "marker": "grid",
+      "offset": 0.1,
+      "text": "Recorre las misiones y prueba sus demos.",
+      "duration": 3,
+      "character": "conversational"
+    },
+    {
+      "id": "s07_demo",
+      "marker": "demo",
+      "offset": 0.3,
+      "text": "Spend Save: control de gastos móvil, con tasa BCV, OCR y perfiles comercio.",
+      "duration": 6,
+      "character": "narrator"
+    },
+    {
+      "id": "s08_producto",
+      "marker": "producto",
+      "offset": 0.3,
+      "text": "Producto propio, con demo que puedes probar desde el portfolio.",
+      "duration": 4,
+      "character": "narrator"
+    },
+    {
+      "id": "s09_cotizar",
+      "marker": "cotizar",
+      "offset": 0.3,
+      "text": "¿Tienes un proyecto en mente? Cotiza con el asistente de inteligencia artificial.",
+      "duration": 5,
+      "character": "conversational"
+    },
+    {
+      "id": "s10_chat_envio",
+      "marker": "chat_envio",
+      "offset": 0.2,
+      "text": "Describe tu MVP: landing, panel admin, API REST o lo que necesites.",
+      "duration": 5,
+      "character": "conversational"
+    },
+    {
+      "id": "s11_chat_respuesta",
+      "marker": "chat_respuesta",
+      "offset": 0.3,
+      "text": "El asistente responde con alcance orientativo y tiempos estimados.",
+      "duration": 5,
+      "character": "narrator"
+    },
+    {
+      "id": "s12_chat_cierre",
+      "marker": "chat_respuesta",
+      "offset": 4.8,
+      "text": "Completas tus datos y envías la solicitud.",
+      "duration": 3,
+      "character": "calm"
+    },
+    {
+      "id": "s13_fin",
+      "marker": "cierre",
+      "offset": 0.4,
+      "text": "Buildforge construye el futuro de tu software.",
+      "duration": 4,
+      "character": "calm"
+    },
+    {
+      "id": "s14_cta",
+      "marker": "contacto",
+      "offset": -2.4,
+      "text": "Entra a portfolio buildforge work y escríbenos para arrancar tu proyecto.",
+      "duration": 5,
+      "character": "calm"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import Navbar from '@/components/layout/navbar';
-import CyberBackground from '@/components/layout/cyberBackground';
+import FoundryBackground from '@/components/layout/foundryBackground';
 import HeroSection from '@/components/hero/HeroSection';
 import FeaturedBannerSlot from '@/components/missions/featured-banner-slot';
 import BuildforgeServicesSection from '@/components/services/buildforge-services-section';
@@ -12,8 +12,8 @@ import { SectionBoundary } from '@/components/errors/section-boundary';
 
 export default function Home() {
   return (
-    <div className="text-white bg-black min-h-screen">
-      <CyberBackground />
+    <div className="relative min-h-screen text-foundry-type">
+      <FoundryBackground />
       <Navbar />
       <div className="overflow-x-hidden">
         <main>

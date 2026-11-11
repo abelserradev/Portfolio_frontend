@@ -8,3 +8,8 @@ Placeholders SVG incluidos para desarrollo y deploy sin assets finales.
 | `banner_frame.svg` | Poster por defecto de servicios | `banner_frame.png` o URL en `NEXT_PUBLIC_SERVICES_POSTER_URL` |
 
 Video de servicios: configurar `NEXT_PUBLIC_SERVICES_VIDEO_URL` (HTTPS). Valores `none`, `false` u `off` desactivan el reproductor.
+
+| Archivo | Uso |
+|---------|-----|
+| `portfolio-launch-cyber-reel.webm` | Reel ~55s del launch (grabar con `scripts/record-portfolio-launch-video.mjs`) |
+| `VIDEO-PROMPT-portfolio-launch.md` | Guion + prompts IA + comando de regeneración |
