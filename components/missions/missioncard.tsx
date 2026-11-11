@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { PortfolioProject } from '@/lib/types/portfolio-project';
 import { obtenerUrlRedirectVisita } from '@/lib/api-config';
 import {
@@ -9,6 +9,7 @@ import {
   obtenerSubtituloMision,
   obtenerTextoCtaMision,
 } from '@/lib/mission-presentation';
+import { obtenerImagenMision } from '@/lib/mission-images';
 
 function padPlateId(n: number): string {
   return `PAT-${String(n).padStart(3, '0')}`;
@@ -20,6 +21,25 @@ function claseBordePlaca(destacada: boolean, enLayoutDestacado: boolean): string
   }
   const span = enLayoutDestacado ? '' : 'md:col-span-2 lg:col-span-3';
   return `border-foundry-brass/70 ${span}`.trim();
+}
+
+function subscribeReducedMotion(onChange: () => void): () => void {
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  mq.addEventListener('change', onChange);
+  return () => mq.removeEventListener('change', onChange);
+}
+
+function getReducedMotionSnapshot(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/** Prefer reduced-motion via store so we never setState synchronously inside an effect. */
+function usePrefersReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    () => false,
+  );
 }
 
 export default function MissionCard({
@@ -49,14 +69,13 @@ export default function MissionCard({
   // Badge visual comes from mission-presentation; keep plate chrome foundry-only here.
   const badgeFoundry = etiqueta.claseBadge;
   const plateRef = useRef<HTMLElement>(null);
-  const [registered, setRegistered] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [plateVisible, setPlateVisible] = useState(false);
+  const registered = prefersReducedMotion || plateVisible;
+  const imagenMision = obtenerImagenMision(mission);
 
   useEffect(() => {
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      setRegistered(true);
+    if (prefersReducedMotion) {
       return;
     }
     const el = plateRef.current;
@@ -64,7 +83,7 @@ export default function MissionCard({
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setRegistered(true);
+          setPlateVisible(true);
           obs.disconnect();
         }
       },
@@ -72,7 +91,7 @@ export default function MissionCard({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <article
@@ -81,10 +100,22 @@ export default function MissionCard({
         registered ? 'is-registered' : 'is-unsettled'
       } ${claseBordePlaca(destacada, enLayoutDestacado)}`}
     >
-      <div className="absolute left-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
-      <div className="absolute right-2 top-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
-      <div className="absolute bottom-2 left-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
-      <div className="absolute bottom-2 right-2 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute left-2 top-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute right-2 top-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute bottom-2 left-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+      <div className="absolute bottom-2 right-2 z-20 h-2 w-2 border border-foundry-brass/80" aria-hidden />
+
+      {imagenMision ? (
+        <div className="relative mb-3 aspect-[16/10] w-full overflow-hidden border border-foundry-seam bg-foundry-chrome">
+          {/* Catalog stills are local fallbacks or absolute API URLs */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imagenMision}
+            alt=""
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+      ) : null}
 
       <div className="mb-3 flex items-start justify-between gap-3">
         <span className="foundry-plate-id">{padPlateId(plateIndex)}</span>

@@ -1,8 +1,8 @@
-/** Diagrama de taller: forma → molde → desarrollo → producto (única pieza didáctica). */
+/** Diagrama de taller: idea → arquitectura → desarrollo → producto (única pieza didáctica). */
 export default function ProcessTeachDiagram() {
   const steps = [
-    { id: '01', label: 'Forma', hint: 'Idea / brief' },
-    { id: '02', label: 'Molde', hint: 'Arquitectura' },
+    { id: '01', label: 'Idea', hint: 'Brief / necesidad' },
+    { id: '02', label: 'Arquitectura', hint: 'Diseño / estructura' },
     { id: '03', label: 'Desarrollo', hint: 'Implementación' },
     { id: '04', label: 'Producto', hint: 'Entrega' },
   ] as const;
@@ -10,10 +10,10 @@ export default function ProcessTeachDiagram() {
   return (
     <figure
       className="mx-auto mt-10 max-w-3xl border border-foundry-seam bg-foundry-chrome/70 p-4 sm:p-6"
-      aria-label="Proceso de taller: forma, molde, desarrollo, producto"
+      aria-label="Proceso de taller: idea, arquitectura, desarrollo, producto"
     >
       <figcaption className="mb-5 text-center font-display text-sm tracking-wide text-foundry-type-mute">
-        Del patrón al producto
+        De la idea al producto
       </figcaption>
       <svg
         viewBox="0 0 640 120"
@@ -72,7 +72,7 @@ export default function ProcessTeachDiagram() {
                 textAnchor="middle"
                 fill="#f3ead8"
                 fontFamily="system-ui, sans-serif"
-                fontSize="13"
+                fontSize="11"
                 fontWeight="700"
               >
                 {step.label}
