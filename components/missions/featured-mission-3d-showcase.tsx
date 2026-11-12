@@ -18,7 +18,8 @@ function MarcoDemo({ children }: Readonly<{ children: ReactNode }>) {
           LIVE
         </span>
       </div>
-      <div className="relative aspect-[16/11] min-h-[240px] w-full sm:min-h-[280px] lg:min-h-[320px]">
+      {/* Mobile needs extra height so the demo's fixed bottom controls aren't clipped inside the iframe. */}
+      <div className="relative aspect-[10/11] min-h-[320px] w-full sm:aspect-[16/11] sm:min-h-[280px] lg:min-h-[320px]">
         {children}
       </div>
     </div>
@@ -54,8 +55,9 @@ export default function FeaturedMission3dShowcase({
     return () => observador.disconnect();
   }, [usuarioActivo]);
 
-  const urlDemo = RUTA_DEMO_GUIA_3D_SPENDAVE;
-  const urlPantallaCompleta = urlDemo;
+  // embed=1 enables compact chrome inside the short mission iframe; full-page demo stays untouched.
+  const urlDemo = `${RUTA_DEMO_GUIA_3D_SPENDAVE}?embed=1`;
+  const urlPantallaCompleta = RUTA_DEMO_GUIA_3D_SPENDAVE;
 
   return (
     <div ref={contenedorRef} className="flex h-full flex-col gap-3">

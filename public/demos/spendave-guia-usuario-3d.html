@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spend$ave — Guía en 3D: así se usa la app</title>
+  <script>
+    // Early embed flag so compact controls paint on first frame inside the portfolio iframe.
+    (function marcarEmbed() {
+      try {
+        var q = new URLSearchParams(window.location.search);
+        if (q.get('embed') === '1' || window.self !== window.top) {
+          document.documentElement.classList.add('embed');
+        }
+      } catch (_) {
+        document.documentElement.classList.add('embed');
+      }
+    })();
+  </script>
   <style>
     :root {
       --primario: #ee8329;
@@ -109,10 +122,12 @@
       transform: translateX(-50%);
       display: flex; align-items: center; gap: 0.45rem;
       padding: 0.45rem 0.7rem;
+      max-width: calc(100% - 1rem);
       background: rgba(255, 255, 255, 0.88);
       border-radius: 999px;
       box-shadow: 0 6px 20px rgba(40, 30, 21, 0.14);
       z-index: 11;
+      box-sizing: border-box;
     }
     .controles label {
       font-size: 0.72rem;
@@ -129,13 +144,61 @@
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
+      min-height: 2rem;
     }
     .controles button:hover { border-color: var(--primario); color: var(--primario); }
-    #puntos { display: flex; gap: 0.28rem; margin: 0 0.3rem; }
-    #puntos button { width: 0.62rem; height: 0.62rem; padding: 0; border-radius: 50%; background: #e7dcd3; border: none; }
+    #puntos { display: flex; gap: 0.28rem; margin: 0 0.3rem; flex-shrink: 1; overflow: hidden; }
+    #puntos button { width: 0.62rem; height: 0.62rem; padding: 0; border-radius: 50%; background: #e7dcd3; border: none; min-height: 0; flex-shrink: 0; }
     #puntos button.activo { background: var(--primario); transform: scale(1.25); }
     .barra { position: fixed; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(0, 0, 0, 0.05); z-index: 11; }
     #progreso { height: 100%; width: 0; background: linear-gradient(90deg, var(--amarillo), var(--primario)); }
+    /* Compact chrome when embedded in the portfolio iframe (short + narrow viewport). */
+    html.embed .controles {
+      bottom: 0.4rem;
+      gap: 0.28rem;
+      padding: 0.35rem 0.45rem;
+      border-radius: 16px;
+      flex-wrap: nowrap;
+    }
+    html.embed .controles label { display: none; }
+    html.embed .controles > button,
+    html.embed .controles > select {
+      padding: 0.35rem 0.55rem;
+      font-size: 0.72rem;
+      min-height: 2.4rem;
+      min-width: 2.4rem;
+    }
+    html.embed .controles > select { min-width: auto; }
+    html.embed #btn-play { min-width: 4.5rem; }
+    html.embed #puntos { gap: 0.18rem; margin: 0 0.1rem; }
+    /* Dot steppers must NOT inherit the 44px touch min-size or they blow the bar width. */
+    html.embed #puntos button {
+      width: 0.48rem;
+      height: 0.48rem;
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+    }
+    html.embed #subtitulo {
+      bottom: 3.6rem;
+      padding: 0.65rem 0.85rem;
+      width: min(40rem, 94vw);
+    }
+    /* Embed POV must clear lateral top/left or top+bottom stretch the box on >900px iframes. */
+    html.embed #subtitulo.lateral {
+      top: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 3.6rem;
+      padding: 0.65rem 0.85rem;
+      width: min(40rem, 94vw);
+    }
+    html.embed #subtitulo.lateral.oculto {
+      transform: translate(-50%, 14px);
+    }
+    html.embed .marca { top: 0.55rem; left: 0.55rem; padding: 0.3rem 0.65rem; }
+    html.embed .marca b { font-size: 1rem; }
+    html.embed .marca small { display: none; }
     #fundido {
       position: fixed; inset: 0;
       background: #fff8ef;
@@ -162,6 +225,58 @@
       #subtitulo, #subtitulo.lateral { bottom: 4.6rem; padding: 0.8rem 1rem; }
       #cta { right: 50%; transform: translate(50%, -50%); top: 42%; }
       #cta.visible { transform: translate(50%, -50%); }
+    }
+    /*
+      Embed iframe is short: desktop CTA sizing overflows and ghosts the h2 / control bar.
+      Keep these rules AFTER the mobile media queries so they win on specificity+order.
+    */
+    html.embed #cta {
+      left: 50%;
+      right: auto;
+      top: 46%;
+      transform: translate(-50%, -50%);
+      width: min(22rem, calc(100% - 1.25rem));
+      max-height: calc(100% - 1.25rem);
+      padding: 0.85rem 0.95rem 0.9rem;
+      border-radius: 16px;
+      background: #fffdf9;
+      box-shadow: 0 12px 32px rgba(40, 30, 21, 0.28);
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      z-index: 20;
+    }
+    html.embed #cta.visible {
+      transform: translate(-50%, -50%);
+    }
+    html.embed #cta h2 {
+      font-size: clamp(1.15rem, 5.5vw, 1.45rem);
+      line-height: 1.15;
+    }
+    html.embed #cta p {
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+    html.embed #cta .botones {
+      margin-top: 0.75rem;
+      gap: 0.45rem;
+    }
+    html.embed #cta .btn {
+      padding: 0.7rem 0.8rem;
+      font-size: 0.82rem;
+      border-radius: 12px;
+    }
+    html.embed #cta small {
+      margin-top: 0.65rem;
+      font-size: 0.68rem;
+      line-height: 1.35;
+    }
+    /* Hide guide chrome under the CTA so Pausa/Velocidad don't peek through the card edges. */
+    html.embed #cta.visible ~ .controles,
+    html.embed #cta.visible ~ .barra {
+      opacity: 0;
+      pointer-events: none;
     }
   </style>
 </head>
