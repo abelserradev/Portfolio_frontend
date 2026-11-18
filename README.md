@@ -76,6 +76,8 @@ No uses `npm install` en este repo; `package-lock.json` está ignorado a propós
 
 El despliegue lo orquesta **Coolify** desde la rama configurada.
 
+Hooks locales, CI y deploy: [`docs/ci-coolify.md`](docs/ci-coolify.md).
+
 ### GitHub Actions → webhook
 
 Tras un **CI** exitoso en `main` o `develop` (o con *Run workflow* manual), el workflow [`Deploy Coolify`](.github/workflows/coolify-deploy.yml) hace POST al webhook de Coolify.
