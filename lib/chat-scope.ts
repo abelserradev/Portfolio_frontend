@@ -86,12 +86,23 @@ const TOPIC_SIGNALS: readonly string[] = [
   'portal',
   'tienda',
   'ecommerce',
+  'e-commerce',
   'chatbot',
   'llm',
   'ocr',
   'ia',
   'inteligencia artificial',
   'integracion',
+  'automatizar',
+  'automatizacion',
+  'vender',
+  'venta',
+  'ventas',
+  'negocio',
+  'cliente',
+  'online',
+  'en linea',
+  'budget',
   'whatsapp',
   'contacto',
   'email',
@@ -130,7 +141,7 @@ function normalizar(texto: string): string {
     .toLowerCase();
 }
 
-function esIntentoJailbreak(mensaje: string): boolean {
+export function esIntentoJailbreak(mensaje: string): boolean {
   const texto = normalizar(mensaje);
   return JAILBREAK_PATTERNS.some((p) => p.test(texto));
 }
