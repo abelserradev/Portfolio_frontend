@@ -11,10 +11,12 @@ import { EVENTO_ABRIR_CHAT, type AbrirChatDetalle } from '@/lib/chat-events';
 import { registrarEventoAnalytics } from '@/lib/analytics-api';
 import { validarFormularioCotizacion } from '@/lib/chat-quote-validation';
 import {
+  MENSAJE_DATOS_CONTACTO,
   MENSAJE_ESTADO_MISION,
   MENSAJE_FUERA_DE_ALCANCE,
   MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esPreguntaDatosContacto,
   esPreguntaEstadoMision,
   esPreguntaIdentidadBuildforge,
 } from '@/lib/chat-scope';
@@ -107,6 +109,19 @@ export function useBuildforgeChat() {
             id: generarIdCliente(),
             rol: 'assistant',
             texto: MENSAJE_ESTADO_MISION,
+          },
+        ]);
+        return;
+      }
+
+      // Lead form clarifications ("qué datos", "cómo se comunican") — never soft-refuse
+      if (esPreguntaDatosContacto(limpio)) {
+        setMensajes((prev) => [
+          ...prev,
+          {
+            id: generarIdCliente(),
+            rol: 'assistant',
+            texto: MENSAJE_DATOS_CONTACTO,
           },
         ]);
         return;

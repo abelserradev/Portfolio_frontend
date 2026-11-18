@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
+  MENSAJE_DATOS_CONTACTO,
   MENSAJE_ESTADO_MISION,
   MENSAJE_FUERA_DE_ALCANCE,
   MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esPreguntaDatosContacto,
   esPreguntaEstadoMision,
   esPreguntaIdentidadBuildforge,
 } from '@/lib/chat-scope';
@@ -54,6 +56,17 @@ describe('esFueraDeAlcance', () => {
     expect(MENSAJE_ESTADO_MISION).toMatch(/EN PRODUCCIÓN/);
     expect(MENSAJE_ESTADO_MISION).toMatch(/EN DESARROLLO/);
     expect(MENSAJE_ESTADO_MISION).not.toBe(MENSAJE_FUERA_DE_ALCANCE);
+  });
+
+  it('explica datos del lead y canal de contacto en lugar de rechazar', () => {
+    expect(esPreguntaDatosContacto('que datos debo ingresar?')).toBe(true);
+    expect(esPreguntaDatosContacto('pero como se comunican conmigo?')).toBe(true);
+    expect(esFueraDeAlcance('que datos debo ingresar?')).toBe(false);
+    expect(esFueraDeAlcance('pero como se comunican conmigo?')).toBe(false);
+    expect(esPreguntaDatosContacto('que es google')).toBe(false);
+    expect(MENSAJE_DATOS_CONTACTO).toMatch(/Email/i);
+    expect(MENSAJE_DATOS_CONTACTO).toMatch(/WhatsApp/i);
+    expect(MENSAJE_DATOS_CONTACTO).not.toBe(MENSAJE_FUERA_DE_ALCANCE);
   });
 
   it('trata vacío como fuera de alcance', () => {

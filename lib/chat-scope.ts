@@ -24,6 +24,18 @@ export const MENSAJE_ESTADO_MISION =
   '• PRÓXIMAMENTE: anunciado, todavía sin demo pública.\n' +
   'Si te interesa uno en concreto, dime el nombre y te oriento o cotizamos algo similar.';
 
+/** FAQ: what contact fields / how we reach the lead after an estimate. */
+export const MENSAJE_DATOS_CONTACTO =
+  'Para el siguiente paso del formulario de cotización en este chat pedimos:\n' +
+  '• Email (obligatorio)\n' +
+  '• Teléfono (obligatorio)\n' +
+  '• Nombre (opcional)\n' +
+  '• Descripción breve del proyecto\n' +
+  '• Canal preferido: email o WhatsApp\n' +
+  '• Presupuesto orientativo (opcional)\n\n' +
+  'Te contactamos por el canal que elijas. El chat orienta alcance y cotización; ' +
+  'no sustituye el email ni WhatsApp del sitio.';
+
 const JAILBREAK_PATTERNS: readonly RegExp[] = [
   /ignore\s+(all\s+)?(previous|prior|above|earlier)\s+instructions?/i,
   /disregard\s+(all\s+)?(previous|prior|your)\s+(instructions?|rules?)/i,
@@ -207,16 +219,65 @@ export function esPreguntaEstadoMision(mensaje: string): boolean {
 }
 
 /**
+ * Lead/contact clarifications after "deja tus datos" — never soft-refuse.
+ * Keep narrow: "qué datos" / "cómo me contactan", not generic "datos de X".
+ */
+export function esPreguntaDatosContacto(mensaje: string): boolean {
+  const texto = normalizar(mensaje);
+  if (!texto.trim()) {
+    return false;
+  }
+  const preguntaDatos =
+    (texto.includes('datos') || texto.includes('informacion') || texto.includes('formulario')) &&
+    [
+      'que ',
+      'cual',
+      'debo',
+      'debo ',
+      'ingresar',
+      'dejar',
+      'enviar',
+      'completar',
+      'llenar',
+      'necesito',
+      'pido',
+      'piden',
+      'requieren',
+      'solicitan',
+    ].some((p) => texto.includes(p));
+  if (preguntaDatos) {
+    return true;
+  }
+  return [
+    'como se comunican',
+    'como me comunican',
+    'como me contactan',
+    'como me escriben',
+    'como me llaman',
+    'como los contacto',
+    'como las contacto',
+    'como me alcanzan',
+    'por donde me contactan',
+    'como se contactan conmigo',
+    'como se comunican conmigo',
+  ].some((p) => texto.includes(p));
+}
+
+/**
  * Allowlist soft-block: only greetings + Buildforge/project signals call the API.
  * General trivia ("qué es Google") has no signal → refuse without hitting the backend.
- * Brand/status FAQs are never treated as out of scope.
+ * Brand/status/lead FAQs are never treated as out of scope.
  */
 export function esFueraDeAlcance(texto: string): boolean {
   const limpio = texto.trim();
   if (!limpio) {
     return true;
   }
-  if (esPreguntaIdentidadBuildforge(limpio) || esPreguntaEstadoMision(limpio)) {
+  if (
+    esPreguntaIdentidadBuildforge(limpio) ||
+    esPreguntaEstadoMision(limpio) ||
+    esPreguntaDatosContacto(limpio)
+  ) {
     return false;
   }
   if (esIntentoJailbreak(limpio)) {
