@@ -18,6 +18,11 @@ describe('esFueraDeAlcance', () => {
     expect(esFueraDeAlcance('integrar ia en mi negocio')).toBe(false);
     expect(esFueraDeAlcance('Hola')).toBe(false);
     expect(esFueraDeAlcance('¿Tienen WhatsApp para contactarlos?')).toBe(false);
+    expect(
+      esFueraDeAlcance(
+        'tengo 500$ y mi negocio es vender productos en linea, quiero automatizar las respuestas al cliente',
+      ),
+    ).toBe(false);
   });
 
   it('rechaza jailbreaks sin pasar al API', () => {

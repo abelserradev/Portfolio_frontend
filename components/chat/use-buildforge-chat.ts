@@ -16,6 +16,7 @@ import {
   MENSAJE_FUERA_DE_ALCANCE,
   MENSAJE_IDENTIDAD_BUILDFORGE,
   esFueraDeAlcance,
+  esIntentoJailbreak,
   esPreguntaDatosContacto,
   esPreguntaEstadoMision,
   esPreguntaIdentidadBuildforge,
@@ -127,8 +128,16 @@ export function useBuildforgeChat() {
         return;
       }
 
-      // Soft-block obvious off-topic / jailbreak before spending an API call
-      if (esFueraDeAlcance(limpio)) {
+      // Soft-block only cold starts / jailbreaks — follow-ups in an active quote thread go to the API
+      const hayContextoProyecto =
+        Boolean(draft) ||
+        mensajes.some(
+          (m) => m.rol === 'assistant' && m.texto !== MENSAJE_FUERA_DE_ALCANCE,
+        );
+      if (
+        esIntentoJailbreak(limpio) ||
+        (esFueraDeAlcance(limpio) && !hayContextoProyecto)
+      ) {
         setMensajes((prev) => [
           ...prev,
           {
@@ -194,7 +203,7 @@ export function useBuildforgeChat() {
         setCargando(false);
       }
     },
-    [cargando, enviado, persistirSession, sessionId],
+    [cargando, draft, enviado, mensajes, persistirSession, sessionId],
   );
 
   useEffect(() => {
