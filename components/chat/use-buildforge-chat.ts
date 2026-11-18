@@ -162,8 +162,19 @@ export function useBuildforgeChat() {
               descripcion: resp.quote_draft!.scope_summary!,
             }));
           }
-        }
-        if (resp.flow_state === 'contact' || resp.flow_state === 'estimate') {
+          // Show lead form as soon as there is a draft — don't wait for late flow_state
+          if (!enviado) {
+            setMostrarFormulario(true);
+            registrarEventoAnalytics({
+              event: 'chat.form.visible',
+              sessionId: resp.session_id,
+              metadata: {
+                flow_state: resp.flow_state,
+                via: 'quote_draft',
+              },
+            });
+          }
+        } else if (resp.flow_state === 'contact' || resp.flow_state === 'estimate') {
           setMostrarFormulario(true);
           registrarEventoAnalytics({
             event: 'chat.form.visible',
@@ -183,7 +194,7 @@ export function useBuildforgeChat() {
         setCargando(false);
       }
     },
-    [cargando, persistirSession, sessionId],
+    [cargando, enviado, persistirSession, sessionId],
   );
 
   useEffect(() => {
